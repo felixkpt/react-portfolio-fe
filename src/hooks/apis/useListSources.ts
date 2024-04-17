@@ -90,7 +90,6 @@ const useListSources = (params?: string) => {
       return res || []
     },
     async competitionId(q?: string) {
-      console.log('should trigger this function!')
       const res = await get('/admin/competitions' + prepareParams(q)).then((res) => res.data || [])
       return res || []
     },

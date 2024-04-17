@@ -1,93 +1,90 @@
 import { useEffect, useState } from 'react';
 import useAxios from './useAxios';
 import { CollectionItemsInterface } from '@/interfaces/UncategorizedInterfaces';
-import queryString from 'query-string';
-import { ParsedQuery } from 'query-string';
-import { useParams } from 'react-router-dom';
+import { subscribe, unsubscribe } from '@/utils/events';
+import Str from '@/utils/Str';
 
 interface AutoTableOptionsInterface {
-    perPage?: string | undefined;
+    perPage: number | undefined
 }
 
-const useAutoTableEffect = (
-    baseUri: string,
-    tableId: string | undefined,
-    options: AutoTableOptionsInterface
-) => {
+const useAutoTableEffect = (baseUri: string, listUri: string | undefined, options: AutoTableOptionsInterface) => {
     const [tableData, setTableData] = useState<CollectionItemsInterface | null>(null);
-    const [page, setPage] = useState<string | undefined>('1');
-    const [per_page, setPerPage] = useState<string | undefined>(options.perPage || '50');
+    const [page, setPage] = useState<number | string>(1);
+    const [per_page, setPerPage] = useState<number | string>(options.perPage || 50);
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined);
     const [orderDirection, setOrderDirection] = useState<string>('desc');
     const [q, setQuery] = useState<string | undefined>(undefined);
     const [reload, setReload] = useState<number>(0);
     const [hidePerPage, setHidePerPage] = useState<boolean>(false);
-    const [fullQueryString, setFullQueryString] = useState<string>(baseUri);
-    const { id } = useParams<string>();
-
-    const [status, setStatus] = useState<number>(() => {
-        const stored_state = localStorage.getItem(`app.${tableId}.status`);
-        let show = 0; // default to 0 (false)
-        if (stored_state) {
-            show = JSON.parse(stored_state) ? 1 : 0;
-        }
-        return show;
-    });
 
     // Initialize useAxios with the desired endpoint for fetching the data
-    const { data, loading, get } = useAxios();
+    const { data, loading, error, get } = useAxios();
 
     useEffect(() => {
         fetchData();
-    }, [page, per_page, orderBy, orderDirection, q, reload, status]);
+    }, [page, per_page, orderBy, orderDirection, q, reload]);
 
     async function fetchData() {
         try {
-            const mergedParams = <{ [key: string]: string | undefined }>{ };
-            mergedParams['id'] = id || '';
-            mergedParams['q'] = q;
-            mergedParams['status'] = status ? '1' : '0';
-            mergedParams['page'] = page;
-            mergedParams['per_page'] = per_page;
-            mergedParams['order_by'] = orderBy;
-            mergedParams['order_direction'] = orderDirection;
 
-            // Cast parsedUrlParams to ParsedQuery<string | undefined>
-            const parsedUrlParams = queryString.parseUrl(baseUri).query as ParsedQuery<string | undefined>;
+            const params: { [key: string]: any } = {};
 
-            // Ensure parsedUrlParams is of type { [key: string]: string | undefined }
-            const queryParams: { [key: string]: string | undefined } = parsedUrlParams ? parsedUrlParams : {};
+            const url = `${baseUri}${listUri ? '/' + listUri : ''}`;
 
-            const newUrl = queryString.parseUrl(baseUri).url;
-
-            // Merge parameters from the provided URL with the hook-managed parameters
-            Object.keys(queryParams).forEach((key) => {
-                if (!(key in mergedParams)) {
-                    mergedParams[key] = queryParams[key];
-                }
-            });
-
-            const queryStringParams = queryString.stringify(mergedParams);
-            setFullQueryString(queryStringParams)
-
-            const finalUrl = `${newUrl}?${queryStringParams}`;
-
-            // Check if the URL contains 'hide_per_page'
-            if (parsedUrlParams?.hide_per_page) {
-                setHidePerPage(true);
+            if (!Str.contains(url, 'page')) {
+                params.page = page
+            }
+            if (!Str.contains(url, 'per_page')) {
+                params.per_page = per_page
+            }
+            if (!Str.contains(url, 'order_by')) {
+                params.order_by = orderBy
+            }
+            if (!Str.contains(url, 'order_direction')) {
+                params.order_direction = orderDirection
+            }
+            if (!Str.contains(url, 'q')) {
+                params.q = q
             }
 
+            // Check if the URL contains 'hide_per_page'
+            if (Str.contains(url, 'hide_per_page'))
+                setHidePerPage(true)
+
             // Fetch data from the API using baseUri and listUri
-            await get(finalUrl.replace(/\/+/, '/'));
+            await get(url.replace(/\/+/, '/'), { params: params });
+
         } catch (error) {
             // Handle error if needed
         }
     }
 
     useEffect(() => {
+
         // Update the tableData state with the fetched data
         setTableData(data);
-    }, [data]);
+
+    }, [data])
+
+    useEffect(() => {
+        // Add event listener for the custom ajaxPost event
+        const eventListener = (event: CustomEvent<{ [key: string]: any }>) => {
+            const { detail } = event
+
+            if (detail.results || detail.message)
+                fetchData()
+        };
+
+        subscribe('ajaxPostDone', eventListener as EventListener);
+
+        // Cleanup the event listener when the component unmounts
+        return () => {
+            unsubscribe('ajaxPostDone', eventListener as EventListener);
+        };
+
+    }, []);
+
 
     function handleOrderBy(key: string) {
         if (key === orderBy) setOrderDirection((orderDirection) => (orderDirection === 'asc' ? 'desc' : 'asc'));
@@ -107,9 +104,6 @@ const useAutoTableEffect = (
         setPerPage,
         setReload,
         hidePerPage,
-        status,
-        setStatus,
-        fullQueryString,
     };
 };
 

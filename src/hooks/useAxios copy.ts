@@ -114,9 +114,9 @@ const useAxios = <T = any>() => {
 
     const get = (url: string, config = {}) => fetchData({ method: 'GET', url, ...config });
     const post = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config });
-    const put = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config, _method: 'patch' });
+    const put = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config, _method: 'put' });
     const patch = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config, _method: 'patch' });
-    const destroy = (url: string, data = {}, config = {}) => fetchData({ method: 'DELETE', url, data, ...config });
+    const destroy = (url: string, data = {}, config = {}) => fetchData({ method: 'DELETE', url, ...config });
     const getFile = async (url: string, config = {}, placeholder: string | null = null) => {
 
         if (!url && placeholder) return placeholder
@@ -141,6 +141,7 @@ const useAxios = <T = any>() => {
         return ''
 
     };
+
 
     return { data, loading, errors, get, post, put, patch, destroy, getFile };
 };
