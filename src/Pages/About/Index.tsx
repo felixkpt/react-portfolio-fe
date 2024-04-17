@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import useAxios from "../../hooksnew/useAxios"
+import useAxios from "../../hooks/useAxios"
 import { useEffect } from "react"
 import Loader from "../../components/Loader"
 

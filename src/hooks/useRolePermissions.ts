@@ -43,7 +43,9 @@ const useRolePermissions = () => {
             if (routePermissionsResponse) {
                 setRoutePermissions(routePermissionsResponse || []);
             }
-        } catch (error) { }
+        } catch (error) {
+            // Handle error
+        }
 
         setLoadingRoutePermissions(false);
     };
@@ -59,7 +61,7 @@ const useRolePermissions = () => {
 
     useEffect(() => {
         if (user && currentRole === undefined && verified && roles.length > 0) {
-            const defaultRole = user.default_role_id ? roles.find((role) => role.id === user.default_role_id) : null;
+            const defaultRole = user.default_role_id ? roles.find((role) => String(role.id) === String(user.default_role_id)) : null;
             setCurrentRole(defaultRole || roles[0]);
         }
     }, [roles, verified]);
