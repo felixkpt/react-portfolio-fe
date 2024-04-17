@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/Authenicated/AuthenticatedLayout"
+import AuthenticatedLayout from "@/Layouts/Default/DefaultLayout"
 import Index from '@/Pages/Admin/Settings/System/JobLogs/Index'
 
 const relativeUri = 'admin/settings/system/job-logs/'

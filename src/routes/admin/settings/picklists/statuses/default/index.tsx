@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/Authenicated/AuthenticatedLayout";
+import AuthenticatedLayout from "@/Layouts/Default/DefaultLayout";
 import Statuses from "@/Pages/Admin/Settings/Picklists/Statuses/Default/Index";
 
 

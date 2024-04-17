@@ -1,6 +1,6 @@
 import Permissions from '@/Pages/Admin/Settings/RolePermissions/Permissions/Index';
 import CreateOrUpdatePermission from '@/Pages/Admin/Settings/RolePermissions/Permissions/CreateOrUpdatePermission';
-import AuthenticatedLayout from '@/Layouts/Authenicated/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/Default/DefaultLayout';
 
 const relativeUri = 'admin/settings/role-permissions/permissions/';
 
