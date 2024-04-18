@@ -4,8 +4,9 @@ import About from '@/routes/about/';
 import Login from '@/Pages/Auth/Login';
 import Register from '@/Pages/Auth/Register';
 import Password from '@/Pages/Auth/Password';
-import Error404 from '@/Pages/ErrorPages/Error404';
+import ResetPasswordConfirm from '@/Pages/Auth/ResetPasswordConfirm';
 import PasswordSet from '@/Pages/Auth/PasswordSet';
+import Error404 from '@/Pages/ErrorPages/Error404';
 import adminRoutes from '@/routes/admin/adminRoutes';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
 import DefaultLayout from '@/Layouts/Default/DefaultLayout';
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
   {
     path: '/password',
     element: <GuestLayout Component={Password} />,
+  },
+  {
+    path: '/reset-password-confirm',
+    element: <GuestLayout Component={ResetPasswordConfirm} />,
+
   },
   {
     path: '/password-set/:token',

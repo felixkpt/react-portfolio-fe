@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { clearErrors, showErrors } from '@/utils/validation-errors';
 import { useAuth } from '@/contexts/AuthContext';
 import { publish } from '@/utils/events';
@@ -12,6 +12,7 @@ interface AxiosResponseWithData<T> extends AxiosResponse {
 const useAxios = <T = any>() => {
 
     axios.defaults.baseURL = baseURL('api');
+    const frontendUrl = window.location.origin
 
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(false);
@@ -26,14 +27,21 @@ const useAxios = <T = any>() => {
     // Request interceptor to add Authorization header if user is authenticated
     axiosInstance.interceptors.request.use(
         (config) => {
-            if (user) {
-                config.headers = {
-                    ...config.headers,
-                    Authorization: `Bearer ${user.token}`,
-                    // 'Content-Type': 'application/json',
-                    // 'Accept': '*',
-                };
+            // Ensure config.headers is of type AxiosRequestHeaders
+            if (!config.headers) {
+                config.headers = {} as AxiosRequestHeaders; // Initialize as an empty object
             }
+
+            // Add X-Frontend-URL header
+            config.headers['X-Frontend-URL'] = frontendUrl;
+
+            // Optionally add other headers here
+
+            if (user) {
+                // Add Authorization header if user is authenticated
+                config.headers['Authorization'] = `Bearer ${user.token}`;
+            }
+
             return config;
         },
         (error) => {
