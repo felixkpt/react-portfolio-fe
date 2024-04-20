@@ -12,7 +12,7 @@ const useRolePermissions = () => {
     const [routePermissions, setRoutePermissions] = useState<PermissionInterface[]>([]);
     const [loadingRoutePermissions, setLoadingRoutePermissions] = useState(false);
     const [userMenu, setUserMenu] = useState<RouteCollectionInterface[]>([]);
-    const [nestedRoutesFolder, setNestedRoutesFolder] = useState<string>('');
+    const [expandedRootFolders, setExpandedRootFolders] = useState<string>('');
 
     const fetchRolesAndDirectPermissions = async () => {
         if (!user) return false;
@@ -87,7 +87,7 @@ const useRolePermissions = () => {
     useEffect(() => {
         if (!loading && !errors && data) {
             setUserMenu(data?.menu);
-            setNestedRoutesFolder(data?.nested_routes_folder);
+            setExpandedRootFolders(data?.expanded_root_folders);
         }
     }, [loading]);
 
@@ -103,7 +103,7 @@ const useRolePermissions = () => {
         loadingRoutePermissions,
         userMenu,
         setUserMenu,
-        nestedRoutesFolder, // Include nestedRoutesFolder in the returned object
+        expandedRootFolders,
         loadingMenu: loading,
         errorsLoadingMenu: errors,
     };

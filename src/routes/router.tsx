@@ -1,6 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from '@/routes/default/home/';
-import About from '@/routes/about/';
+import home from '@/routes/home/';
+import about from '@/routes/about/';
+import contacts from '@/routes/contacts/';
+import experience from '@/routes/experience/';
+import projects from '@/routes/projects/';
+import qualifications from '@/routes/qualifications/';
+import skills from '@/routes/skills/';
 import Login from '@/Pages/Auth/Login';
 import Register from '@/Pages/Auth/Register';
 import Password from '@/Pages/Auth/Password';
@@ -9,16 +14,39 @@ import PasswordSet from '@/Pages/Auth/PasswordSet';
 import Error404 from '@/Pages/ErrorPages/Error404';
 import adminRoutes from '@/routes/admin/adminRoutes';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
-import DefaultLayout from '@/Layouts/Default/DefaultLayout';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <DefaultLayout uri='admin' permission={null} Component={Home} />,
+    children: home,
+  },
+  {
+    path: '/home',
+    children: home,
   },
   {
     path: '/about',
-    children: About,
+    children: about,
+  },
+  {
+    path: '/contacts',
+    children: contacts,
+  },
+  {
+    path: '/experience',
+    children: experience,
+  },
+  {
+    path: '/projects',
+    children: projects,
+  },
+  {
+    path: '/qualifications',
+    children: qualifications,
+  },
+  {
+    path: '/skills',
+    children: skills,
   },
   {
     path: '/login',
@@ -35,7 +63,6 @@ const router = createBrowserRouter([
   {
     path: '/reset-password-confirm',
     element: <GuestLayout Component={ResetPasswordConfirm} />,
-
   },
   {
     path: '/password-set/:token',
@@ -46,7 +73,6 @@ const router = createBrowserRouter([
     path: 'admin',
     children: adminRoutes
   },
-
   {
     path: '*',
     element: <GuestLayout Component={Error404} />,

@@ -20,7 +20,7 @@ const Index = () => {
             <div className="d-flex justify-content-end">
                 <Link className="btn btn-primary" to="/about/create-or-update">Create or update</Link>
             </div>
-            <div>About
+            <div>Home
                 {
                     loading ? <Loader /> : 'Loaded'
                 }

@@ -1,3 +1,4 @@
+import Str from "./Str";
 
 export function convertToTitleCase(str: string) {
     return str.toLowerCase().replace(/_/g, ' ').replace(/(^|\s)\w/g, function (match: string) {
@@ -43,16 +44,24 @@ export const baseURL = (uri: string) => import.meta.env.VITE_APP_BASE_API + (uri
 
 interface Config {
     name: string;
+    version: string;
+    release: string;
     urls: {
         home: string;
     };
+    storageName: string;
 }
 
+const appName = import.meta.env.VITE_APP_NAME || 'App name'
+
 export const config: Config = {
-    name: import.meta.env.VITE_APP_NAME || 'App name',
+    name: appName,
+    version: 'v1.0',
+    release: String(new Date().getFullYear()),
     urls: {
-        home: '/'
-    }
+        home: import.meta.env.VITE_APP_HOME || '/'
+    },
+    storageName: appName
 };
 
 export const environment: 'local' | 'production' = import.meta.env.VITE_APP_ENV || 'local'

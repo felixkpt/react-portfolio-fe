@@ -1,5 +1,5 @@
 import Index from '@/Pages/About/Index';
-import UpdateOrCreate from '@/Pages/About/UpdateOrCreate';
+import CreateOrUpdate from '@/Pages/About/CreateOrUpdate';
 import DefaultLayout from "@/Layouts/Default/DefaultLayout";
 
 const relativeUri = 'about/'
@@ -11,8 +11,8 @@ const index = [
     element: <DefaultLayout uri={relativeUri + ''} permission="" Component={Index} />,
   },
   {
-    path: 'update-or-create',
-    element: <DefaultLayout uri={relativeUri + 'update-or-create'} permission="" Component={UpdateOrCreate} />,
+    path: 'create-or-update',
+    element: <DefaultLayout uri={relativeUri + 'create-or-update'} permission="" Component={CreateOrUpdate} />,
 
   }
 ]

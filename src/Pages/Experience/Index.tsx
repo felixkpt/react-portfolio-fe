@@ -8,7 +8,7 @@ const Index = () => {
     const { get, loading } = useAxios()
 
     useEffect(() => {
-        get('about').then((results) => {
+        get('experience').then((results) => {
             if (results) {
                 console.log(results)
             }
@@ -18,9 +18,9 @@ const Index = () => {
         <div className="">
 
             <div className="d-flex justify-content-end">
-                <Link className="btn btn-primary" to="/about/create-or-update">Create or update</Link>
+                <Link className="btn btn-primary" to="/experience/create-or-update">Create or update</Link>
             </div>
-            <div>About
+            <div>Experience
                 {
                     loading ? <Loader /> : 'Loaded'
                 }

@@ -1,12 +1,20 @@
-import DefaultLayout from '@/Layouts/Default/DefaultLayout';
-import Error404 from '@/Pages/ErrorPages/Error404';
+import Index from '@/Pages/Skills/Index';
+import CreateOrUpdate from '@/Pages/Skills/CreateOrUpdate';
+import DefaultLayout from "@/Layouts/Default/DefaultLayout";
 
-const skillsRoutes = [
+const relativeUri = 'skills/'
+
+const index = [
+
   {
     path: '',
-    element: <DefaultLayout uri='default' permission={null} Component={<>Test</>} />,
+    element: <DefaultLayout uri={relativeUri + ''} permission="" Component={Index} />,
   },
-  
-];
+  {
+    path: 'create-or-update',
+    element: <DefaultLayout uri={relativeUri + 'create-or-update'} permission="" Component={CreateOrUpdate} />,
 
-export default skillsRoutes;
+  }
+]
+
+export default index

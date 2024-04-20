@@ -11,6 +11,7 @@ import AutoActions from './AutoActions';
 import AutoTableHeader from './AutoTableHeader';
 import Loader from './Loader';
 import StatusesUpdate from './StatusesUpdate';
+import { config } from '@/utils/helpers';
 
 function __dangerousHtml(html: HTMLElement) {
     return <div dangerouslySetInnerHTML={{ __html: html }} />;
@@ -30,6 +31,8 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
         hidePerPage,
         status,
         setStatus,
+        searchTerm,
+        setSearchTerm,
         fullQueryString,
     } = useAutoTableEffect(baseUri, localTableId, { perPage });
 
@@ -192,7 +195,17 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
     function handleStatus(e: any) {
         const val = e.target.checked
         setStatus(val)
-        localStorage.setItem(`app.${localTableId}.status`, JSON.stringify(val))
+        localStorage.setItem(`${config.storageName}.${localTableId}.status`, JSON.stringify(val))
+    }
+
+    function handleResetSearch() {
+
+        setSearchTerm(undefined)
+        const btn = document.querySelector('#search-btn') as HTMLInputElement
+        if (btn) {
+            btn.value = ''
+        }
+
     }
 
     return (
@@ -248,27 +261,31 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
                             <div className="relative">
 
                                 <div className="col-md-12 col-md-offset-3">
-                                    <div className="input-group">
-                                        <div className="input-group-btn search-panel" data-search="students">
-                                            <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                                <span className="search_by">Filter by</span> <span className="caret"></span>
+                                    <div className="position-relative">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="q"
+                                            defaultValue={searchTerm}
+                                            id="search-btn"
+                                            onChange={(e: any) => {
+                                                debouncedSearch(e.target.value);
+                                                debouncedSearch2(e.target.value);
+                                            }}
+                                            placeholder="Search here..."
+                                        />
+                                        {searchTerm && ( // Render the clear button only if there is a search term
+                                            <button
+                                                className="btn btn-default shadow-sm position-absolute end-0 translate-middle-y top-50"
+                                                type="button"
+                                                title="Clear search"
+                                                onClick={handleResetSearch}
+                                            >
+                                                <Icon icon="fluent-mdl2:cancel" />
                                             </button>
-                                            <ul className="dropdown-menu" role="menu">
-                                                <li><a data-search="students">students</a></li>
-                                                <li><a data-search="teachers">teachers</a></li>
-                                                <li><a data-search="rooms">rooms</a></li>
-                                                <li className="divider"></li>
-                                                <li><a data-search="all">all</a></li>
-                                            </ul>
-                                        </div>
-                                        <input type="text" className="form-control" name="q" id="search-btn" onChange={(e: any) => {
-                                            debouncedSearch(e.target.value)
-                                            debouncedSearch2(e.target.value)
-                                        }} placeholder="Search here..." />
-                                        <span className="input-group-btn">
-                                            <button className="btn btn-default" type="button"><span className="glyphicon glyphicon-search"></span></button>
-                                        </span>
+                                        )}
                                     </div>
+
                                 </div>
                             </div>
                         }

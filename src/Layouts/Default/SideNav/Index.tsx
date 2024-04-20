@@ -6,13 +6,12 @@ import MenuTree from './MenuTree';
 import RoutesList from './RoutesList';
 import Select from 'react-select';
 import { useRolePermissionsContext } from '@/contexts/RolePermissionsContext';
+import Loader from '@/components/Loader';
 
 const Index = () => {
   const { user } = useAuth();
-  const { roles, setCurrentRole, currentRole, userMenu, nestedRoutesFolder, loadingMenu: loading } = useRolePermissionsContext();
+  const { roles, setCurrentRole, currentRole, userMenu, expandedRootFolders, loadingMenu: loading } = useRolePermissionsContext();
 
-  console.log(nestedRoutesFolder)
-  
   useEffect(() => {
     const expand = document.body.querySelector('.btn-expand-collapse');
     if (expand) {
@@ -46,7 +45,7 @@ const Index = () => {
   const memoizeMenu = useMemo(() => {
     return (
       <>
-        {user && Array.isArray(userMenu) ? (
+        {user && Array.isArray(userMenu) && userMenu.length > 0 ? (
           <ul className="list-unstyled nested-routes main">
             {userMenu.map((child: RouteCollectionInterface) => {
               const { routes, children, icon, folder } = child;
@@ -54,7 +53,10 @@ const Index = () => {
               const currentId = Str.slug((folder).replace(/^\//, ''));
               const indent = 2;
 
-              if (shouldShowFolder && folder !== nestedRoutesFolder) {
+              // Check if the folder should be expanded
+              const isExpanded = expandedRootFolders.includes(folder);
+
+              if (shouldShowFolder && !isExpanded) {
                 return (
                   <div key={currentId} className='position-relative top-0 first-level'>
                     <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target={`#${currentId}`} aria-expanded="false" aria-controls="collapsePages">
@@ -72,7 +74,7 @@ const Index = () => {
                     </div>
                   </div>
                 );
-              } else if (folder === nestedRoutesFolder) {
+              } else if (shouldShowFolder && isExpanded) {
                 return (
                   <div key={currentId}>
                     <RoutesList routes={routes} />
@@ -87,10 +89,7 @@ const Index = () => {
         ) : (
           <div className='ps-2 pt-3'>
             {!currentRole || loading ?
-              <div className="d-flex align-items-center gap-3">
-                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading...
-              </div>
+              <Loader justify='start' />
               : `No menus associated with role.`
             }
           </div>
@@ -99,35 +98,34 @@ const Index = () => {
     );
   }, [user, userMenu, loading]);
 
-  if (currentRole) {
-    return (
-      <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
-        <div className="sb-sidenav-menu shadow">
-          <div className="nav pt-2">
-            <div className='px-1'>
-              <div id="menu">
-                <div id='role-switcher'>
-                  <Select
-                    className="basic-single text-dark mb-2"
-                    classNamePrefix="select"
-                    value={currentRole || []}
-                    isSearchable={true}
-                    name="roles"
-                    options={roles}
-                    getOptionValue={(option: any) => `${option['id']}`}
-                    getOptionLabel={(option: any) => `${option['name']}`}
-                    onChange={(item: any) => setCurrentRole(item)}
-                  />
-                </div>
-                {memoizeMenu}
+  return (
+    <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+      <div className="sb-sidenav-menu shadow">
+        <div className="nav pt-2">
+          <div className='px-1'>
+            <div id="menu">
+              <div id='role-switcher' title='Switch your role'>
+                <Select
+                  className="basic-single text-dark mb-2"
+                  classNamePrefix="select"
+                  value={currentRole || []}
+                  isSearchable={true}
+                  name="roles"
+                  options={roles}
+                  placeholder='Switch your role'
+                  getOptionValue={(option: any) => `${option['id']}`}
+                  getOptionLabel={(option: any) => `${option['name']}`}
+                  onChange={(item: any) => setCurrentRole(item)}
+                />
               </div>
+              {memoizeMenu}
             </div>
           </div>
         </div>
-      </nav>
-    );
-  }
-};
+      </div>
+    </nav>
+  );
+}
 
 export const toggleSidebar = (event?: Event, action: string | undefined = undefined, forceClose = false) => {
   if (action && action === 'hide') {

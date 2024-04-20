@@ -12,7 +12,9 @@ export default function Footer() {
             <footer className="py-4 bg-body-secondary mt-auto footer">
                 <div className="container-fluid px-4">
                     <div className="d-flex align-items-center justify-content-between small">
-                        <div className="text-muted">Copyright &copy; {config.name} 2023</div>
+                        <div className="text-muted  d-flex align-items-center gap-1">
+                            <span>Copyright &copy; {config.name}</span><span>{config.version}</span><span>{config.release}</span>
+                        </div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;

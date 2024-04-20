@@ -4,6 +4,7 @@ import { CollectionItemsInterface } from '@/interfaces/UncategorizedInterfaces';
 import queryString from 'query-string';
 import { ParsedQuery } from 'query-string';
 import { useParams } from 'react-router-dom';
+import { config } from '@/utils/helpers';
 
 interface AutoTableOptionsInterface {
     perPage?: string | undefined;
@@ -19,14 +20,14 @@ const useAutoTableEffect = (
     const [per_page, setPerPage] = useState<string | undefined>(options.perPage || '50');
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined);
     const [orderDirection, setOrderDirection] = useState<string>('desc');
-    const [q, setQuery] = useState<string | undefined>(undefined);
+    const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);
     const [reload, setReload] = useState<number>(0);
     const [hidePerPage, setHidePerPage] = useState<boolean>(false);
     const [fullQueryString, setFullQueryString] = useState<string>(baseUri);
     const { id } = useParams<string>();
 
     const [status, setStatus] = useState<number>(() => {
-        const stored_state = localStorage.getItem(`app.${tableId}.status`);
+        const stored_state = localStorage.getItem(`${config.storageName}.${tableId}.status`);
         let show = 0; // default to 0 (false)
         if (stored_state) {
             show = JSON.parse(stored_state) ? 1 : 0;
@@ -39,13 +40,13 @@ const useAutoTableEffect = (
 
     useEffect(() => {
         fetchData();
-    }, [page, per_page, orderBy, orderDirection, q, reload, status]);
+    }, [page, per_page, orderBy, orderDirection, searchTerm, reload, status]);
 
     async function fetchData() {
         try {
             const mergedParams = <{ [key: string]: string | undefined }>{ };
             mergedParams['id'] = id || '';
-            mergedParams['q'] = q;
+            mergedParams['search'] = searchTerm;
             mergedParams['status'] = status ? '1' : '0';
             mergedParams['page'] = page;
             mergedParams['per_page'] = per_page;
@@ -94,8 +95,8 @@ const useAutoTableEffect = (
         setOrderBy(key);
     }
 
-    const handleSearch = (_q: string) => {
-        setQuery(_q);
+    const handleSearch = (_query: string) => {
+        setSearchTerm(_query);
     };
 
     return {
@@ -109,6 +110,8 @@ const useAutoTableEffect = (
         hidePerPage,
         status,
         setStatus,
+        searchTerm,
+        setSearchTerm,
         fullQueryString,
     };
 };
