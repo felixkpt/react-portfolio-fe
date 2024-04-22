@@ -16,6 +16,7 @@ const useAxios = <T = any>() => {
 
     const [data, setData] = useState<T | null>(null);
     const [loading, setLoading] = useState(false);
+    const [fetched, setFetched] = useState(false);
     const [errors, setErrors] = useState(null);
 
     // Create an Axios instance with a request interceptor
@@ -117,6 +118,7 @@ const useAxios = <T = any>() => {
 
         } finally {
             setLoading(false);
+            setFetched(true);
         }
     };
 
@@ -144,13 +146,14 @@ const useAxios = <T = any>() => {
             // Error handling code...
         } finally {
             setLoading(false);
+            setFetched(true);
         }
 
         return ''
 
     };
 
-    return { data, loading, errors, get, post, put, patch, destroy, getFile };
+    return { data, loading, fetched, errors, get, post, put, patch, destroy, getFile };
 };
 
 export default useAxios;

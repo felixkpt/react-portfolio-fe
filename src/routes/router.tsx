@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import home from '@/routes/home/';
 import about from '@/routes/about/';
-import contacts from '@/routes/contacts/';
-import experience from '@/routes/experience/';
+import getInTouch from '@/routes/get-in-touch/';
 import projects from '@/routes/projects/';
 import qualifications from '@/routes/qualifications/';
 import skills from '@/routes/skills/';
+import workExperiences from '@/routes/work-experiences/';
 import Login from '@/Pages/Auth/Login';
 import Register from '@/Pages/Auth/Register';
 import Password from '@/Pages/Auth/Password';
@@ -14,6 +14,8 @@ import PasswordSet from '@/Pages/Auth/PasswordSet';
 import Error404 from '@/Pages/ErrorPages/Error404';
 import adminRoutes from '@/routes/admin/adminRoutes';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
+import TermsAndConditions from '../Pages/TermsAndConditions';
+import PrivacyPolicy from '../Pages/PrivacyPolicy';
 
 const router = createBrowserRouter([
   {
@@ -29,12 +31,8 @@ const router = createBrowserRouter([
     children: about,
   },
   {
-    path: '/contacts',
-    children: contacts,
-  },
-  {
-    path: '/experience',
-    children: experience,
+    path: '/get-in-touch',
+    children: getInTouch,
   },
   {
     path: '/projects',
@@ -47,6 +45,9 @@ const router = createBrowserRouter([
   {
     path: '/skills',
     children: skills,
+  },{
+    path: '/work-experiences',
+    children: workExperiences,
   },
   {
     path: '/login',
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
   {
     path: 'admin',
     children: adminRoutes
+  },
+  {
+    path: '/privacy-policy',
+    element: <GuestLayout Component={PrivacyPolicy} />,
+  },
+  {
+    path: '/terms-and-conditions',
+    element: <GuestLayout Component={TermsAndConditions} />,
   },
   {
     path: '*',

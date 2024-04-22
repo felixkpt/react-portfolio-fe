@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom"
 import useAxios from "../../hooks/useAxios"
 import { useEffect } from "react"
-import Loader from "../../components/Loader"
 
 const Index = () => {
 
-    const { get, loading } = useAxios()
+    const { get } = useAxios()
 
     useEffect(() => {
         get('about').then((results) => {
@@ -16,15 +14,7 @@ const Index = () => {
     }, [])
     return (
         <div className="">
-
-            <div className="d-flex justify-content-end">
-                <Link className="btn btn-primary" to="/about/create-or-update">Create or update</Link>
-            </div>
-            <div>Home
-                {
-                    loading ? <Loader /> : 'Loaded'
-                }
-            </div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, magni consequatur dolorem deserunt maxime eius eum, modi quos velit dolore, quisquam optio exercitationem consectetur mollitia quas accusantium nobis. Odio, et.
         </div>
     )
 }

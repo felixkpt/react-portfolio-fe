@@ -8,7 +8,7 @@ const CreateOrUpdate = () => {
 
     return (
         <div>
-            <form method='post' action-url={'/qualifications/create-or-update'} onSubmit={(e: any) => publish('ajaxPost', e, { image: files[0] })} className="flex justify-center">
+            <form method='post' action-url={'/qualifications'} onSubmit={(e: any) => publish('ajaxPost', e, { image: files[0] })} className="flex justify-center">
                 <div className="form-group">
                     <label className="form-label">Institution</label>
                     <input type="text" name="institution" id="institution" className="form-control" />
@@ -45,7 +45,9 @@ const CreateOrUpdate = () => {
                         </div>
                     </div>
                 </div>
-                <SubmitButton />
+                <div className="mt-2 d-flex justify-content-end">
+                    <SubmitButton />
+                </div>
             </form>
         </div>
     )
