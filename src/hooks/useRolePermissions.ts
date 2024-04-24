@@ -12,8 +12,8 @@ const useRolePermissions = () => {
     const [loadingRoutePermissions, setLoadingRoutePermissions] = useState(true);
     const [userMenu, setUserMenu] = useState<RouteCollectionInterface[]>([]);
     const [expandedRootFolders, setExpandedRootFolders] = useState<string>('');
-    const {roles, directPermissions} = useFetchUserRolesAndDirectPermissions()
-    
+    const { roles, directPermissions, setRefresh: fetchRolesAndDirectPermissions } = useFetchUserRolesAndDirectPermissions()
+
     const fetchRoutePermissions = async (roleId = null) => {
         if (!currentRole) return false;
 
@@ -38,7 +38,7 @@ const useRolePermissions = () => {
     function refreshCurrentRole() {
         if (user) {
             setCurrentRole(() => {
-                // fetchRolesAndDirectPermissions();
+                fetchRolesAndDirectPermissions((curr: number) => curr = curr + 1);
                 return undefined;
             });
         }

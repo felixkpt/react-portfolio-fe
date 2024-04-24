@@ -27,11 +27,6 @@ class Str {
         return subject.split(search)[0];
     }
 
-    static beforeLast(subject: string, search: string): string {
-        const parts = subject.split(search);
-        return parts.slice(0, -1).join(search);
-    }
-
     static afterFirst(subject: string, search: string): string {
         const index = subject.indexOf(search);
         if (index === -1) {

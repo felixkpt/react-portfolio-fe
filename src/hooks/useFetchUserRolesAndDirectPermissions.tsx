@@ -6,6 +6,7 @@ const useFetchUserRolesAndDirectPermissions = () => {
 
     const [roles, setRoles] = useState<RoleInterface[]>([]);
     const [directPermissions, setDirectPermissions] = useState<PermissionInterface[]>([]);
+    const [refresh, setRefresh] = useState<number>(0);
 
     useEffect(() => {
         get('/admin/settings/role-permissions/roles/get-user-roles-and-direct-permissions').then((rolesPermissions: any) => {
@@ -15,9 +16,9 @@ const useFetchUserRolesAndDirectPermissions = () => {
             }
 
         });
-    }, [])
+    }, [refresh])
 
-    return { roles, directPermissions }
+    return { roles, directPermissions, setRefresh }
 }
 
 export default useFetchUserRolesAndDirectPermissions

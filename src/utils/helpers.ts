@@ -52,16 +52,14 @@ interface Config {
     storageName: string;
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'App name'
-
 export const config: Config = {
-    name: appName,
+    name: import.meta.env.VITE_APP_NAME || 'App name',
     version: 'v1.0',
     release: String(new Date().getFullYear()),
     urls: {
         home: import.meta.env.VITE_APP_HOME || '/'
     },
-    storageName: appName
+    storageName: Str.slug(import.meta.env.VITE_APP_NAME || 'App name')
 };
 
 export const environment: 'local' | 'production' = import.meta.env.VITE_APP_ENV || 'local'
