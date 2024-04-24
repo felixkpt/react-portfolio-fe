@@ -12,7 +12,6 @@ const CreateOrUpdate = () => {
     const [data, setData] = useState(undefined)
     const navigate = useNavigate()
 
-
     useEffect(() => {
         get('about').then((results: any) => {
             if (results) {
