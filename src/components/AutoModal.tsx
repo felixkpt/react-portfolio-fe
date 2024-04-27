@@ -34,7 +34,7 @@ const AutoModal: React.FC<ModalProps> = ({ modelDetails, record, actionUrl, moda
     const formRef = useRef<HTMLFormElement>(null);
 
     return (
-        <form ref={formRef} method='post' action-url={actionUrl} onSubmit={(e: any) => publish('ajaxPost', e)} className="flex justify-center">
+        <form ref={formRef} method='post' data-action={actionUrl} onSubmit={(e: any) => publish('autoPost', e)} className="flex justify-center">
 
             <div key={localKey} className={`modal fade`} id={modalId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden='true'>
                 <div className={`modal-dialog ${computedSize}`}>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { convertToTitleCase, emitAjaxPost } from '@/utils/helpers';
+import { convertToTitleCase, emitAutoPost } from '@/utils/helpers';
 
 interface ModalProps {
   modelName: string;
@@ -115,7 +115,7 @@ const AutoModal: React.FC<ModalProps> = ({ data, row, actionUrl, action }) => {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                <form ref={formRef} method='post' action={getActionUrl()} onSubmit={(e: any) => emitAjaxPost(e)} className="flex justify-center">
+                <form ref={formRef} method='post' action={getActionUrl()} onSubmit={(e: any) => emitAutoPost(e)} className="flex justify-center">
                   <input type="hidden" name="_method" value={method} />
                   <div className="flex max-w-md flex-col gap-4">
                     {hasFillable ? (

@@ -8,7 +8,7 @@ const CreateOrUpdate = () => {
 
     return (
         <div>
-            <form method='post' action-url={'/qualifications'} onSubmit={(e: any) => publish('ajaxPost', e, { image: files[0] })} className="flex justify-center">
+            <form method='post' data-action={'/qualifications'} onSubmit={(e: any) => publish('autoPost', e, { image: files[0] })} className="flex justify-center">
                 <div className="form-group">
                     <label className="form-label">Institution</label>
                     <input type="text" name="institution" id="institution" className="form-control" />

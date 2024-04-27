@@ -17,7 +17,7 @@ const useGetMenu = ({user, roles}: Props) => {
         roleId = currentRole.id;
     }
 
-    getMenu('/admin/settings/role-permissions/roles/view/' + roleId + '/get-role-menu/?get-menu=1').then((resp) => {
+    getMenu('/settings/role-permissions/roles/view/' + roleId + '/get-role-menu/?get-menu=1').then((resp) => {
         if (resp === undefined) {
             setUserMenu([]);
         }

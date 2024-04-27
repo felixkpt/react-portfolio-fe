@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { convertToTitleCase, emitAjaxPost } from '@/utils/helpers';
+import { convertToTitleCase, emitAutoPost } from '@/utils/helpers';
 import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 import useAxios from '@/hooks/useAxios';
@@ -141,7 +141,7 @@ const CreateOrEditModel: React.FC<ModalProps> = ({ data, actionUrl, list_sources
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <form ref={formRef} method='post' action={actionUrl} onSubmit={(e: any) => emitAjaxPost(e)} className="flex justify-center">
+                                    <form ref={formRef} method='post' action={actionUrl} onSubmit={(e: any) => emitAutoPost(e)} className="flex justify-center">
                                         <input type="hidden" name="_method" value={method} />
                                         <div className="row">
                                             {hasFillable ? (

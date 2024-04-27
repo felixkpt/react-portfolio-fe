@@ -1,3 +1,5 @@
+import { CollectionItemsInterface } from "./UncategorizedInterfaces";
+
 export interface CountryInterface {
     id: string;
     name: string;
@@ -29,7 +31,7 @@ export interface TeamInterface {
     club_colors: string | null;
     venue_id: string | null;
     coach_id: string | null;
-    coach_contract: any;
+    coach_contract: CollectionItemsInterface;
     competition_id: string;
     competition: CompetitionInterface;
     competitions: CompetitionInterface[];
@@ -92,7 +94,7 @@ export interface SeasonInterface {
     current_matchday: number | null;
     total_matchdays: number | null;
     winner_id: string | null;
-    stages: any[]; // Define the structure based on your data
+    stages: CollectionItemsInterface[];
     status_id: string;
     user_id: string;
     created_at: string;
@@ -285,7 +287,7 @@ export interface CompetitionTabInterface {
     seasons: SeasonInterface[] | null
     selectedSeason: SeasonInterface | null
     setSelectedSeason: React.Dispatch<React.SetStateAction<SeasonInterface | null>>;
-    mainKey: any
+    mainKey: number
     setMainKey?: React.Dispatch<React.SetStateAction<number>>;
     useDate?: boolean;
     isDisabled?: boolean
@@ -331,7 +333,6 @@ export interface BettingTipsTotalsInterface {
     total_gain: number;
     average_roi: number;
 }
-
 
 export interface DashboardStatsMatchJobLogsInterface {
 
@@ -461,7 +462,6 @@ export interface DashboardStatsInterface {
     }
 
 }
-
 export interface MatchesInterface {
     totals: number;
     past: number;

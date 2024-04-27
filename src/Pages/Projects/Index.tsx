@@ -3,19 +3,19 @@ import useAxios from "../../hooks/useAxios"
 import { useEffect } from "react"
 import Loader from "../../components/Loader"
 import usePermissions from "../../hooks/usePermissions"
+import AlertMessage from "../../components/AlertMessage"
+import NoContentMessage from "../../components/NoContentMessage"
+import ProjectsCard from "./ProjectCard"
 
 const Index = () => {
 
-    const { get, loading } = useAxios()
+    const { get, loading, loaded, errors, data } = useAxios()
     const { userCan } = usePermissions()
 
     useEffect(() => {
-        get('projects').then((results) => {
-            if (results) {
-                console.log(results)
-            }
-        })
+        get('projects')
     }, [])
+
     return (
         <div className="">
             {
@@ -24,9 +24,24 @@ const Index = () => {
                     <Link className="btn btn-primary" to="/projects/create">Create</Link>
                 </div>
             }
-            <div>Projects
+            <div>
                 {
-                    loading ? <Loader /> : 'Loaded'
+                    loaded && !errors ?
+                        <div className="pf-projects">
+                            {
+                                data?.data && data?.data.length ?
+                                    data.data.map((item) => <ProjectsCard item={item} />)
+                                    :
+                                    <NoContentMessage />
+                            }
+                        </div>
+                        :
+                        <>
+                            {
+
+                                loading ? <Loader /> : <AlertMessage message={errors} />
+                            }
+                        </>
                 }
             </div>
         </div>

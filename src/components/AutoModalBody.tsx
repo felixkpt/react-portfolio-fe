@@ -110,13 +110,13 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
 
     useEffect(() => {
 
-        subscribe('ajaxPostDone', handleAjaxPostDone as EventListener);
+        subscribe('autoPostDone', handleAutoPostDone as EventListener);
 
-        return () => unsubscribe('ajaxPostDone', handleAjaxPostDone as EventListener);
+        return () => unsubscribe('autoPostDone', handleAutoPostDone as EventListener);
 
     }, [])
 
-    const handleAjaxPostDone = (event: CustomEvent<{ [key: string]: any }>) => {
+    const handleAutoPostDone = (event: CustomEvent<{ [key: string]: any }>) => {
 
         if (event.detail) {
             const detail = event.detail;

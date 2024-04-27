@@ -21,13 +21,13 @@ const useListSources = (params?: string) => {
     },
 
     async rolesList(search?: string) {
-      const res = await get('admin/settings/role-permissions/roles' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('settings/role-permissions/roles' + prepareParams(search)).then((res) => res.data || [])
       return res || []
 
     },
 
     async directPermissionsList(search?: string) {
-      const res = await get('admin/settings/role-permissions/permissions' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('settings/role-permissions/permissions' + prepareParams(search)).then((res) => res.data || [])
       return res || []
 
     },
@@ -55,47 +55,18 @@ const useListSources = (params?: string) => {
     }
   ]
 
-  const competitions = {
+  const portfolio = {
 
-    async hasCompetitions() {
-      return booleanOptions
-    },
-    async hasTeams() {
-      return booleanOptions
-    },
-    async continentId(search?: string) {
-      const res = await get('/admin/continents' + prepareParams(search)).then((res) => res.data || [])
-      return res || []
-
-    },
-    async countryId(search?: string) {
-      const res = await get('/admin/countries' + prepareParams(search)).then((res) => res.data || [])
-      return res || []
-
-    },
-    async nationalityId(search?: string) {
-      const res = await get('/admin/countries' + prepareParams(search)).then((res) => res.data || [])
+    async companyId(search?: string) {
+      const res = await get('/companies' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
-    async addressId(search?: string) {
-      const res = await get('/admin/teams/addresses' + prepareParams(search)).then((res) => res.data || [])
+    async skillId(search?: string) {
+      const res = await get('/skills' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
-    async venueId(search?: string) {
-      const res = await get('/admin/teams/venues' + prepareParams(search)).then((res) => res.data || [])
-      return res || []
-    },
-    async coachId(search?: string) {
-      const res = await get('/admin/teams/coaches' + prepareParams(search)).then((res) => res.data || [])
-      return res || []
-    },
-    async competitionId(search?: string) {
-      console.log('should trigger this function!')
-      const res = await get('/admin/competitions' + prepareParams(search)).then((res) => res.data || [])
-      return res || []
-    },
-    async teamId(search: string) {
-      const res = await get('/admin/teams' + prepareParams(search)).then((res) => res.data || [])
+    async skillIds(search?: string) {
+      const res = await get('/skills' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
 
@@ -104,7 +75,8 @@ const useListSources = (params?: string) => {
   return {
     rolePermissions,
     posts,
-    competitions
+    portfolio,
+    booleanOptions
   }
 
   function prepareParams(search: string | undefined) {

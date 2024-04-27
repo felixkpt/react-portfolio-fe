@@ -13,15 +13,15 @@ const InlineAction: React.FC<InlinActionProps> = ({ title, children, actionUrl, 
 
     useEffect(() => {
 
-        subscribe('ajaxPostDone', handleAjaxPostDone);
+        subscribe('autoPostDone', handleAutoPostDone);
 
         return () => {
-            unsubscribe('ajaxPostDone', handleAjaxPostDone);
+            unsubscribe('autoPostDone', handleAutoPostDone);
         };
 
     }, [])
 
-    const handleAjaxPostDone = (resp: any) => {
+    const handleAutoPostDone = (resp: any) => {
         if (resp.detail) {
             const detail = resp.detail;
             if (detail.elementId === id && detail.results && setKey) {
@@ -32,7 +32,7 @@ const InlineAction: React.FC<InlinActionProps> = ({ title, children, actionUrl, 
         }
     };
 
-    return <form encType="" id={id || 'inlineForm'} method="post" action-url={actionUrl} onSubmit={(e: any) => publish('ajaxPost', e)} >{children}</form>
+    return <form encType="" id={id || 'inlineForm'} method="post" data-action={actionUrl} onSubmit={(e: any) => publish('autoPost', e)} >{children}</form>
 
 }
 

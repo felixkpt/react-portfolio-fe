@@ -1,33 +1,38 @@
-import { Link } from "react-router-dom"
 import useAxios from "../../hooks/useAxios"
 import { useEffect } from "react"
 import Loader from "../../components/Loader"
-import usePermissions from "../../hooks/usePermissions"
+import AlertMessage from "../../components/AlertMessage"
+import NoContentMessage from "../../components/NoContentMessage"
+import WorkExperienceCard from "./WorkExperienceCard"
 
 const Index = () => {
 
-    const { get, loading } = useAxios()
-    const { userCan } = usePermissions()
+    const { get, loading, loaded, errors, data } = useAxios()
 
     useEffect(() => {
-        get('work-experiences').then((results) => {
-            if (results) {
-                console.log(results)
-            }
-        })
+        get('companies')
     }, [])
+
     return (
         <div className="">
-
-            {
-                userCan('work-experiences', 'post') &&
-                <div className="d-flex justify-content-end">
-                    <Link className="btn btn-primary" to="/work-experiences/create">Create</Link>
-                </div>
-            }
-            <div>Skills
+            <div>
                 {
-                    loading ? <Loader /> : 'Loaded'
+                    loaded && !errors ?
+                        <div className="pf-companies">
+                            {
+                                data?.data && data?.data.length ?
+                                    data.data.map((item) => <WorkExperienceCard item={item} />)
+                                    :
+                                    <NoContentMessage />
+                            }
+                        </div>
+                        :
+                        <>
+                            {
+
+                                loading ? <Loader /> : <AlertMessage message={errors} />
+                            }
+                        </>
                 }
             </div>
         </div>

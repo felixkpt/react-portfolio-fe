@@ -23,18 +23,18 @@ export const emitStatusUpdate = (e: Event) => {
     window.dispatchEvent(event);
 };
 
-// Event emitter to emit emitAjaxPost to the parent component
-export const emitAjaxPost = (e: any) => {
+// Event emitter to emit emitAutoPost to the parent component
+export const emitAutoPost = (e: any) => {
     e.preventDefault()
-    const event = new CustomEvent('ajaxPost', {
+    const event = new CustomEvent('autoPost', {
         detail: e,
     });
     window.dispatchEvent(event);
 };
 
-// Event emitter to emit emitAjaxPost to the parent component
-export const emitAjaxPostDone = (response: any) => {
-    const event = new CustomEvent('ajaxPostDone', {
+// Event emitter to emit emitAutoPost to the parent component
+export const emitAutoPostDone = (response: any) => {
+    const event = new CustomEvent('autoPostDone', {
         detail: response,
     });
     window.dispatchEvent(event);

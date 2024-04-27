@@ -23,7 +23,7 @@ const useRolePermissions = () => {
         setLoadingRoutePermissions(true);
 
         try {
-            const routePermissionsResponse = await get(`/admin/settings/role-permissions/roles/view/${currentRole.id}/get-role-route-permissions`);
+            const routePermissionsResponse = await get(`/settings/role-permissions/roles/view/${currentRole.id}/get-role-route-permissions`);
 
             if (routePermissionsResponse) {
                 setRoutePermissions(routePermissionsResponse || []);
@@ -61,7 +61,7 @@ const useRolePermissions = () => {
 
     useEffect(() => {
         if (currentRole) {
-            getMenu('/admin/settings/role-permissions/roles/view/' + currentRole.id + '/get-role-menu/?get-menu=1').then((resp) => {
+            getMenu('/settings/role-permissions/roles/view/' + currentRole.id + '/get-role-menu/?get-menu=1').then((resp) => {
                 if (resp === undefined) {
                     setUserMenu([]);
                 }

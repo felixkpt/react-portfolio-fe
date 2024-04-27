@@ -1,4 +1,4 @@
-import AjaxPost from '@/components/AjaxPost';
+import AutoPost from '@/components/AutoPost';
 import ToastNotification from '@/components/Modals/ToastNotification';
 import PrepareEditModal from '@/components/PrepareEditModal';
 import PrepareStatusUpdateModal from '@/components/PrepareStatusUpdateModal';
@@ -33,7 +33,7 @@ export default function Footer() {
                 <PrepareViewModal />
                 <PrepareEditModal />
                 <PrepareStatusUpdateModal />
-                <AjaxPost />
+                <AutoPost />
             </div>
         </>
     );

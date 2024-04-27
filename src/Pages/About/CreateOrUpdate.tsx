@@ -5,10 +5,11 @@ import SubmitButton from "../../components/SubmitButton";
 import useAxios from "../../hooks/useAxios";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";
+import AlertMessage from "../../components/AlertMessage";
 
 const CreateOrUpdate = () => {
     const [files, setFiles] = useState<string[]>([]);
-    const { get, loading, fetched } = useAxios()
+    const { get, loading, loaded, errors } = useAxios()
     const [data, setData] = useState(undefined)
     const navigate = useNavigate()
 
@@ -23,12 +24,12 @@ const CreateOrUpdate = () => {
     // attach listener for create update then redirect to about page
     useEffect(() => {
 
-        subscribe('ajaxPostDone', handleAjaxPostDone)
+        subscribe('autoPostDone', handleAutoPostDone)
 
-        return () => unsubscribe('ajaxPostDone', handleAjaxPostDone)
+        return () => unsubscribe('autoPostDone', handleAutoPostDone)
     }, [])
 
-    const handleAjaxPostDone = (event: any) => {
+    const handleAutoPostDone = (event: any) => {
         if (event?.detail) {
             const { elementId, results } = event.detail;
             if (elementId === 'aboutForm' && results) {
@@ -40,8 +41,8 @@ const CreateOrUpdate = () => {
     return (
         <div>
             {
-                fetched ?
-                    <form id="aboutForm" method='post' action-url={'/about/create-or-update'} onSubmit={(e: any) => publish('ajaxPost', e, { image: files[0] })} className="flex justify-center">
+                loaded && !errors ?
+                    <form id="aboutForm" method='post' data-action={'/about/create-or-update'} onSubmit={(e: any) => publish('autoPost', e, { image: files[0] })} className="flex justify-center">
                         <input type="hidden" name="id" defaultValue={data && data.id} />
                         <div className="form-group">
                             <label className="form-label">Current Title</label>
@@ -82,8 +83,10 @@ const CreateOrUpdate = () => {
                     :
                     <div>
                         {
-                            loading &&
-                            <Loader />
+                            loading ?
+                                <Loader />
+                                :
+                                <AlertMessage message={errors} />
                         }
                     </div>
             }

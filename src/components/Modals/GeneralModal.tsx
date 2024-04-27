@@ -29,15 +29,15 @@ const GeneralModal: React.FC<GeneralModalProps> = ({ title, children, actionUrl,
 
     useEffect(() => {
 
-        subscribe('ajaxPostDone', handleAjaxPostDone);
+        subscribe('autoPostDone', handleAutoPostDone);
 
         return () => {
-            unsubscribe('ajaxPostDone', handleAjaxPostDone);
+            unsubscribe('autoPostDone', handleAutoPostDone);
         };
 
     }, [])
 
-    const handleAjaxPostDone = (resp: any) => {
+    const handleAutoPostDone = (resp: any) => {
         if (resp.detail) {
             const detail = resp.detail;
             if (detail.elementId === id && detail.results && setKey) {
@@ -58,7 +58,7 @@ const GeneralModal: React.FC<GeneralModalProps> = ({ title, children, actionUrl,
                     </div>
                     <div className="modal-body">
                         <div className="section">
-                            <form encType="" method="post" action-url={actionUrl} onSubmit={(e: any) => publish('ajaxPost', e)} >
+                            <form encType="" method="post" data-action={actionUrl} onSubmit={(e: any) => publish('autoPost', e)} >
                                 {children}
                             </form>
                         </div>

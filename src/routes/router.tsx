@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import home from '@/routes/home/';
 import about from '@/routes/about/';
-import getInTouch from '@/routes/get-in-touch/';
+import contactMe from '@/routes/contact-me/';
 import projects from '@/routes/projects/';
 import qualifications from '@/routes/qualifications/';
 import skills from '@/routes/skills/';
@@ -12,10 +12,11 @@ import Password from '@/Pages/Auth/Password';
 import ResetPasswordConfirm from '@/Pages/Auth/ResetPasswordConfirm';
 import PasswordSet from '@/Pages/Auth/PasswordSet';
 import Error404 from '@/Pages/ErrorPages/Error404';
-import adminRoutes from '@/routes/admin/adminRoutes';
+import settingsRoutes from '@/routes/settings';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
 import TermsAndConditions from '../Pages/TermsAndConditions';
 import PrivacyPolicy from '../Pages/PrivacyPolicy';
+import companies from '@/routes/companies'
 
 const router = createBrowserRouter([
   {
@@ -31,12 +32,16 @@ const router = createBrowserRouter([
     children: about,
   },
   {
-    path: '/get-in-touch',
-    children: getInTouch,
+    path: '/contact-me',
+    children: contactMe,
   },
   {
     path: '/projects',
     children: projects,
+  },
+  {
+    path: '/companies',
+    children: companies,
   },
   {
     path: '/qualifications',
@@ -45,7 +50,7 @@ const router = createBrowserRouter([
   {
     path: '/skills',
     children: skills,
-  },{
+  }, {
     path: '/work-experiences',
     children: workExperiences,
   },
@@ -71,8 +76,8 @@ const router = createBrowserRouter([
 
   },
   {
-    path: 'admin',
-    children: adminRoutes
+    path: '/settings',
+    children: settingsRoutes
   },
   {
     path: '/privacy-policy',

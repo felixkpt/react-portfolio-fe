@@ -36,7 +36,7 @@ const PrepareEditModal = () => {
 
     useEffect(() => {
 
-        // Add event listener for the custom ajaxPost event
+        // Add event listener for the custom autoPost event
         const prepareEventListener: EventListener = (event) => {
 
             const customEvent = event as CustomEvent<{ [key: string]: any }>;

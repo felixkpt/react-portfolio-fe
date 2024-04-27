@@ -6,11 +6,7 @@ const Index = () => {
     const { get } = useAxios()
 
     useEffect(() => {
-        get('about').then((results) => {
-            if (results) {
-                console.log(results)
-            }
-        })
+        get('about')
     }, [])
     return (
         <div className="">

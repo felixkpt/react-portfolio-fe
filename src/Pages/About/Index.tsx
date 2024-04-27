@@ -3,10 +3,11 @@ import useAxios from "../../hooks/useAxios"
 import { useEffect, useState } from "react"
 import Loader from "../../components/Loader"
 import usePermissions from "../../hooks/usePermissions"
+import AlertMessage from "../../components/AlertMessage"
 
 const Index = () => {
 
-    const { get, loading } = useAxios()
+    const { get, loading, loaded, errors } = useAxios()
     const [data, setData] = useState(undefined)
     const { userCan } = usePermissions()
 
@@ -27,9 +28,9 @@ const Index = () => {
                     <Link className="btn btn-primary" to="/about/create-or-update">Create or update</Link>
                 }
             </div>
-            <div>About
+            <div>
                 {
-                    !loading && data ?
+                    loaded && data ?
                         <div>
                             <h4 className="pf-header d-flex gap-1">
                                 {
@@ -43,7 +44,14 @@ const Index = () => {
                             <div className="pf-content" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
                         </div>
                         :
-                        <Loader />
+                        <>
+                            {
+                                loading ?
+                                    <Loader />
+                                    :
+                                    <AlertMessage message={errors} />
+
+                            }</>
                 }
             </div>
         </div>
