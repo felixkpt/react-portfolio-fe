@@ -5,18 +5,18 @@ class AutoActions {
     protected modelDetails: any
     protected tableData: any
     protected navigate: any
-    protected list_sources?: any
+    protected listSources?: any
     protected exclude?: any
     protected modalSize: any
     protected customModalId?: any
     protected isSingle?: boolean
 
-    constructor(modelDetails: any, tableData: any, navigate: any, list_sources?: any, exclude?: any, modalSize?: any, customModalId?: any, isSingle?: boolean) {
+    constructor(modelDetails: any, tableData: any, navigate: any, listSources?: any, exclude?: any, modalSize?: any, customModalId?: any, isSingle?: boolean) {
 
         this.modelDetails = modelDetails
         this.tableData = tableData
         this.navigate = navigate
-        this.list_sources = list_sources
+        this.listSources = listSources
         this.exclude = exclude
         this.modalSize = modalSize
         this.customModalId = customModalId
@@ -43,7 +43,7 @@ class AutoActions {
 
             const record = this.isSingle ? this.tableData : this.tableData.data.find((item: any) => item.id == id)
 
-            publish('prepareModalAction', { modelDetails: this.modelDetails, record, action, list_sources: this.list_sources, modalSize: this.modalSize, customModalId: this.customModalId, classList: Array.from(event.target?.classList) })
+            publish('prepareModalAction', { modelDetails: this.modelDetails, record, action, listSources: this.listSources, modalSize: this.modalSize, customModalId: this.customModalId, classList: Array.from(event.target?.classList) })
 
         }
 
@@ -79,7 +79,7 @@ class AutoActions {
 
         const record = this.isSingle ? this.tableData : this.tableData.data.find((item: any) => item.id == id)
 
-        publish('prepareEdit', { modelDetails: this.modelDetails, record, action, list_sources: this.list_sources, modalSize: this.modalSize, customModalId: this.customModalId })
+        publish('prepareEdit', { modelDetails: this.modelDetails, record, action, listSources: this.listSources, modalSize: this.modalSize, customModalId: this.customModalId })
 
     };
 

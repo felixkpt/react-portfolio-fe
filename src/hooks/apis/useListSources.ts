@@ -21,13 +21,13 @@ const useListSources = (params?: string) => {
     },
 
     async rolesList(search?: string) {
-      const res = await get('settings/role-permissions/roles' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('/dashboard/settings/role-permissions/roles' + prepareParams(search)).then((res) => res.data || [])
       return res || []
 
     },
 
     async directPermissionsList(search?: string) {
-      const res = await get('settings/role-permissions/permissions' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('/dashboard/settings/role-permissions/permissions' + prepareParams(search)).then((res) => res.data || [])
       return res || []
 
     },
@@ -58,15 +58,23 @@ const useListSources = (params?: string) => {
   const portfolio = {
 
     async companyId(search?: string) {
-      const res = await get('/companies' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('/dashboard/companies' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
     async skillId(search?: string) {
-      const res = await get('/skills' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('/dashboard/skills' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
     async skillIds(search?: string) {
-      const res = await get('/skills' + prepareParams(search)).then((res) => res.data || [])
+      const res = await get('/dashboard/skills' + prepareParams(search)).then((res) => res.data || [])
+      return res || []
+    },
+    async skillCategoryId(search?: string) {
+      const res = await get('/dashboard/settings/picklists/skill-categories' + prepareParams(search)).then((res) => res.data || [])
+      return res || []
+    },
+    async experienceLevelId(search?: string) {
+      const res = await get('/dashboard/settings/picklists/experience-levels' + prepareParams(search)).then((res) => res.data || [])
       return res || []
     },
 

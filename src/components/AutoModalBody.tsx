@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { publish, subscribe, unsubscribe } from '@/utils/events';
 import RenderAsyncSelect from './RenderAsyncSelect';
 import { DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
 import Str from '@/utils/Str';
@@ -11,21 +10,19 @@ interface ModalProps {
     id?: string
     setKey?: React.Dispatch<React.SetStateAction<number>>;
     modalSize?: ModalSizeType
-    list_sources?: { [key: string]: () => Promise<ListSourceInterface[]> };
-    list_selects?: any
+    listSources?: { [key: string]: () => Promise<ListSourceInterface[]> };
+    listSelects?: any
     computedSize?: string
     setComputedSize?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, id, setKey, list_sources, list_selects, computedSize, setComputedSize }) => {
+const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, id, setKey, listSources, listSelects, computedSize, setComputedSize }) => {
 
     const [inputData, setInputData] = useState<{ [key: string]: string }>({});
     const [localKey, setLocalKey] = useState(0);
     const [hasFillable, setHasFillable] = useState(false);
     const [fillable, setFillable] = useState<{ [key: string]: any }[]>([]);
     const [method, setMethod] = useState("POST");
-
-    const modalId = id || 'AutoModal'
 
     useEffect(() => {
         if (Object.keys(modelDetails).length > 0) {
@@ -108,38 +105,6 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
         return 'text';
     };
 
-    useEffect(() => {
-
-        subscribe('autoPostDone', handleAutoPostDone as EventListener);
-
-        return () => unsubscribe('autoPostDone', handleAutoPostDone as EventListener);
-
-    }, [])
-
-    const handleAutoPostDone = (event: CustomEvent<{ [key: string]: any }>) => {
-
-        if (event.detail) {
-            const detail = event.detail;
-
-            if (detail.results) {
-          
-                if (detail.elementId === id && setKey) {
-                    setTimeout(() => {
-                        setKey((curr) => curr + 1);
-                    }, 300);
-                } else {
-                    publish('reloadAutoTable', { tableId: modelDetails.tableId });
-                }
-
-                // close_modal
-                const modal = document.querySelector(`#${modalId}`)
-                if (modal && !modal.classList.contains('modal-static')) {
-                    (modal.querySelector('button[data-bs-dismiss="modal"]') as HTMLElement)?.click()
-                }
-            }
-        }
-    };
-
     return (
         <div key={localKey}>
             {modelDetails ?
@@ -158,7 +123,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                                 const currentData = inputData[current_key.replace(/_list|_id/, '')]
 
                                 return (
-                                    <div key={current_key} className={`col-12 ${computedSize !== 'modal-sm' ? 'col-md-6 col-xl-6' : ''} d-flex align-items-${type === 'checkbox' ? 'end' : 'center'}`}>
+                                    <div key={current_key} className={`col-12 ${computedSize !== 'modal-sm' && (input !== 'textarea') ? 'col-md-6 col-xl-6' : ''} d-flex align-items-${type === 'checkbox' ? 'end' : 'center'}`}>
                                         <div className="form-group mb-3 w-100" id={`form-group-section-${current_key}`}>
                                             <div className="mb-2 block">
                                                 {
@@ -225,9 +190,9 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                                                 />
                                             )}
 
-                                            {input === 'select' && type === 'multi' && <RenderAsyncSelect list_sources={list_sources} list_selects={list_selects} current_key={current_key} currentData={currentData} isMulti={true} />}
+                                            {input === 'select' && type === 'multi' && <RenderAsyncSelect listSources={listSources} listSelects={listSelects} current_key={current_key} currentData={currentData} isMulti={true} />}
 
-                                            {input === 'select' && type !== 'multi' && <RenderAsyncSelect list_sources={list_sources} list_selects={list_selects} current_key={current_key} currentData={currentData} isMulti={false} />}
+                                            {input === 'select' && type !== 'multi' && <RenderAsyncSelect listSources={listSources} listSelects={listSelects} current_key={current_key} currentData={currentData} isMulti={false} />}
 
                                             {input === 'textarea' && (
                                                 <textarea

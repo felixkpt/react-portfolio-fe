@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
-import useAxios from "../../hooks/useAxios"
+import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
-import Loader from "../../components/Loader"
-import usePermissions from "../../hooks/usePermissions"
-import AlertMessage from "../../components/AlertMessage"
-import NoContentMessage from "../../components/NoContentMessage"
+import Loader from "@/components/Loader"
+import usePermissions from "@/hooks/usePermissions"
+import AlertMessage from "@/components/AlertMessage"
+import NoContentMessage from "@/components/NoContentMessage"
 import ProjectsCard from "./ProjectCard"
 
 const Index = () => {

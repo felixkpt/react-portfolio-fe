@@ -1,40 +1,40 @@
 import { Link, useNavigate } from "react-router-dom"
-import useAxios from "../../hooks/useAxios"
+import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
-import Loader from "../../components/Loader"
-import usePermissions from "../../hooks/usePermissions"
-import AlertMessage from "../../components/AlertMessage"
-import NoContentMessage from "../../components/NoContentMessage"
+import Loader from "@/components/Loader"
+import usePermissions from "@/hooks/usePermissions"
+import AlertMessage from "@/components/AlertMessage"
+import NoContentMessage from "@/components/NoContentMessage"
 import ContactMeCard from "./ContactMeCard"
-import SubmitButton from "../../components/SubmitButton"
-import { publish } from "../../utils/events"
-import useAutoPostDone from "../../hooks/useAutoPostDone"
+import SubmitButton from "@/components/SubmitButton"
+import { publish } from "@/utils/events"
+import useAutoPostDone from "@/hooks/useAutoPostDone"
 
 const Index = () => {
+    // on success redirect to listing
+    const navigate = useNavigate()
+    const { event } = useAutoPostDone()
+    useEffect(() => {
+        if (event && event.status == 'success' && event.id === 'contact-me-form') {
+            navigate('/contact-me')
+        }
+    }, [event])
 
     const { get, loading, loaded, errors, data } = useAxios()
     const { userCan } = usePermissions()
-    const { event } = useAutoPostDone()
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (!data) {
-            get('settings/picklists/get-in-touch')
+            get('dashboard/settings/picklists/get-in-touch')
         }
-
-        if (event?.elementId == 'contact-me-form') {
-            navigate('/')
-        }
-
-    }, [event])
+    }, [])
 
     return (
         <div className="">
             {
                 userCan('settings.picklists.get-in-touch', 'post') &&
                 <div className="d-flex justify-content-end">
-                    <Link className="btn btn-primary" to="/settings/picklists/get-in-touch">Create</Link>
+                    <Link className="btn btn-primary" to="/dashboard/settings/picklists/get-in-touch">Create</Link>
                 </div>
             }
             <div>

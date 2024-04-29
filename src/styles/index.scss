@@ -1,5 +1,4 @@
 body {
-  padding-bottom: 30px;
   position: relative;
   min-height: 100%;
 }
@@ -74,7 +73,7 @@ a:focus {
 
 .main-content-inner {
   padding: 0.5rem;
-  box-shadow: 0 0.1rem 0.6rem rgba(0, 0.15, 0, 0.15) !important;
+  box-shadow: 0 0.1rem 0.6rem rgba(50, 49, 49, 0.1) !important;
   border-radius: 0.5rem;
 }
 

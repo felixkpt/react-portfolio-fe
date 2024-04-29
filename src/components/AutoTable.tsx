@@ -5,7 +5,6 @@ import Pagination from './Pagination';
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
-import { subscribe, unsubscribe } from '@/utils/events';
 import { AutoTableInterface } from '../interfaces/UncategorizedInterfaces';
 import AutoActions from './AutoActions';
 import AutoTableHeader from './AutoTableHeader';
@@ -13,12 +12,14 @@ import Loader from './Loader';
 import StatusesUpdate from './StatusesUpdate';
 import { config } from '@/utils/helpers';
 import usePermissions from '@/hooks/usePermissions';
+import useAutoPostDone from '../hooks/useAutoPostDone';
+import Str from '../utils/Str';
 
 function __dangerousHtml(html: HTMLElement) {
     return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetails, list_sources, tableId, modalSize, customModalId, perPage }: AutoTableInterface) => {
+const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetails, listSources, tableId, modalSize, customModalId, perPage }: AutoTableInterface) => {
     const localTableId = tableId ? tableId : 'AutoTable'
 
     const {
@@ -59,6 +60,16 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
     const [query, setQuery] = useState<string>('')
 
     const { userCan } = usePermissions()
+    const { event } = useAutoPostDone()
+    useEffect(() => {
+        if (event && event.status === 'success' && tableId) {
+            const test = Str.replace(tableId, 'Table', '')
+            const against = Str.replace(Str.replace(event.id, 'Form', ''), 'Modal', '')
+            if (tableId && test === against) {
+                setReload((curr: number) => curr + 1)
+            }
+        }
+    }, [event])
 
     useEffect(() => {
         if (tableData) {
@@ -94,41 +105,13 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
 
     const [columns, setColumns] = useState(initCols)
 
-    useEffect(() => {
-        subscribe('reloadAutoTable', reloadAutoTable)
-
-        return () => unsubscribe('reloadAutoTable', reloadAutoTable)
-    }, [])
-
     const reloadAutoTable: EventListener | any = (event) => {
         setReload((curr) => curr + 1)
     }
 
-    useEffect(() => {
-
-        subscribe('autoPostDone', handleAutoPostDone as EventListener);
-
-        return () => unsubscribe('autoPostDone', handleAutoPostDone as EventListener);
-
-    }, [])
-
-    const handleAutoPostDone = (event: CustomEvent<{ [key: string]: any }>) => {
-
-        if (event.detail) {
-            const detail = event.detail;
-
-            if (detail.results) {
-                if (detail.elementId === 'statusesUpdate') {
-                    setReload((curr) => curr + 1)
-                    setCheckedItems([])
-                }
-            }
-        }
-    }
-
     const navigate = useNavigate()
 
-    const autoActions = new AutoActions(modelDetails, tableData, navigate, list_sources, exclude, modalSize, customModalId)
+    const autoActions = new AutoActions(modelDetails, tableData, navigate, listSources, exclude, modalSize, customModalId)
 
     useEffect(() => {
         if (currentPageDataLength) {

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { NavLink } from 'react-router-dom';
 import Str from '@/utils/Str';
-import { toggleSidebar } from './Index';
+import { publish } from '../../../utils/events';
+import { RouteInterface } from '../../../interfaces/RolePermissionsInterfaces';
 
 function cleanUri(uri: string): string {
    
@@ -22,7 +23,7 @@ const RoutesList: React.FC<RoutesListProps> = ({ routes }) => {
                 <>
                     {routes.map((route, i) => (
                         <NavLink
-                            onClick={(e:any) => toggleSidebar(e, 'hide')}
+                            onClick={() => publish('hideSideNav', 'hide')}
                             key={`${i}_${route.uri}`}
                             to={cleanUri(route.uri)}
                             className="nav-link overflow-hidden text-decoration-none px-3 cursor-pointer d-flex align-items-center gap-1"

@@ -4,7 +4,12 @@ type Props = {
 
 const SkillCard = ({ item }: Props) => {
     return (
-        <div>SkillCard</div>
+        <div className="container col-5">
+            <div className="d-flex gap-2">
+                <div className="col">{item.id}</div>
+                <div className="col">{item.name}</div>
+            </div>
+        </div>
     )
 }
 

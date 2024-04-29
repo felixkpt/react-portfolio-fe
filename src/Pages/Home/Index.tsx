@@ -1,4 +1,4 @@
-import useAxios from "../../hooks/useAxios"
+import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
 
 const Index = () => {

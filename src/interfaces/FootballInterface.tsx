@@ -11,7 +11,7 @@ export interface CountryInterface {
     continent_id: string;
     has_competitions: boolean;
     competitions: CompetitionInterface[];
-    priority_number: number;
+    priority: number;
     status_id: string;
     user_id: string;
     created_at: string;
@@ -38,7 +38,7 @@ export interface TeamInterface {
     continent_id: string;
     country_id: string | null;
     country: CountryInterface;
-    priority_number: number;
+    priority: number;
     last_updated: string | null;
     last_fetch: string | null;
     last_detailed_fetch: string | null;
@@ -114,7 +114,7 @@ export interface CompetitionInterface {
     continent_id: string;
     country_id: string | null;
     country: CountryInterface;
-    priority_number: number;
+    priority: number;
     predictions_last_train: string | null
     Predictions_last_train: string | null
     predictions_trained_to: string | null
@@ -197,7 +197,7 @@ export interface GameInterface {
     group: string | null;
     last_updated: string;
     last_fetch: string;
-    priority_number: number;
+    priority: number;
     status_id: string;
     user_id: string;
     created_at: string;
@@ -268,7 +268,7 @@ export interface GameSourceInterface {
     name: string
     url: string
     description: string
-    priority_number: number
+    priority: number
 }
 export interface CompetitionGameSourceInterface {
     id: string
@@ -278,7 +278,7 @@ export interface CompetitionGameSourceInterface {
     source_id: string
     subscription_expires: string
     is_subscribed: string
-    priority_number: number
+    priority: number
     pivot: any
 }
 

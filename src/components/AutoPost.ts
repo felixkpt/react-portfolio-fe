@@ -10,9 +10,11 @@ const AutoPost = () => {
 
     const [form, setForm] = useState();
     const [key, setKey] = useState(0);
+    const [hasData, setHasData] = useState(false);
 
     const handleEvent = async (event: CustomEvent<{ [key: string]: any }>) => {
-
+        setHasData(false)
+        
         const rawForm = event.detail.target
         setForm(rawForm);
 
@@ -53,20 +55,29 @@ const AutoPost = () => {
 
         }
 
-        let results
+        let response
 
         // Make the request
         if (method == 'post') {
-            results = await post(url, formData, { elementId });
+            await post(url, formData, { elementId }).then((res) => {
+                response = res
+            });
         } else if (method == 'put') {
-            results = await put(url, formData, { elementId });
+            await put(url, formData, { elementId }).then((res) => {
+                response = res
+            });
         } else if (method == 'patch') {
-            results = await patch(url, formData, { elementId });
+            await patch(url, formData, { elementId }).then((res) => {
+                response = res
+            });
         } else if (method == 'delete') {
-            results = await destroy(url, formData, { elementId });
+            await destroy(url, formData, { elementId }).then((res) => {
+                response = res
+            });
         }
 
-        publish('autoPostDone', { elementId, results })
+        publish('autoPostDone', { elementId, response })
+
         setKey(key + 1)
 
         if (submitButton) {
@@ -83,8 +94,12 @@ const AutoPost = () => {
     };
 
     useEffect(() => {
+        setHasData(!!data)
+    }, [data])
 
-        if (data && form) {
+    useEffect(() => {
+
+        if (hasData && form) {
             const modal = form?.closest('.modal')
 
             if (modal && !modal.classList.contains('persistent-modal')) {
@@ -97,9 +112,10 @@ const AutoPost = () => {
 
                 }
             }
+            setHasData(false)
         }
 
-    }, [data, key])
+    }, [hasData, key, form])
 
     const eventListener = (event: CustomEvent<{ [key: string]: any }>) => {
         event.preventDefault()

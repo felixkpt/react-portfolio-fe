@@ -1,8 +1,8 @@
-import useAxios from "../../hooks/useAxios"
+import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
-import Loader from "../../components/Loader"
-import AlertMessage from "../../components/AlertMessage"
-import NoContentMessage from "../../components/NoContentMessage"
+import Loader from "@/components/Loader"
+import AlertMessage from "@/components/AlertMessage"
+import NoContentMessage from "@/components/NoContentMessage"
 import WorkExperienceCard from "./WorkExperienceCard"
 
 const Index = () => {

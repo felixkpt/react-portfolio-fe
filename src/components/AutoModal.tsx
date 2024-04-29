@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { publish, subscribe, unsubscribe } from '@/utils/events';
-import RenderAsyncSelect from './RenderAsyncSelect';
+import { publish } from '@/utils/events';
 import { DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
-import Str from '@/utils/Str';
 import AutoModalBody from './AutoModalBody';
+import Str from '../utils/Str';
 interface ModalProps {
     modelDetails?: any;
     record?: DataInterface | null
@@ -13,11 +12,11 @@ interface ModalProps {
     id?: string
     setKey?: React.Dispatch<React.SetStateAction<number>>; // Use React.Dispatch type for setKey
     modalSize?: ModalSizeType
-    list_sources?: { [key: string]: () => Promise<ListSourceInterface[]> };
-    list_selects?: any
+    listSources?: { [key: string]: () => Promise<ListSourceInterface[]> };
+    listSelects?: any
 }
 
-const AutoModal: React.FC<ModalProps> = ({ modelDetails, record, actionUrl, modalSize, id, setKey, list_sources, list_selects }) => {
+const AutoModal: React.FC<ModalProps> = ({ modelDetails, record, actionUrl, modalSize, id, setKey, listSources, listSelects }) => {
 
     const [localKey, setLocalKey] = useState(0);
     const [modelName, setModelName] = useState([]);
@@ -25,18 +24,23 @@ const AutoModal: React.FC<ModalProps> = ({ modelDetails, record, actionUrl, moda
     const [computedSize, setComputedSize] = useState<string>('')
     const modalId = id || 'AutoModal'
 
+    let formId = 'AutoModalForm'
+    if (modelDetails.tableId) {
+        formId = Str.before(modelDetails.tableId, 'Table') + 'Form'
+    } else if (modalId) {
+        formId = Str.before(modalId, 'Modal') + 'Form'
+    }
+
     useEffect(() => {
         if (Object.keys(modelDetails).length > 0) {
             setModelName(modelDetails?.model_name || null);
         }
     }, [modelDetails]);
 
-    const formRef = useRef<HTMLFormElement>(null);
-
     return (
-        <form ref={formRef} method='post' data-action={actionUrl} onSubmit={(e: any) => publish('autoPost', e)} className="flex justify-center">
 
-            <div key={localKey} className={`modal fade`} id={modalId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden='true'>
+        <div key={localKey} className={`modal fade`} id={modalId} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden='true'>
+            <form method='post' id={formId} data-action={actionUrl} onSubmit={(e) => publish('autoPost', e)} className="flex justify-center">
                 <div className={`modal-dialog ${computedSize}`}>
                     <div className="modal-content">
                         {modelDetails ?
@@ -45,14 +49,14 @@ const AutoModal: React.FC<ModalProps> = ({ modelDetails, record, actionUrl, moda
                                     <h5 className="modal-title" id="staticBackdropLabel">{`${record && record.id ? 'Edit' : 'Create'} ${modelName}`}</h5>
                                     <button type="button" className="btn-close" onClick={() => setLocalKey(localKey + 1)} data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <AutoModalBody modelDetails={modelDetails} record={record} modalSize={modalSize} id={id} setKey={setKey} list_sources={list_sources} list_selects={list_selects} setComputedSize={setComputedSize} />
+                                <AutoModalBody modelDetails={modelDetails} record={record} modalSize={modalSize} id={id} setKey={setKey} listSources={listSources} listSelects={listSelects} setComputedSize={setComputedSize} />
                             </div>
                             : 'Model data incomplete'
                         }
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     );
 };
 

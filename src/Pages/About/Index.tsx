@@ -1,22 +1,19 @@
 import { Link } from "react-router-dom"
-import useAxios from "../../hooks/useAxios"
-import { useEffect, useState } from "react"
-import Loader from "../../components/Loader"
-import usePermissions from "../../hooks/usePermissions"
-import AlertMessage from "../../components/AlertMessage"
+import useAxios from "@/hooks/useAxios"
+import { useEffect } from "react"
+import Loader from "@/components/Loader"
+import usePermissions from "@/hooks/usePermissions"
+import AlertMessage from "@/components/AlertMessage"
+import NoContentMessage from "@/components/NoContentMessage"
+import AboutCard from "./AboutCard"
 
 const Index = () => {
 
-    const { get, loading, loaded, errors } = useAxios()
-    const [data, setData] = useState(undefined)
+    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
     const { userCan } = usePermissions()
 
     useEffect(() => {
-        get('about').then((results: any) => {
-            if (results) {
-                setData(results.data)
-            }
-        })
+        getAbout('about')
     }, [])
 
     return (
@@ -30,28 +27,23 @@ const Index = () => {
             </div>
             <div>
                 {
-                    loaded && data ?
-                        <div>
-                            <h4 className="pf-header d-flex gap-1">
-                                {
-                                    data.current_title
-                                    &&
-                                    <span>{data.current_title}</span>
-                                }
-                                <span>{data.name}</span>
-                            </h4>
-                            <div className="pf-slogan" dangerouslySetInnerHTML={{ __html: data?.slogan }}></div>
-                            <div className="pf-content" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
+                    loadedAbout && !errorsAbout ?
+                        <div className="pf-projects">
+                            {
+                                dataAbout?.data
+                                    ?
+                                    <AboutCard item={dataAbout.data} />
+                                    :
+                                    <NoContentMessage />
+                            }
                         </div>
                         :
                         <>
                             {
-                                loading ?
-                                    <Loader />
-                                    :
-                                    <AlertMessage message={errors} />
 
-                            }</>
+                                loadingAbout ? <Loader /> : <AlertMessage message={errorsAbout} />
+                            }
+                        </>
                 }
             </div>
         </div>

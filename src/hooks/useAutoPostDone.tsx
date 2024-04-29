@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { subscribe, unsubscribe } from "../utils/events";
 
 interface EventType {
-    elementId: string
-    results: object
+    id: string
+    response: { results: any, message: string, tableId: string }
+    status: 'success' | 'failure'
 }
 
 const useAutoPostDone = () => {
@@ -12,6 +13,7 @@ const useAutoPostDone = () => {
 
     useEffect(() => {
 
+        unsubscribe('autoPostDone', handleAutoPostDone);
         subscribe('autoPostDone', handleAutoPostDone);
 
         return () => {
@@ -22,8 +24,9 @@ const useAutoPostDone = () => {
 
     const handleAutoPostDone = (resp: any) => {
         if (resp.detail) {
-            const { elementId, results } = resp.detail;
-            setEvent({ elementId, results })
+            const { elementId, response } = resp.detail;
+            const status = (response?.status == undefined || response?.status == 200 || response?.status == 201) ? 'success' : 'failure'
+            setEvent({ id: elementId, response, status })
         }
     };
 

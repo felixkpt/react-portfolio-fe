@@ -1,14 +1,25 @@
-import { useState } from "react";
-import Dropzone from "../../components/Dropzone"
-import { publish } from "../../utils/events"
-import SubmitButton from "../../components/SubmitButton";
+import { useEffect, useState } from "react";
+import Dropzone from "@/components/Dropzone"
+import { publish } from "@/utils/events"
+import SubmitButton from "@/components/SubmitButton";
+import { useNavigate } from "react-router-dom";
+import useAutoPostDone from "@/hooks/useAutoPostDone";
 
 const CreateOrUpdate = () => {
+    // on success redirect to listing
+    const navigate = useNavigate()
+    const { event } = useAutoPostDone()
+    useEffect(() => {
+        if (event && event.status == 'success' && event.id === 'companiesForm') {
+            navigate('/companies')
+        }
+    }, [event])
+
     const [files, setFiles] = useState<string[]>([]);
 
     return (
         <div>
-            <form method='post' data-action={'/companies'} onSubmit={(e: any) => publish('autoPost', e, { image: files[0] })} className="flex justify-center">
+            <form method='post' id="companiesForm" data-action={'/companies'} onSubmit={(e: any) => publish('autoPost', e, { image: files[0] })} className="flex justify-center">
                 <div className="form-group">
                     <label className="form-label">Name</label>
                     <input type="text" name="name" id="name" className="form-control" />
@@ -18,7 +29,7 @@ const CreateOrUpdate = () => {
                     <input type="text" name="website" id="website" className="form-control" />
                 </div>
                 <div className="form-group">
-                <label className="form-label">Roles</label>
+                    <label className="form-label">Roles</label>
                     <textarea className="form-control" name="roles"></textarea>
                 </div>
                 <div className="form-group">

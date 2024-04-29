@@ -27,26 +27,26 @@ const GeneralModal: React.FC<GeneralModalProps> = ({ title, children, actionUrl,
     }, [])
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        subscribe('autoPostDone', handleAutoPostDone);
+    //     subscribe('autoPostDone', handleAutoPostDone);
 
-        return () => {
-            unsubscribe('autoPostDone', handleAutoPostDone);
-        };
+    //     return () => {
+    //         unsubscribe('autoPostDone', handleAutoPostDone);
+    //     };
 
-    }, [])
+    // }, [])
 
-    const handleAutoPostDone = (resp: any) => {
-        if (resp.detail) {
-            const detail = resp.detail;
-            if (detail.elementId === id && detail.results && setKey) {
-                setTimeout(() => {
-                    setKey((curr) => curr + 1);
-                }, 300);
-            }
-        }
-    };
+    // const handleAutoPostDone = (resp: any) => {
+    //     if (resp.detail) {
+    //         const detail = resp.detail;
+    //         if (detail.elementId === id && detail.results && setKey) {
+    //             setTimeout(() => {
+    //                 setKey((curr) => curr + 1);
+    //             }, 300);
+    //         }
+    //     }
+    // };
     
     return (
         <div className={`modal fade`} id={`${id || 'GeneralModal'}`} data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden={`true`}>

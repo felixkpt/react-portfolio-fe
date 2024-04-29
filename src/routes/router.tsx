@@ -12,7 +12,7 @@ import Password from '@/Pages/Auth/Password';
 import ResetPasswordConfirm from '@/Pages/Auth/ResetPasswordConfirm';
 import PasswordSet from '@/Pages/Auth/PasswordSet';
 import Error404 from '@/Pages/ErrorPages/Error404';
-import settingsRoutes from '@/routes/settings';
+import dashboardRoutes from '@/routes/dashboard';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
 import TermsAndConditions from '../Pages/TermsAndConditions';
 import PrivacyPolicy from '../Pages/PrivacyPolicy';
@@ -76,8 +76,8 @@ const router = createBrowserRouter([
 
   },
   {
-    path: '/settings',
-    children: settingsRoutes
+    path: '/dashboard',
+    children: dashboardRoutes
   },
   {
     path: '/privacy-policy',

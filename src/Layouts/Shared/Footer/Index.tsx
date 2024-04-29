@@ -15,7 +15,7 @@ export default function Footer() {
                     <div className="row align-items-center justify-content-between small">
                         <div className="col-md-6">
                             <div className="text-muted d-flex align-items-center justify-content-center justify-content-md-start gap-1">
-                                <span>Copyright &copy; {config.name}</span><span>{config.version}</span><span>{config.release}</span>
+                                <span>Copyright &copy; <NavLink to='/'>{config.name}</NavLink></span><span>{config.version}</span><span>{config.release}</span>
                             </div>
                         </div>
                         <div className="col-md-6">

@@ -9,16 +9,16 @@ interface RenderAsyncSelectProps {
     current_key: string;
     currentData: {};
     isMulti?: boolean;
-    list_sources?: { [key: string]: () => Promise<ListSourceInterface[]> };
-    list_selects?: { [key: string]: any };
+    listSources?: { [key: string]: () => Promise<ListSourceInterface[]> };
+    listSelects?: { [key: string]: any };
 }
 
 var l: any
 
-const RenderAsyncSelect = ({ list_sources, list_selects, current_key, currentData, isMulti = false }: RenderAsyncSelectProps) => {
+const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData, isMulti = false }: RenderAsyncSelectProps) => {
 
-    if (list_sources)
-        l = list_sources
+    if (listSources)
+        l = listSources
 
     async function getOptions(current_key: string, rawSelected: PropsValue<object> | PropsValue<object[]> | undefined, q?: string) {
         console.log(l,'ddd')
@@ -28,7 +28,7 @@ const RenderAsyncSelect = ({ list_sources, list_selects, current_key, currentDat
         console.log(fn)
 
 
-        // Type assertion to specify that list_sources[fn] is a function returning Promise<any>
+        // Type assertion to specify that listSources[fn] is a function returning Promise<any>
         const listSourceFn = l[fn] as ((q?: string) => Promise<any>);
 
         if (typeof listSourceFn === 'function') {
@@ -36,8 +36,8 @@ const RenderAsyncSelect = ({ list_sources, list_selects, current_key, currentDat
 
             let selected = rawSelected;
 
-            if (list_selects && list_selects[fn]) {
-                selected = list_selects[fn]
+            if (listSelects && listSelects[fn]) {
+                selected = listSelects[fn]
             }
             else {
 
@@ -52,7 +52,7 @@ const RenderAsyncSelect = ({ list_sources, list_selects, current_key, currentDat
             return { options, selected: selected };
 
         } else {
-            const err = `Function '${fn}' not found in list_sources.`
+            const err = `Function '${fn}' not found in listSources.`
             console.log(err)
             throw new Error(err);
         }

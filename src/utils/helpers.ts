@@ -6,36 +6,12 @@ export function convertToTitleCase(str: string) {
     });
 }
 
-// Event emitter to emit PrepareEdit to the parent component
-export const emitPrepareEdit = (row: any, action: any, data: any) => {
-    const event = new CustomEvent('prepareEdit', {
-        detail: { row, action, data }
-    });
-    window.dispatchEvent(event);
-};
-
-// Event emitter to emit statusUpdate to the parent component
-export const emitStatusUpdate = (e: Event) => {
-    e.preventDefault()
-    const event = new CustomEvent('statusUpdate', {
-        detail: e,
-    });
-    window.dispatchEvent(event);
-};
 
 // Event emitter to emit emitAutoPost to the parent component
 export const emitAutoPost = (e: any) => {
     e.preventDefault()
     const event = new CustomEvent('autoPost', {
         detail: e,
-    });
-    window.dispatchEvent(event);
-};
-
-// Event emitter to emit emitAutoPost to the parent component
-export const emitAutoPostDone = (response: any) => {
-    const event = new CustomEvent('autoPostDone', {
-        detail: response,
     });
     window.dispatchEvent(event);
 };

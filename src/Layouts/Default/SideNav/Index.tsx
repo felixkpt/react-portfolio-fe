@@ -7,9 +7,16 @@ import RoutesList from './RoutesList';
 import Select from 'react-select';
 import { useRolePermissionsContext } from '@/contexts/RolePermissionsContext';
 import Loader from '@/components/Loader';
+import { NavLink } from 'react-router-dom';
+import { baseURL, config } from '../../../utils/helpers';
+import useAxios from '../../../hooks/useAxios';
+import { publish, subscribe, unsubscribe } from '../../../utils/events';
+import useAutoPostDone from '../../../hooks/useAutoPostDone';
 
 const Index = () => {
   const { user } = useAuth();
+  const { event } = useAutoPostDone()
+
   const { roles, setCurrentRole, currentRole, userMenu, expandedRootFolders, loadingMenu: loading } = useRolePermissionsContext();
 
   useEffect(() => {
@@ -100,43 +107,93 @@ const Index = () => {
   }, [user, userMenu, loading]);
 
   useEffect(() => {
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-
-    if (sidebarToggle) {
-      sidebarToggle.addEventListener('click', toggleSidebar);
-    }
-
-    return () => {
-      if (sidebarToggle) {
-        sidebarToggle.removeEventListener('click', toggleSidebar);
+    if (event) {
+      if (event.id == 'logoutBtn') {
+        if (event.status == 'success') {
+          localStorage.removeItem(`${config.storageName}.user`);
+          window.location.href = '/';
+        }
       }
-    };
+    }
+  }, [event])
+
+  useEffect(() => {
+
+    subscribe('hideSideNav', toggleSidebar)
+
+    return () => unsubscribe('hideSideNav', toggleSidebar)
+
   }, []);
+
+  useEffect(() => {
+
+    if (window.innerWidth >= 992)
+      toggleSidebar({ detail: 'show' })
+
+  }, [window.innerWidth]);
+
+  const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
+
+  useEffect(() => {
+    getAbout('about')
+  }, [])
 
   return (
     <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
       <div className="sb-sidenav-menu shadow">
         <div className="nav pt-2">
           <div className='px-1'>
+
             <div id="menu">
-              <div id='role-switcher' title='Switch your role'>
+              <NavLink to="/" onClick={() => publish('hideSideNav', 'hide')} className='navbar-brand side-navbar-brand d-flex flex-column justify-content-center align-items-center gap-2'>
                 {
-                  user && roles.length > 0 &&
-                  <Select
-                    className="basic-single text-dark mb-2"
-                    classNamePrefix="select"
-                    value={currentRole || []}
-                    isSearchable={true}
-                    name="roles"
-                    options={roles}
-                    placeholder='Switch your role'
-                    getOptionValue={(option: any) => `${option['id']}`}
-                    getOptionLabel={(option: any) => `${option['name']}`}
-                    onChange={(item: any) => setCurrentRole(item)}
-                  />
+                  dataAbout?.data &&
+                  <>
+                    <div className='pf-avatar pf-avatar-sm'>
+                      <img src={baseURL(`assets/${dataAbout?.data?.image}`)} alt="" />
+                    </div>
+                    <span>{dataAbout?.data.name}</span>
+                  </>
+                }
+              </NavLink>
+
+              <div className='menu-inner'>
+                {memoizeMenu}
+                <div id='role-switcher' title='Switch your role'>
+                  {
+                    user && roles.length > 0 &&
+                    <Select
+                      className="basic-single text-dark mb-2"
+                      classNamePrefix="select"
+                      value={currentRole || []}
+                      isSearchable={true}
+                      name="roles"
+                      options={roles}
+                      placeholder='Switch your role'
+                      getOptionValue={(option: any) => `${option['id']}`}
+                      getOptionLabel={(option: any) => `${option['name']}`}
+                      onChange={(item: any) => setCurrentRole(item)}
+                    />
+                  }
+                </div>
+                {
+                  user ? (
+                    <>
+                      <ul className="navbar-nav d-none d-lg-block">
+                        <li className="nav-item dropdown">
+                          <a className="nav-link dropdown-toggle px-2 d-flex gap-2" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><Icon icon={`uiw:user`} /><span className="dropdown-item disabled">{user?.name}</span></a>
+                          <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><NavLink className="dropdown-item" to="/user/profile">Profile</NavLink></li>
+                            <li><a className="dropdown-item" href="#!">Activity Log</a></li>
+                            <li><hr className="dropdown-divider" /></li>
+                            <li><form className="dropdown-item cursor-pointer" id='logoutBtn' data-action='/auth/logout' onClick={(e) => publish('autoPost', e)}>Logout</form></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </>
+                  ) : null
                 }
               </div>
-              {memoizeMenu}
             </div>
           </div>
         </div>
@@ -145,19 +202,30 @@ const Index = () => {
   );
 }
 
-export const toggleSidebar = (event?: Event, action: string | undefined = undefined, forceClose = false) => {
-  if (window.innerWidth >= 992) return
+export const toggleSidebar = (event?: Event, forceClose = false) => {
+  const action = event?.detail
+  if (!document.body.classList.contains('sb-sidenav-toggled')) {
+    if (action == 'hide') {
+      if (window.innerWidth >= 992) return
+    }
+  }
 
-  if (action && action === 'hide') {
-    if (document.body.classList.contains('sb-sidenav-toggled')) {
+  if (action) {
+
+    if (action === 'hide') {
+
+      if (document.body.classList.contains('sb-sidenav-toggled')) {
+        document.body.classList.remove('sb-sidenav-toggled');
+      }
+      if (forceClose) {
+        document.body.classList.add('sb-sidenav-toggled');
+      }
+    } else if (action === 'show') {
       document.body.classList.remove('sb-sidenav-toggled');
+    } else {
+      document.body.classList.toggle('sb-sidenav-toggled');
     }
-    if (forceClose) {
-      document.body.classList.add('sb-sidenav-toggled');
-    }
-  } else if (event) {
-    event.preventDefault();
-    document.body.classList.toggle('sb-sidenav-toggled');
+
   }
 
   const isToggled = document.body.classList.contains('sb-sidenav-toggled');

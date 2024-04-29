@@ -5,6 +5,7 @@ import "@/styles/errorpages.scss";
 import "@/styles/layout.scss";
 import "@/styles/userprofile.scss";
 import "@/styles/postsection.scss";
+import "@/styles/portfolio.scss";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { RouterProvider } from "react-router-dom";
 import router from "@/routes/router.js";

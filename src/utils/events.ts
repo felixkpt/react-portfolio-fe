@@ -6,7 +6,7 @@ function unsubscribe(eventName: string, listener: EventListener) {
   document.removeEventListener(eventName, listener);
 }
 
-function publish(eventName: string, data: any, moreData: any = null) {
+function publish(eventName: string, data: any = null, moreData: any = null) {
 
   if (data instanceof Event || (data && data.nativeEvent)) {
     data.preventDefault();

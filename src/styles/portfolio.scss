@@ -1,0 +1,25 @@
+.pf-avatar {
+    width: 110px;
+    height: 110px;
+    background: #d9dde9;
+    color: #061623;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+
+    img {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+    }
+
+    &:hover {
+        background: #061623;
+        color: #d9dde9;
+
+    }
+    .pf-avatar-sm {}
+
+}
