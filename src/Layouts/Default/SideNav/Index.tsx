@@ -135,7 +135,7 @@ const Index = () => {
   const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
 
   useEffect(() => {
-    getAbout('about')
+    getAbout('/about/view/default')
   }, [])
 
   return (

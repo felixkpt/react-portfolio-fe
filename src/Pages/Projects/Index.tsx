@@ -27,7 +27,7 @@ const Index = () => {
             <div>
                 {
                     loaded && !errors ?
-                        <div className="pf-projects">
+                        <div className="pf-projects row mt-3 justify-content-between">
                             {
                                 data?.data && data?.data.length ?
                                     data.data.map((item) => <ProjectsCard item={item} />)

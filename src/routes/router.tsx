@@ -16,7 +16,6 @@ import dashboardRoutes from '@/routes/dashboard';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
 import TermsAndConditions from '../Pages/TermsAndConditions';
 import PrivacyPolicy from '../Pages/PrivacyPolicy';
-import companies from '@/routes/companies'
 
 const router = createBrowserRouter([
   {
@@ -38,10 +37,6 @@ const router = createBrowserRouter([
   {
     path: '/projects',
     children: projects,
-  },
-  {
-    path: '/companies',
-    children: companies,
   },
   {
     path: '/qualifications',

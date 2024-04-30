@@ -219,15 +219,19 @@
 
         .side-navbar-brand {
             font-size: 24px;
+            color: #20ab95;
+            border-bottom: 1px solid gray;
         }
 
         .menu-inner {
             width: 97%;
 
-            #role-switcher, .navbar-nav {
+            #role-switcher,
+            .navbar-nav {
                 width: 100%;
 
             }
+
             .nested-routes {
                 >div {
                     display: flex;
@@ -328,7 +332,7 @@
 }
 
 .sb-sidenav-light {
-    background-color: #061623;
+    background-color: rgb(15, 23, 42);
     color: #d9dde9;
 }
 
@@ -338,6 +342,7 @@
 
 .sb-sidenav-light .sb-sidenav-menu .nav-link {
     color: #d9dde9;
+    border-radius: 5px;
 }
 
 .sb-sidenav-light .sb-sidenav-menu .nav-link .sb-nav-link-icon {
@@ -349,17 +354,17 @@
 }
 
 .sb-sidenav-light .sb-sidenav-menu .nav-link:hover {
-    color: #2073ed;
-    background: #f4f5f7;
+    color: #f2f3f8;
+    background: #243046;
 }
 
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active {
-    color: #2073ed;
-    background: #f4f5f7;
+    color: #f2f3f8;
+    background: #243046;
 }
 
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
-    color: #2073ed;
+    color: #99b5e0;
     background: #f4f5f7;
 
 }

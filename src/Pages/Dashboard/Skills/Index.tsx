@@ -22,6 +22,12 @@ const Index = () => {
       key: 'name',
     },
     {
+      key: 'start_date',
+    },
+    {
+      key: 'experience_level.name',
+    },
+    {
       label: 'Priority',
       key: 'priority',
     },

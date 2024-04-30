@@ -1,16 +1,43 @@
 import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
+import AboutCard from "../About/AboutCard"
+import NoContentMessage from "../../components/NoContentMessage"
+import Loader from "../../components/Loader"
+import AlertMessage from "../../components/AlertMessage"
 
 const Index = () => {
 
-    const { get } = useAxios()
+    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
 
     useEffect(() => {
-        get('about')
+        if (!dataAbout) {
+            getAbout('/about/view/default')
+        }
     }, [])
+
     return (
         <div className="">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, magni consequatur dolorem deserunt maxime eius eum, modi quos velit dolore, quisquam optio exercitationem consectetur mollitia quas accusantium nobis. Odio, et.
+            <div>
+                {
+                    loadedAbout && !errorsAbout ?
+                        <div className="pf-about">
+                            {
+                                dataAbout?.data
+                                    ?
+                                    <AboutCard item={dataAbout.data} />
+                                    :
+                                    <NoContentMessage />
+                            }
+                        </div>
+                        :
+                        <>
+                            {
+
+                                loadingAbout ? <Loader /> : <AlertMessage message={errorsAbout} />
+                            }
+                        </>
+                }
+            </div>
         </div>
     )
 }

@@ -2,7 +2,7 @@ import Index from '@/Pages/Dashboard/About/Index';
 import CreateOrUpdate from '@/Pages/Dashboard/About/CreateOrUpdate';
 import DefaultLayout from "@/Layouts/Default/DefaultLayout";
 
-const relativeUri = 'about/'
+const relativeUri = 'dashboard/about/'
 
 const index = [
 

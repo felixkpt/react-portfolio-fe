@@ -18,8 +18,16 @@ const Index = () => {
       key: 'id',
     },
     {
-      label: 'Name',
-      key: 'name',
+      key: 'title',
+    },
+    {
+      key: 'company.name',
+    },
+    {
+      key: 'start_date',
+    },
+    {
+      key: 'end_date',
     },
     {
       label: 'Priority',

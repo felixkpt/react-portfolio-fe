@@ -1,53 +1,72 @@
-import { Link } from "react-router-dom"
-import useAxios from "@/hooks/useAxios"
-import { useEffect } from "react"
-import Loader from "@/components/Loader"
-import usePermissions from "@/hooks/usePermissions"
-import AlertMessage from "@/components/AlertMessage"
-import NoContentMessage from "@/components/NoContentMessage"
-import AboutCard from "./AboutCard"
+import AutoTable from '@/components/AutoTable';
+import AutoModal from '@/components/AutoModal';
+import { useState } from 'react';
+import Str from '@/utils/Str';
 
 const Index = () => {
+    // begin component common config
+    const pluralName = 'About'
+    const singularName = 'About'
+    const uri = '/dashboard/about'
+    const componentId = Str.slug(pluralName)
+    const [modelDetails, setModelDetails] = useState({})
+    const search = true
 
-    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
-    const { userCan } = usePermissions()
 
-    useEffect(() => {
-        getAbout('about')
-    }, [])
+    const columns = [
+        {
+            label: 'ID',
+            key: 'id',
+        },
+        {
+            key: 'current_title',
+        },
+        {
+            label: 'Name',
+            key: 'name',
+        },
+        {
+            key: 'slogan',
+        },
+        {
+            key: 'introduction',
+        },
+        {
+            label: 'Priority',
+            key: 'priority',
+        },
+        { key: 'Created_by' },
+        {
+            label: 'Created At',
+            key: 'Created_at',
+        },
+        {
+            label: 'Action',
+            key: 'action',
+        },
+    ]
+    // end component common config
 
     return (
-        <div className="">
-
-            <div className="d-flex justify-content-end">
-                {
-                    userCan('dashboard/about/create-or-update', 'any') &&
-                    <Link className="btn btn-primary" to="/dashboard/about/create-or-update">Create or update</Link>
-                }
-            </div>
+        <div>
+            <h3>{pluralName} List</h3>
             <div>
-                {
-                    loadedAbout && !errorsAbout ?
-                        <div className="pf-projects">
-                            {
-                                dataAbout?.data
-                                    ?
-                                    <AboutCard item={dataAbout.data} />
-                                    :
-                                    <NoContentMessage />
-                            }
-                        </div>
-                        :
-                        <>
-                            {
-
-                                loadingAbout ? <Loader /> : <AlertMessage message={errorsAbout} />
-                            }
-                        </>
-                }
+                <div className='d-flex justify-content-end'>
+                    <button type="button" className="btn btn-info text-white" data-bs-toggle="modal" data-bs-target={`#${componentId}Modal`}>Create {singularName}</button>
+                </div>
+                <AutoTable
+                    baseUri={uri}
+                    columns={columns}
+                    getModelDetails={setModelDetails}
+                    search={search}
+                    tableId={`${componentId}Table`}
+                />
             </div>
+            {
+                modelDetails && <><AutoModal id={`${componentId}Modal`} modelDetails={modelDetails} actionUrl={`${uri}/create-or-update`} /></>
+            }
         </div>
-    )
-}
+    );
+};
 
-export default Index
+export default Index;

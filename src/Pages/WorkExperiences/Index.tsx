@@ -1,27 +1,37 @@
+import { Link } from "react-router-dom"
 import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
 import Loader from "@/components/Loader"
+import usePermissions from "@/hooks/usePermissions"
 import AlertMessage from "@/components/AlertMessage"
+import CompanyCard from "./CompanyCard"
 import NoContentMessage from "@/components/NoContentMessage"
-import WorkExperienceCard from "./WorkExperienceCard"
 
 const Index = () => {
 
     const { get, loading, loaded, errors, data } = useAxios()
+    const { userCan } = usePermissions()
 
     useEffect(() => {
-        get('companies')
+        get('companies?status=1')
     }, [])
 
     return (
-        <div className="">
+        <div className="container">
+            {
+                userCan('companies', 'post') &&
+                <div className="d-flex justify-content-end">
+                    <Link className="btn btn-primary" to="/companies/create">Create</Link>
+                </div>
+            }
             <div>
                 {
                     loaded && !errors ?
-                        <div className="pf-companies">
+                        <div className="pf-companies row mt-3 justify-content-between">
+
                             {
                                 data?.data && data?.data.length ?
-                                    data.data.map((item) => <WorkExperienceCard item={item} />)
+                                    data.data.map((item) => <CompanyCard item={item} />)
                                     :
                                     <NoContentMessage />
                             }

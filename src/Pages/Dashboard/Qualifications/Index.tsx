@@ -17,13 +17,14 @@ const Index = () => {
       key: 'id',
     },
     {
-      label: 'Name',
-      key: 'name',
+      key: 'institution',
     },
     {
-      label: 'Priority',
-      key: 'priority',
+      key: 'course',
     },
+    { key: 'start_date' },
+    { key: 'end_date' },
+    { key: 'priority' },
     { key: 'Created_by' },
     {
       label: 'Created At',

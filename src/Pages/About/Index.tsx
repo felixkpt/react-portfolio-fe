@@ -13,7 +13,9 @@ const Index = () => {
     const { userCan } = usePermissions()
 
     useEffect(() => {
-        getAbout('about')
+        if (!dataAbout) {
+            getAbout('/about/view/default')
+        }
     }, [])
 
     return (
@@ -21,14 +23,14 @@ const Index = () => {
 
             <div className="d-flex justify-content-end">
                 {
-                    userCan('about/create-or-update', 'any') &&
-                    <Link className="btn btn-primary" to="/about/create-or-update">Create or update</Link>
+                    userCan('dashboard/about/create-or-update', 'any') &&
+                    <Link className="btn btn-primary" to="/dashboard/about/create-or-update">Create or update</Link>
                 }
             </div>
             <div>
                 {
                     loadedAbout && !errorsAbout ?
-                        <div className="pf-projects">
+                        <div className="pf-about">
                             {
                                 dataAbout?.data
                                     ?

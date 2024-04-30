@@ -21,6 +21,12 @@ const Index = () => {
       key: 'name',
     },
     {
+      key: 'start_date',
+    },
+    {
+      key: 'end_date',
+    },
+    {
       label: 'Priority',
       key: 'priority',
     },

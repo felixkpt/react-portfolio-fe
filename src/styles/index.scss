@@ -1,12 +1,90 @@
 body {
   position: relative;
   min-height: 100%;
+  line-height: 1.7 !important;
+  background: rgba(15, 23, 42, .9882352941176471) !important;
+  color: #d6d9dc !important;
+  font-size: 16px;
+
 }
 
 a:hover,
 a:focus {
   text-decoration: none;
 }
+
+div, .autotable,
+.automodal {
+
+  .card,
+  .modal-content {
+    background: #061623 !important;
+
+    .btn-close {
+      color: #d6d9dc !important;
+    }
+  }
+
+  .form-control {
+    background: #354450 !important;
+    color: #d6d9dc;
+  }
+
+  .table {
+    --bs-table-color: #d6d9dc;
+    --bs-table-bg: #061623;
+    --bs-table-border-color: #4d5154;
+    --bs-table-striped-bg: #2c3034;
+    --bs-table-striped-color: #fff;
+    --bs-table-active-bg: #373b3e;
+    --bs-table-active-color: #fff;
+    --bs-table-hover-bg: #1b2434;
+    --bs-table-hover-color: #fff;
+    color: var(--bs-table-color);
+    border-color: var(--bs-table-border-color);
+  }
+}
+
+.dropdown-menu {
+  background: #061623 !important;
+
+  .dropdown-item {
+    color: #adb5bd;
+
+    &:hover {
+      color: #f2f3f8;
+    }
+
+    &.disabled {
+      color: #444448;
+    }
+
+  }
+
+  .dropdown-item:hover {
+    background: #243046 !important;
+
+  }
+
+}
+
+.footer-section {
+  background: #061623;
+}
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background-color: #041323;
+  background-image: url('/static/media/pre.d4812f51c8c80976eaab.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 
 .useravatar {
   width: 50px;
@@ -472,6 +550,7 @@ p {
 .btn-saving {
   opacity: 0.85;
 }
+
 .form-group {
   margin-bottom: 1.2rem;
 }

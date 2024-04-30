@@ -42,7 +42,6 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
         visibleItemsCounts,
         checkedAllItems,
         checkedItems,
-        setCheckedItems,
         setCheckedAllItems,
         statuses,
         setPaginatorChangeKey,

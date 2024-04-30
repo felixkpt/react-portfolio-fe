@@ -20,6 +20,186 @@
         color: #d9dde9;
 
     }
+
     .pf-avatar-sm {}
 
+}
+
+.pf-card {
+    background: #101723;
+    color: #9d9fa6;
+    padding: 1rem;
+    border-radius: 5px;
+    background: transparent;
+    transition-property: color,
+        background-color,
+        border-color,
+        text-decoration-color,
+        fill,
+        stroke,
+        opacity,
+        box-shadow,
+        transform,
+        filter,
+        backdrop-filter;
+    -webkit-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    -webkit-transition-duration: .15s;
+    transition-duration: .15s;
+
+
+    h5 {
+        color: #c7cad4;
+
+        &:hover {
+            color: #dee1ec;
+        }
+    }
+
+    .pf-card-view-item {
+        transition: all ease-in 250ms;
+    }
+
+    &:hover {
+        background: rgb(30 41 59 / 50%);
+        background: #1b2434;
+        color: #dee1ec;
+        transition: all ease-in 200ms;
+
+        h5 {
+            color: #5eead4;
+        }
+
+        .pf-card-view-item {
+            transform: translateX(10px);
+        }
+
+    }
+
+    &.pf-card-transform:hover {
+        transform: scale(1.02);
+    }
+
+}
+
+.bg-highlight {
+    background: rgb(30 41 59 / 50%);
+    background: #1b2434;
+    color: #dee1ec;
+
+    h5 {
+        color: #5eead4;
+    }
+}
+
+.pf-skills {
+
+    .pf-skill-cat-card {
+
+        .pf-skill-cat-image {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #103444;
+        }
+
+        .pf-skill-image {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #103444;
+
+        }
+    }
+
+}
+
+.pf-companies {
+
+    .pf-company-card {
+        margin-bottom: 2rem;
+
+        .pf-companies-image {
+            width: 50px;
+            height: 44px;
+            border-radius: 10px;
+            border: 2px solid #103444;
+        }
+    }
+
+}
+
+.pf-projects {
+
+    .pf-projects-card {
+        margin-bottom: 2rem;
+
+        .pf-projects-image {
+            width: 160px;
+            height: 100px;
+            border-radius: 10px;
+            border: 4px solid #103444;
+            transition: transform cubic-bezier(.4, 0, .2, 1) 0.15s;
+        }
+
+        &:hover {
+            .pf-projects-image {
+                transform: scale(1.02);
+            }
+        }
+
+    }
+
+    .pf-skill-image {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #103444;
+    }
+
+}
+
+.pf-content {
+    p {
+        // margin: 1rem;
+    }
+}
+
+
+
+.pf-grid-item {
+    margin: auto 0px;
+    padding: 0.3rem;
+}
+
+.title_sect {
+    grid-area: title_sect;
+}
+
+.content_short_sect {
+    grid-area: content_short_sect;
+}
+
+.featured_image_sect {
+    grid-area: featured_image_sect;
+}
+
+.pf-grid {
+    display: grid;
+    grid-template-areas: "title_sect featured_image_sect" "content_short_sect featured_image_sect";
+}
+
+@media (max-width: 1024px) {
+    .pf-grid {
+        grid-template-areas: "title_sect title_sect" "featured_image_sect content_short_sect";
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .pf-grid {
+        grid-template-areas: "title_sect" "featured_image_sect" "content_short_sect";
+        grid-template-columns: minmax(0px, 1fr);
+        width: 100%;
+    }
 }
