@@ -21,12 +21,10 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
         l = listSources
 
     async function getOptions(current_key: string, rawSelected: PropsValue<object> | PropsValue<object[]> | undefined, q?: string) {
-        console.log(l,'ddd')
+        
         if (!l) return {};
 
         const fn = Str.camel(current_key);
-        console.log(fn)
-
 
         // Type assertion to specify that listSources[fn] is a function returning Promise<any>
         const listSourceFn = l[fn] as ((q?: string) => Promise<any>);
