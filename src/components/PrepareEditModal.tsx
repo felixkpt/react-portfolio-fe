@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { publish, subscribe, unsubscribe } from '@/utils/events'
-import AutoModal from './AutoModal'
+import AutoModal from './Autos/AutoModal'
 import { ListSourceInterface } from '@/interfaces/UncategorizedInterfaces'
 
 const PrepareEditModal = () => {

@@ -1,6 +1,6 @@
 import Str from "@/utils/Str";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { ColumnInterface } from "../interfaces/UncategorizedInterfaces"; // Assuming you have a Column interface defined
+import { ColumnInterface } from "../../interfaces/UncategorizedInterfaces"; // Assuming you have a Column interface defined
 
 interface AutoTableHeaderProps {
     columns: ColumnInterface[];

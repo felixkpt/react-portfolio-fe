@@ -1,6 +1,6 @@
-import AutoTable from '@/components/AutoTable'
+import AutoTable from '@/components/Autos/AutoTable'
 import { useState } from 'react'
-import AutoModal from '@/components/AutoModal'
+import AutoModal from '@/components/Autos/AutoModal'
 import PageHeader from '@/components/PageHeader'
 import useListSources from '@/hooks/apis/useListSources'
 

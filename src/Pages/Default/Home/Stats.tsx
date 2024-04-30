@@ -1,4 +1,4 @@
-import AutoTable from '@/components/AutoTable';
+import AutoTable from '@/components/Autos/AutoTable';
 import { useState } from 'react';
 
 const Stats = () => {

@@ -1,5 +1,5 @@
-import AutoTable from '@/components/AutoTable';
-import AutoModal from '@/components/AutoModal';
+import AutoTable from '@/components/Autos/AutoTable';
+import AutoModal from '@/components/Autos/AutoModal';
 import { useState } from 'react';
 import PageHeader from '@/components/PageHeader';
 import useListSources from '@/hooks/apis/useListSources';

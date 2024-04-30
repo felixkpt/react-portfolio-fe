@@ -1,5 +1,5 @@
-import AutoModal from '@/components/AutoModal';
-import SimpleTable from '@/components/SimpleTable';
+import AutoModal from '@/components/Autos/AutoModal';
+import SimpleTable from '@/components/Autos/SimpleTable';
 import { useAuth } from '@/contexts/AuthContext';
 import useListSources from '@/hooks/apis/useListSources';
 import useAxios from '@/hooks/useAxios'
@@ -9,6 +9,7 @@ import { publish } from '@/utils/events';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { config } from '../../../../../utils/helpers';
 
 type Props = {}
 
@@ -28,7 +29,7 @@ const Index = (props: Props) => {
   const [modelDetails, setModelDetails] = useState<CollectionItemsInterface>()
 
   useEffect(() => {
-    get('settings/users/view/' + id)
+    get('/dashboard/settings/users/view/' + id)
   }, [id, key])
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Index = (props: Props) => {
   async function loginUser() {
 
     if (user) {
-      await postLogin(`settings/users/view/login/${user.id}`);
+      await postLogin(`/dashboard/settings/users/view/login/${user.id}`);
 
     }
 
@@ -60,7 +61,7 @@ const Index = (props: Props) => {
         setVerified(false)
 
         // Redirect the user to the home page
-        navigate('/admin');
+        navigate(config.urls.home);
 
       }
     }

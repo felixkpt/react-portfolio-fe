@@ -1,4 +1,4 @@
-import AutoTabs from "@/components/AutoTabs";
+import AutoTabs from "@/components/Autos/AutoTabs";
 import SeasonsJobLogs from "./Tabs/SeasonsJobLogs";
 import PredictionsJobLogs from "./Tabs/PredictionsJobLogs";
 import StandingsHistoricalResults from "./Tabs/StandingsJobLogs/HistoricalResults";

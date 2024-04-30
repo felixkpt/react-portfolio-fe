@@ -1,4 +1,4 @@
-import AutoTable from "@/components/AutoTable"
+import AutoTable from "@/components/Autos/AutoTable"
 import GeneralModal from "@/components/Modals/GeneralModal"
 import useAxios from "@/hooks/useAxios"
 import { Icon } from "@iconify/react/dist/iconify.js"

@@ -31,7 +31,7 @@ const Index = () => {
 
                             {
                                 data?.data && data?.data.length ?
-                                    data.data.map((item) => <CompanyCard item={item} />)
+                                    data.data.map((item) => <CompanyCard key={item.id} item={item} />)
                                     :
                                     <NoContentMessage />
                             }

@@ -30,7 +30,7 @@ const Index = () => {
                         <div className="pf-projects row mt-3 justify-content-between">
                             {
                                 data?.data && data?.data.length ?
-                                    data.data.map((item) => <ProjectsCard item={item} />)
+                                    data.data.map((item) => <ProjectsCard key={item.id} item={item} />)
                                     :
                                     <NoContentMessage />
                             }

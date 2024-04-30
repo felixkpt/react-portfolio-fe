@@ -1,19 +1,19 @@
 import useAutoTableEffect from '@/hooks/useAutoTableEffect';
 import useStatusesUpdateEffect from '@/hooks/useStatusesUpdateEffect';
 import { debounce } from 'lodash';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
-import { AutoTableInterface } from '../interfaces/UncategorizedInterfaces';
+import { AutoTableInterface } from '../../interfaces/UncategorizedInterfaces';
 import AutoActions from './AutoActions';
 import AutoTableHeader from './AutoTableHeader';
-import Loader from './Loader';
-import StatusesUpdate from './StatusesUpdate';
+import Loader from '../Loader';
+import StatusesUpdate from '../StatusesUpdate';
 import { config } from '@/utils/helpers';
 import usePermissions from '@/hooks/usePermissions';
-import useAutoPostDone from '../hooks/useAutoPostDone';
-import Str from '../utils/Str';
+import useAutoPostDone from '../../hooks/useAutoPostDone';
+import Str from '../../utils/Str';
 
 function __dangerousHtml(html: HTMLElement) {
     return <div dangerouslySetInnerHTML={{ __html: html }} />;

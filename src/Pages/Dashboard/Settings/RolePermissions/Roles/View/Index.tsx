@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AutoTabs from "@/components/AutoTabs";
+import AutoTabs from "@/components/Autos/AutoTabs";
 import Permissions from "./Tabs/Permissions";
 import Users from "./Tabs/Users";
 import useAxios from "@/hooks/useAxios";

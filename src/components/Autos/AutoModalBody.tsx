@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import RenderAsyncSelect from './RenderAsyncSelect';
+import RenderAsyncSelect from '../RenderAsyncSelect';
 import { DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
 import Str from '@/utils/Str';
 interface ModalProps {

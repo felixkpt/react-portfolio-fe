@@ -30,7 +30,7 @@ const Index = () => {
                         <div className="pf-skills row mt-3 justify-content-between">
                             {
                                 data?.data ?
-                                    data.data.map((item) => <SkillCategoryCard item={item} />)
+                                    data.data.map((item) => <SkillCategoryCard key={item.id} item={item} />)
                                     :
                                     <NoContentMessage />
                             }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { subscribe, unsubscribe } from '@/utils/events'
-import ViewModal from './Modals/ViewModal'
+import ViewModal from './Autos/ViewModal'
 
 const PrepareViewModal = () => {
 

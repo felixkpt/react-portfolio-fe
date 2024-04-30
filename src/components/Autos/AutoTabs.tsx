@@ -1,7 +1,7 @@
 import Str from "@/utils/Str";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import PageHeader from "./PageHeader";
+import PageHeader from "../PageHeader";
 import { PageHeaderInterface, TabInterface } from "@/interfaces/UncategorizedInterfaces";
 import useAxios from "@/hooks/useAxios";
 

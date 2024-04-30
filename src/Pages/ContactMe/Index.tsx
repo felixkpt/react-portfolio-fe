@@ -43,7 +43,7 @@ const Index = () => {
                         <div className="pf-contact-me">
                             {
                                 data?.data && data?.data.length ?
-                                    data.data.map((item) => <ContactMeCard item={item} />)
+                                    data.data.map((item) => <ContactMeCard key={item.id} item={item} />)
                                     :
                                     <NoContentMessage />
                             }

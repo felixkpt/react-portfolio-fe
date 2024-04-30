@@ -1,4 +1,4 @@
-import AutoTabs from "@/components/AutoTabs";
+import AutoTabs from "@/components/Autos/AutoTabs";
 import Roles from "./Roles/Index";
 import Permissions from "./Permissions/Index";
 import Routes from "./Roles/View/Routes";

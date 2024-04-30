@@ -1,4 +1,4 @@
-import AutoPost from '@/components/AutoPost';
+import AutoPost from '@/components/Autos/AutoPost';
 import ToastNotification from '@/components/Modals/ToastNotification';
 import PrepareEditModal from '@/components/PrepareEditModal';
 import PrepareStatusUpdateModal from '@/components/PrepareStatusUpdateModal';

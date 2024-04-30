@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAutoTableEffect from '@/hooks/useAutoTableEffect';
 import { debounce } from 'lodash';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import { convertToTitleCase } from '@/utils/helpers';
 
 interface Props {

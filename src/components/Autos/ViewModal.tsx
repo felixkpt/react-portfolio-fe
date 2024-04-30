@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SimpleTable from "../SimpleTable";
+import SimpleTable from "./SimpleTable";
 
 type ModalShowProps = {
     record: object | null

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { publish } from '@/utils/events';
 import { DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
 import AutoModalBody from './AutoModalBody';
-import Str from '../utils/Str';
+import Str from '../../utils/Str';
 interface ModalProps {
     modelDetails?: any;
     record?: DataInterface | null

@@ -30,7 +30,7 @@ const Index = () => {
                         <div className="pf-qualifications">
                             {
                                 data?.data && data?.data.length ?
-                                    data.data.map((item) => <QualificationCard item={item} />)
+                                    data.data.map((item) => <QualificationCard key={item.id} item={item} />)
                                     :
                                     <NoContentMessage />
                             }
