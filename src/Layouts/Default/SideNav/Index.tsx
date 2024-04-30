@@ -12,6 +12,7 @@ import { baseURL, config } from '../../../utils/helpers';
 import useAxios from '../../../hooks/useAxios';
 import { publish, subscribe, unsubscribe } from '../../../utils/events';
 import useAutoPostDone from '../../../hooks/useAutoPostDone';
+import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
 
 const Index = () => {
   const { user } = useAuth();
@@ -97,7 +98,7 @@ const Index = () => {
         ) : (
           <div className='ps-2 pt-3'>
             {!currentRole || loading ?
-              <Loader justify='start' />
+              <Loader justify="center" message="Getting menu..." />
               : `No menus associated with role.`
             }
           </div>
@@ -140,63 +141,65 @@ const Index = () => {
 
   return (
     <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
-      <div className="sb-sidenav-menu shadow">
-        <div className="nav pt-2">
-          <div className='px-1'>
-
-            <div id="menu">
-              <NavLink to="/" onClick={() => publish('hideSideNav', 'hide')} className='navbar-brand side-navbar-brand d-flex flex-column justify-content-center align-items-center gap-2'>
-                {
-                  dataAbout?.data &&
-                  <>
-                    <div className='pf-avatar pf-avatar-sm'>
-                      <img src={baseURL(`assets/${dataAbout?.data?.image}`)} alt="" />
-                    </div>
-                    <span>{dataAbout?.data.name}</span>
-                  </>
-                }
-              </NavLink>
-
-              <div className='menu-inner'>
-                {memoizeMenu}
-                <div id='role-switcher' title='Switch your role'>
-                  {
-                    user && roles.length > 0 &&
-                    <Select
-                      className="basic-single text-dark mb-2"
-                      classNamePrefix="select"
-                      value={currentRole || []}
-                      isSearchable={true}
-                      name="roles"
-                      options={roles}
-                      placeholder='Switch your role'
-                      getOptionValue={(option: any) => `${option['id']}`}
-                      getOptionLabel={(option: any) => `${option['name']}`}
-                      onChange={(item: any) => setCurrentRole(item)}
-                    />
-                  }
+      <div className="sb-sidenav-menu shadow mt-4 pt-4">
+        <div className="brand-and-menu">
+          <NavLink to="/" onClick={() => publish('hideSideNav', 'hide')}
+            className='navbar-brand side-navbar-brand d-flex flex-column justify-content-center align-items-center gap-2'
+          >
+            {
+              dataAbout?.data &&
+              <>
+                <div className='pf-avatar pf-avatar-sm'>
+                  <img src={baseURL(`assets/${dataAbout?.data?.image}`)} alt="" />
                 </div>
+                <span>{dataAbout?.data.name}</span>
+                <div className='my-3 border-light border-top-0 border-opacity-50'></div>
+              </>
+            }
+          </NavLink>
+          <div className='nav menu-inner px-2' id='menu'>
+            <div className='menu-content'>
+              {memoizeMenu}
+              <div id='role-switcher' title='Switch your role'>
                 {
-                  user ? (
-                    <>
-                      <ul className="navbar-nav d-none d-lg-block">
-                        <li className="nav-item dropdown">
-                          <a className="nav-link dropdown-toggle px-2 d-flex gap-2" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><Icon icon={`uiw:user`} /><span className="dropdown-item disabled">{user?.name}</span></a>
-                          <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><NavLink className="dropdown-item" to="/user/profile">Profile</NavLink></li>
-                            <li><a className="dropdown-item" href="#!">Activity Log</a></li>
-                            <li><hr className="dropdown-divider" /></li>
-                            <li><form className="dropdown-item cursor-pointer" id='logoutBtn' data-action='/auth/logout' onClick={(e) => publish('autoPost', e)}>Logout</form></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </>
-                  ) : null
+                  user && roles.length > 0 &&
+                  <Select
+                    className="basic-single text-dark mb-2"
+                    classNamePrefix="select"
+                    value={currentRole || []}
+                    isSearchable={true}
+                    name="roles"
+                    options={roles}
+                    placeholder='Switch your role'
+                    getOptionValue={(option: any) => `${option['id']}`}
+                    getOptionLabel={(option: any) => `${option['name']}`}
+                    onChange={(item: any) => setCurrentRole(item)}
+                  />
                 }
               </div>
             </div>
           </div>
         </div>
+        <div className="sidebar-auth">
+          {
+            user ? (
+              <div>
+                <ul className="navbar-nav d-none d-lg-block">
+                  <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle px-2 d-flex gap-2" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><Icon icon={`uiw:user`} /><span className="dropdown-item disabled">{user?.name}</span></a>
+                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                      <li><NavLink className="dropdown-item" to="/user/profile">Profile</NavLink></li>
+                      <li><a className="dropdown-item" href="#!">Activity Log</a></li>
+                      <li><hr className="dropdown-divider" /></li>
+                      <li><form className="dropdown-item cursor-pointer" id='logoutBtn' data-action='/auth/logout' onClick={(e) => publish('autoPost', e)}>Logout</form></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            ) : null
+          }
+        </div>
+
       </div>
     </nav>
   );

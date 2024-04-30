@@ -33,10 +33,12 @@ const AuthenticatedLayout = ({ uri, permission, method, Component }: Props) => {
                     </div>
                     <div id="mainContent" onClick={() => publish('hideSideNav', 'hide')}>
                         <div className='main-content my-2'>
-                            <main className='main-content-inner container-fluid p-3 min-h-100vh'>
+                            <main className='main-content-inner container-fluid p-3 min-h-100vh position-relative'>
                                 {
                                     loadingUser && !isAllowed ?
-                                        <><Loader message="Please wait, logging you in..." /></>
+                                        <div style={{ fontSize: '20px' }}>
+                                            <Loader position="absolute" height="100vh" message='Please wait, logging you in...' />
+                                        </div>
                                         :
                                         isAllowed === true && checked === true ?
                                             <Component />
@@ -52,7 +54,9 @@ const AuthenticatedLayout = ({ uri, permission, method, Component }: Props) => {
                                                                     <Error404 previousUrl={previousUrl} currentUrl={location.pathname} setReloadKey={setReloadKey} />
                                                             )
                                                             :
-                                                            <Loader message='Granting you page access...' position='static' />
+                                                            <div style={{ fontSize: '20px' }}>
+                                                                <Loader position="absolute" height="100vh" message='Granting you page access...' />
+                                                            </div>
                                                     )
                                                     :
                                                     <><AlertMessage message={loadingUserError} /></>
