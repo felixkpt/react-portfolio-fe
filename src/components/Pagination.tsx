@@ -40,6 +40,8 @@ const Pagination: React.FC<PaginationProps> = ({ items, setPage, setPerPage, set
     { value: 100, label: '100 per page' },
     { value: 200, label: '200 per page' },
     { value: 500, label: '500 per page' },
+    { value: 750, label: '750 per page' },
+    { value: 1000, label: '1000 per page' },
   ]
 
   return (
@@ -66,15 +68,17 @@ const Pagination: React.FC<PaginationProps> = ({ items, setPage, setPerPage, set
             !hidePerPage
             &&
             <div className={`col-${breakpoint || 'md'}-4`} style={{ maxWidth: '250px' }}>
-              <Select
-                key={0}
-                className="form-control d-flex justify-content-center"
-                classNamePrefix="select"
-                placeholder="Select per page"
-                defaultValue={per_page ? options.find(v => v.value == per_page) : options[1]}
-                options={options}
-                onChange={(v) => handlePerPageChange(v)}
-              />
+              <div className="d-flex justify-content-center">
+                <Select
+                  key={0}
+                  className="flatpickr-input"
+                  classNamePrefix="select"
+                  placeholder="Select per page"
+                  defaultValue={per_page ? options.find(v => v.value == per_page) : options[1]}
+                  options={options}
+                  onChange={(v) => handlePerPageChange(v)}
+                />
+              </div>
             </div>
           }
         </div>
