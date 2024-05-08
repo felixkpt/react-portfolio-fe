@@ -21,7 +21,7 @@ const ProjectCard = ({ item }: Props) => {
                                 <small className="text-white-50">@ {item.company.name}</small>
                             </div>
                             <div className="pf-card-view-item">
-                                <Icon icon='carbon:list' />
+                                <Icon icon='ph:arrow-right-bold' />
                             </div>
                         </h5>
                         <div>{item.description_trimmed}</div>

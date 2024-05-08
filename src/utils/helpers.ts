@@ -16,7 +16,23 @@ export const emitAutoPost = (e: any) => {
     window.dispatchEvent(event);
 };
 
-export const baseURL = (uri: string) => import.meta.env.VITE_APP_BASE_API + (uri ? uri.replace(/\/+/, '/') : '')
+export const baseURL = (uri: string) => {
+
+    let base = String(import.meta.env.VITE_APP_BASE_API)
+    base = base.endsWith('/') ? base : base + '/'
+
+    if (uri) {
+
+        // remove repeated slashes
+        uri = uri.replace(/\/+/, '/')
+        // remove first slash
+        uri = uri.endsWith('/') === false ? uri : Str.afterFirst(base, '/')
+        base = base + uri
+    }
+
+    return base
+
+}
 
 interface Config {
     name: string;

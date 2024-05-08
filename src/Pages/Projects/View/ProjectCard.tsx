@@ -9,7 +9,7 @@ type Props = {
 const ProjectCard = ({ item }: Props) => {
     return (
         <div className="col-md-12 cursor-default">
-            <div className="shadow-sm rounded pf-projects-card row gap-2 gap-md-0">
+            <div className="shadow-sm rounded pf-projects-card row gap-2 gap-md-0 pf-card">
                 <div className="col-md-3 col-xl-2 text-center text-md-start">
                     <img className="pf-projects-image" src={baseURL(`assets/${item.image || ''}`)} />
                 </div>
@@ -22,7 +22,7 @@ const ProjectCard = ({ item }: Props) => {
                         {
                             item.project_url &&
                             <div className="pf-card-view-item">
-                                <a href={`${item.project_url}`} className="nav-link"><Icon icon='carbon:list' /></a>
+                                <a href={`${item.project_url}`} className="nav-link"><Icon icon='quill:link-out' /></a>
                             </div>
                         }
                     </h5>

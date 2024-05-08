@@ -3,9 +3,9 @@ import useAxios from "@/hooks/useAxios"
 import { useEffect } from "react"
 import Loader from "@/components/Loader"
 import usePermissions from "@/hooks/usePermissions"
-import AlertMessage from "@/components/AlertMessage"
 import NoContentMessage from "@/components/NoContentMessage"
 import SkillCategoryCard from "./SkillCategoryCard"
+import ResumeDownloadForm from "../Home/ResumeDownloadForm"
 
 const Index = () => {
 
@@ -28,6 +28,8 @@ const Index = () => {
                 {
                     loaded && !errors ?
                         <div className="pf-skills row mt-3 justify-content-between">
+                            <h4 className="mb-3">Skills</h4>
+
                             {
                                 data?.data ?
                                     data.data.map((item) => <SkillCategoryCard key={item.id} item={item} />)
@@ -39,11 +41,12 @@ const Index = () => {
                         <>
                             {
 
-                                loading ? <Loader /> : <AlertMessage message={errors} />
+                                loading ? <Loader /> : <NoContentMessage message={errors} />
                             }
                         </>
                 }
             </div>
+            <ResumeDownloadForm />
         </div>
     )
 }

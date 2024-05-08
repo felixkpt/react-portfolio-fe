@@ -30,7 +30,7 @@ const Index = () => {
             <div>
                 {
                     loadedAbout && !errorsAbout ?
-                        <div className="pf-about">
+                        <div className="pf-about row mt-3 justify-content-between">
                             {
                                 dataAbout?.data
                                     ?

@@ -4,6 +4,7 @@ import AboutCard from "../About/AboutCard"
 import NoContentMessage from "../../components/NoContentMessage"
 import Loader from "../../components/Loader"
 import AlertMessage from "../../components/AlertMessage"
+import ResumeDownloadForm from "./ResumeDownloadForm"
 
 const Index = () => {
 
@@ -20,7 +21,7 @@ const Index = () => {
             <div>
                 {
                     loadedAbout && !errorsAbout ?
-                        <div className="pf-about">
+                        <div className="pf-about row mt-3 justify-content-between">
                             {
                                 dataAbout?.data
                                     ?
@@ -38,6 +39,7 @@ const Index = () => {
                         </>
                 }
             </div>
+            <ResumeDownloadForm />
         </div>
     )
 }

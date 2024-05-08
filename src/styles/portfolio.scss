@@ -21,8 +21,6 @@
 
     }
 
-    .pf-avatar-sm {}
-
 }
 
 .pf-card {
@@ -140,6 +138,11 @@
             border-radius: 10px;
             border: 4px solid #103444;
             transition: transform cubic-bezier(.4, 0, .2, 1) 0.15s;
+
+            &.thumb {
+                width: 100% !important;
+                height: 200px !important;
+            }
         }
 
         &:hover {
@@ -159,13 +162,15 @@
 
 }
 
-.pf-content {
-    p {
-        // margin: 1rem;
+.pf-contact-me {
+    .pf-contact-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid #103444;
     }
+
 }
-
-
 
 .pf-grid-item {
     margin: auto 0px;
