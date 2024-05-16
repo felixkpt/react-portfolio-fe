@@ -22,9 +22,9 @@ const Permissions: React.FC<Props> = ({ role }) => {
     const { data: routes, get: getRoutes } = useAxios<RouteCollectionInterface[]>();
     const { data: allPermissions, get: getAllPermissions } = useAxios<PermissionInterface[]>();
 
-    const roleUri = `/dashboard/settings/role-permissions/roles/view/${id}`;
-    const allPermissionsUri = `/dashboard/settings/role-permissions/permissions/get-role-permissions/all`;
-    const routesUri = '/dashboard/settings/role-permissions/permissions/routes';
+    const roleUri = `dashboard/settings/role-permissions/roles/view/${id}`;
+    const allPermissionsUri = `dashboard/settings/role-permissions/permissions/get-role-permissions/all`;
+    const routesUri = 'dashboard/settings/role-permissions/permissions/routes';
 
     useEffect(() => {
         getRoutes(routesUri, { uri: 1 });
@@ -50,7 +50,7 @@ const Permissions: React.FC<Props> = ({ role }) => {
     }, [role])
 
     function doGetPermissions() {
-        getPermissions(`/dashboard/settings/role-permissions/permissions/get-role-permissions/${id}`, { uri: 1 }).then((res) => {
+        getPermissions(`dashboard/settings/role-permissions/permissions/get-role-permissions/${id}`, { uri: 1 }).then((res) => {
             setPermissions(res)
         });
     }
@@ -112,10 +112,10 @@ const Permissions: React.FC<Props> = ({ role }) => {
                 <div className="row">
                     <div className='col-sm-12'>
                         <div className='card mt-2'>
-                            <div className='card-body'>
                                 <div className="card-header">
                                     <h4>Permissions</h4>
                                 </div>
+                            <div className='card-body overflow-auto'>
                                 {/* let us wait 4 roles, routes & permissions */}
                                 {
                                     routes && permissions && allPermissions ?

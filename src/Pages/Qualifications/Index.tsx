@@ -7,6 +7,7 @@ import usePermissions from "@/hooks/usePermissions"
 import NoContentMessage from "@/components/NoContentMessage"
 import QualificationCard from "./QualificationCard"
 import ResumeDownloadForm from '../Home/ResumeDownloadForm'
+import Header from '../../components/Header'
 
 const Index = () => {
 
@@ -29,7 +30,8 @@ const Index = () => {
                 {
                     loaded && !errors ?
                         <div className="pf-qualifications row mt-3 justify-content-between">
-                            <h4 className="mb-3">Qualifications</h4>
+                            <Header title="Qualifications" />
+
                             {
                                 data?.data && data?.data.length ?
                                     <ul className="timeline">

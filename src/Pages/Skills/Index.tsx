@@ -6,6 +6,7 @@ import usePermissions from "@/hooks/usePermissions"
 import NoContentMessage from "@/components/NoContentMessage"
 import SkillCategoryCard from "./SkillCategoryCard"
 import ResumeDownloadForm from "../Home/ResumeDownloadForm"
+import Header from "../../components/Header"
 
 const Index = () => {
 
@@ -28,7 +29,7 @@ const Index = () => {
                 {
                     loaded && !errors ?
                         <div className="pf-skills row mt-3 justify-content-between">
-                            <h4 className="mb-3">Skills</h4>
+                            <Header title="Skills" />
 
                             {
                                 data?.data ?

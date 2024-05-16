@@ -55,7 +55,7 @@ const Users = ({ role }: Props) => {
                             search={true}
                             tableId='roleUsersTable'
                         />
-                        <GeneralModal setKey={setKey} title='Add User to Role' actionUrl={`/dashboard/settings/role-permissions/roles/view/${role.id}/add-user`} id={`addUserToRole`}>
+                        <GeneralModal setKey={setKey} title='Add User to Role' actionUrl={`dashboard/settings/role-permissions/roles/view/${role.id}/add-user`} id={`addUserToRole`}>
                             <AddUser key={key} role={role} />
                         </GeneralModal>
                     </>
@@ -100,9 +100,9 @@ const AddUser = ({ role }: Pick<Props, 'role'>) => {
     };
 
     useEffect(() => {
-        subscribe('autoPostDone', handleIsCurrentUser as EventListener);
+        subscribe('ajaxPostDone', handleIsCurrentUser as EventListener);
 
-        return () => unsubscribe('autoPostDone', handleIsCurrentUser as EventListener)
+        return () => unsubscribe('ajaxPostDone', handleIsCurrentUser as EventListener)
     }, [])
 
     return (

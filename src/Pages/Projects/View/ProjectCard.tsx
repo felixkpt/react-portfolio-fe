@@ -1,14 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { baseURL } from "@/utils/helpers"
+import Header from "../../../components/Header"
 
 type Props = {
     item: any
 }
 
-
 const ProjectCard = ({ item }: Props) => {
     return (
         <div className="col-md-12 cursor-default">
+            <Header title={`${item.title} @ ${item.company.name}`} hideTitle description={item.company.name} />
             <div className="shadow-sm rounded pf-projects-card row gap-2 gap-md-0 pf-card">
                 <div className="col-md-3 col-xl-2 text-center text-md-start">
                     <img className="pf-projects-image" src={baseURL(`assets/${item.image || ''}`)} />
@@ -36,11 +37,11 @@ const ProjectCard = ({ item }: Props) => {
                         item.skills.length ?
                             <>
                                 <h5>Key skills</h5>
-                                <div className="flex flex-wrap align-items-center">
+                                <div className="d-flex flex-wrap align-items-center">
                                     {
                                         item.skills.map((skill: any) =>
                                         (
-                                            <div className="col btn btn-outline-success m-1 pf-skills">
+                                            <div className="btn btn-outline-success m-1 pf-skills">
                                                 <div className="text-nowrap text-truncate d-flex align-items-center gap-1">
                                                     <div><img className="pf-skill-image" src={baseURL(`assets/${skill.image || ''}`)} /></div>
                                                     <span>{skill.name}</span>

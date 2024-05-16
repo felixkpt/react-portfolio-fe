@@ -6,6 +6,7 @@ import usePermissions from "@/hooks/usePermissions"
 import NoContentMessage from "@/components/NoContentMessage"
 import ProjectsCard from "./ProjectCard"
 import ResumeDownloadForm from "../Home/ResumeDownloadForm"
+import Header from "../../components/Header"
 
 const Index = () => {
 
@@ -28,7 +29,7 @@ const Index = () => {
                 {
                     loaded && !errors ?
                         <div className="pf-projects row mt-3 justify-content-between">
-                            <h4 className="mb-3">Projects</h4>
+                            <Header title="Projects" />
                             {
                                 data?.data && data?.data.length ?
                                     data.data.map((item) => <ProjectsCard key={item.id} item={item} />)

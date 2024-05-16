@@ -5,7 +5,7 @@ import { Route } from '@/interfaces';
 
 const Routes = () => {
 
-    const uri = '/dashboard/settings/role-permissions/permissions/routes'
+    const uri = 'dashboard/settings/role-permissions/permissions/routes'
 
     const [routes, setRoutes] = useState<Route[] | null>(null);
     const { data, get, loading } = useAxios();

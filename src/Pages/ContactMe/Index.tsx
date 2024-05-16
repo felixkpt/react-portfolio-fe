@@ -10,6 +10,7 @@ import SubmitButton from "@/components/SubmitButton"
 import { publish } from "@/utils/events"
 import useAutoPostDone from "@/hooks/useAutoPostDone"
 import ResumeDownloadForm from "../Home/ResumeDownloadForm"
+import Header from "../../components/Header"
 
 const Index = () => {
     // on success redirect to listing
@@ -42,7 +43,7 @@ const Index = () => {
                 <div className="pf-contact-me-form m-5">
                     <div className="row justify-content-center">
                         <div className="col-md-10">
-                            <h4 className="mb-3">Contact me</h4>
+                            <Header title="Contact me" />
                             <div className="p-3">
                                 <h6>If you have a project idea or simply want to have a conversation, don't hesitate to send me an email!</h6>
                                 <form id="contact-me-form" data-action="/contact-me" onSubmit={(e) => publish('autoPost', e)}>

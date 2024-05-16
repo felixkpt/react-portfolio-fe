@@ -5,6 +5,8 @@ import NoContentMessage from "../../components/NoContentMessage"
 import Loader from "../../components/Loader"
 import AlertMessage from "../../components/AlertMessage"
 import ResumeDownloadForm from "./ResumeDownloadForm"
+import Header from "../../components/Header"
+import { config } from "../../utils/helpers"
 
 const Index = () => {
 
@@ -18,6 +20,7 @@ const Index = () => {
 
     return (
         <div className="">
+            <Header title={`${config.name}`} hideTitle />
             <div>
                 {
                     loadedAbout && !errorsAbout ?

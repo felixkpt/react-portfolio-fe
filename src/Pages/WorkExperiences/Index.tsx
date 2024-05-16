@@ -6,6 +6,7 @@ import usePermissions from "@/hooks/usePermissions"
 import CompanyCard from "./CompanyCard"
 import NoContentMessage from "@/components/NoContentMessage"
 import ResumeDownloadForm from "../Home/ResumeDownloadForm"
+import Header from "../../components/Header"
 
 const Index = () => {
 
@@ -28,7 +29,8 @@ const Index = () => {
                 {
                     loaded && !errors ?
                         <div className="pf-companies row mt-3 justify-content-between">
-                            <h4 className="mb-3">Work experience</h4>
+                            <Header title="Work experience" />
+
                             {
                                 data?.data && data?.data.length ?
                                     data.data.map((item) => <CompanyCard key={item.id} item={item} />)
