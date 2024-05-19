@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import useAxios from "./useAxios";
 import { useRolePermissionsContext } from "../contexts/RolePermissionsContext";
 import { useNavigate } from "react-router-dom";
-import usePermissions from "./usePermissions";
+import { convertToLaravelPattern } from '@/utils/helpers';
 import { HttpVerbsType } from "../interfaces/UncategorizedInterfaces";
 interface Props {
   uri: string
@@ -13,89 +13,148 @@ interface Props {
 
 const useRestrictedAccess = ({ uri, permission, method }: Props) => {
 
+  const allowedRoutes = ['error-404', 'login'];
+  const testPermission = permission || uri;
+
+  const [isAllowed, setIsAllowed] = useState(false);
+
   const [reloadKey, setReloadKey] = useState<number>(0);
-  const { updateUser, deleteUser, verified, setRedirectTo } = useAuth();
+  const { updateUser, deleteUser, setRedirectTo, setRedirectMessage } = useAuth();
   const { data: freshUser, loading: loadingUser, get: getUser, loaded: loadedUser, errors: loadingUserError } = useAxios();
 
   const navigate = useNavigate();
-  const { loadingRoutePermissions, currentRole, refreshCurrentRole, setCurrentRole, fetchRoutePermissions, routePermissions } = useRolePermissionsContext();
-  const { userCan } = usePermissions();
-  const allowedRoutes = ['error-404', 'login'];
-  const [isAllowed, setIsAllowed] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [tried, setTried] = useState(false);
-  const [previousUrl, setPreviousUrl] = useState<string | null>(null);
-  const testPermission = permission || uri;
+  const { guestMode, refreshedCurrentRole, currentRole, loadingCurrentRole, refreshCurrentRole, loadingRoutePermissions, refreshedRoutePermissions, directPermissions, routePermissions } = useRolePermissionsContext();
 
-  // useEffect to check permission and loading state
+  const [checkedAccess, setCheckedAccess] = useState(false);
+
+  const [previousUrl, setPreviousUrl] = useState<string | null>(null);
+
+  const [startCheckingAccess, setStartCheckingAccess] = useState(false);
+
+  // Scenario 1: route is in allowedRoutes
   useEffect(() => {
 
-    if ((verified || loadedUser) && testPermission && loadingRoutePermissions === false) {
-      if (!allowedRoutes.includes(testPermission)) {
-        const isAllowed = userCan(testPermission, method || 'get');
-        setIsAllowed(isAllowed);
-      }
-      setChecked(true);
+    if (allowedRoutes.includes(testPermission)) {
+      setIsAllowed(true)
     }
-  }, [verified, loadingRoutePermissions, permission, routePermissions, loadedUser]);
 
+  }, [])
+
+  // Scenario 2: dealing with guest
   // useEffect to fetch user data and refresh current role
   useEffect(() => {
-    const fetchData = () => {
+    if (!isAllowed && !loadedUser) {
       getUser('/auth/user?verify=1');
     }
-
-    if (verified === false) {
-      setCurrentRole(undefined);
-      fetchData();
-    }
-  }, [verified]);
-
+  }, []);
+  // useEffect to update user data or delete user on loadedUser state change
   useEffect(() => {
-    if (currentRole === undefined) {
-      refreshCurrentRole();
-    }
-  }, [currentRole]);
-
-  // useEffect to update user data or delete user on loading state change
-  useEffect(() => {
-
     if (loadedUser) {
-      if (tried === false) {
-        setTried(true);
+      if (freshUser) {
+        updateUser(freshUser);
       } else {
-        if (freshUser) {
-          updateUser(freshUser);
-        } else {
+        if (loadingUserError == 'Unauthenticated.') {
           deleteUser();
         }
       }
     }
-  }, [loadedUser, tried]);
+  }, [loadedUser]);
 
-  // useEffect to update previous URL
   useEffect(() => {
+    if (!isAllowed && loadedUser && !freshUser && guestMode) {
+      // is guest...
+      setStartCheckingAccess(true)
+    }
+
+  }, [loadedUser, freshUser, loadingRoutePermissions])
+
+  // Scenario 3: dealing with loggedin user
+  useEffect(() => {
+    if (!isAllowed && loadedUser && freshUser) {
+      // is loggedin...
+      setStartCheckingAccess(true)
+    }
+
+  }, [loadedUser, freshUser])
+
+  // Scenario 4: Actual checking of access permission
+  useEffect(() => {
+
+    if (startCheckingAccess) {
+
+      if (!isAllowed && !checkedAccess && routePermissions.length > 0) {
+        const isAllowed = userCan(testPermission, method || 'get');
+        setIsAllowed(isAllowed);
+        setCheckedAccess(true);
+      }
+    }
+
+  }, [startCheckingAccess, checkedAccess, routePermissions, testPermission])
+
+  // Scenario 5: Guest / Auth sort
+  useEffect(() => {
+
+    if (startCheckingAccess && !loadingRoutePermissions) {
+
+      if (!isAllowed && !loadingCurrentRole) {
+
+        if (currentRole && routePermissions.length > 0) {
+          const isAllowed = userCan(testPermission, method || 'get');
+          setIsAllowed(isAllowed);
+          setCheckedAccess(true);
+
+          if (!isAllowed) {
+            setRedirectMessage(`${currentRole.name} can't access: ${testPermission}`)
+            navigate('/login')
+          }
+
+        } else if (!loadingRoutePermissions) {
+          navigate('/login')
+        }
+
+      }
+
+    }
+
+  }, [routePermissions, startCheckingAccess, checkedAccess, refreshedRoutePermissions, freshUser, refreshedCurrentRole, currentRole, loadingRoutePermissions, guestMode, loadingCurrentRole])
+
+  // Scenario 6: miscellenious
+  // useEffect to update setRedirectTo & previous URL
+  useEffect(() => {
+    setRedirectTo(location.pathname);
     if (previousUrl !== location.pathname) {
       setPreviousUrl(location.pathname);
     }
   }, [location.pathname]);
 
-  // useEffect to fetch route permissions on reloadKey change
+  // useEffect to refreshCurrentRole on reloadKey change
   useEffect(() => {
     if (reloadKey > 0) {
-      fetchRoutePermissions();
+      refreshCurrentRole();
     }
   }, [reloadKey]);
 
-  // useEffect to redirect to login if not allowed and loadingUser is false
-  useEffect(() => {
-    if (loadedUser && !isAllowed && checked) {
-      setRedirectTo(location.pathname);
-      navigate('/login');
-    }
-  }, [loadingUser, loadedUser, isAllowed, checked]);
+  const userCan = (permission: string, method: string) => {
 
-  return { reloadKey, loadingUser, isAllowed, checked, loadingUserError, loadingRoutePermissions, previousUrl, setReloadKey }
+    if (method) {
+      permission = permission.replace(/\./g, '/')
+
+      permission = convertToLaravelPattern(permission)
+      const permissionCleaned = permission.replace(/\/$/, '').replace(/^\//, '')
+
+      const httpMethod = method.toUpperCase()
+      const found = !routePermissions ? false : !!routePermissions.find((route) => {
+        return (String(route).startsWith(permissionCleaned + '@') && (httpMethod === 'ANY' || String(route).includes('@' + httpMethod))) || httpMethod === 'GET' && String(route) === permissionCleaned
+
+      });
+      return found
+    } else {
+      return !!directPermissions.some((perm) => perm.name === permission)
+    }
+
+  };
+
+  return { userCan, loadingUser, loadedUser, loadingUserError, checkedAccess, isAllowed, loadingRoutePermissions, previousUrl, setReloadKey }
 }
 
 export default useRestrictedAccess

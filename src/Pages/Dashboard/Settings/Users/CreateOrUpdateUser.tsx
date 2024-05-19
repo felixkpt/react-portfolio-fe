@@ -1,5 +1,5 @@
 import useAxios from '@/hooks/useAxios';
-import { emitAutoPost } from '@/utils/helpers';
+import { emitAjaxPost } from '@/utils/helpers';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Select from 'react-select';
@@ -30,14 +30,14 @@ const CreateOrUpdateUser: React.FC<Props> = () => {
         // Fetch the user data if the 'id' parameter is present
 
         if (id) {
-            getUser(`admin/setting/users/view/${id}/edit`);
+            getUser(`dashboard/setting/users/view/${id}/edit`);
         }
 
     }, [id]);
 
     useEffect(() => {
         if (!roles) {
-            getRoles(`admin/role-permissions/roles?all=1`);
+            getRoles(`dashboard/role-permissions/roles?all=1`);
         }
     }, [roles]);
 
@@ -78,12 +78,12 @@ const CreateOrUpdateUser: React.FC<Props> = () => {
                         <h1 className="text-2xl font-bold mb-4">{'Edit User'}</h1>
                         <form
                             method="post"
-                            data-action={
+                            action-url={
                                 user
-                                    ? `/admin/setting/users/view/${user.id}`
-                                    : '/admin/setting/users'
+                                    ? `/dashboard/setting/users/view/${user.id}`
+                                    : '/dashboard/setting/users'
                             }
-                            onSubmit={(e: any) => emitAutoPost(e)}
+                            onSubmit={(e: any) => emitAjaxPost(e)}
                             className="flex justify-center"
                         >
                             {user && <input type="hidden" value="put" name="_method" />}

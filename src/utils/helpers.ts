@@ -6,33 +6,41 @@ export function convertToTitleCase(str: string) {
     });
 }
 
+// Event emitter to emit PrepareEdit to the parent component
+export const emitPrepareEdit = (row: any, action: any, data: any) => {
+    const event = new CustomEvent('prepareEdit', {
+        detail: { row, action, data }
+    });
+    window.dispatchEvent(event);
+};
 
-// Event emitter to emit emitAutoPost to the parent component
-export const emitAutoPost = (e: any) => {
+// Event emitter to emit statusUpdate to the parent component
+export const emitStatusUpdate = (e: Event) => {
     e.preventDefault()
-    const event = new CustomEvent('autoPost', {
+    const event = new CustomEvent('statusUpdate', {
         detail: e,
     });
     window.dispatchEvent(event);
 };
 
-export const baseURL = (uri: string) => {
+// Event emitter to emit emitAjaxPost to the parent component
+export const emitAjaxPost = (e: any) => {
+    e.preventDefault()
+    const event = new CustomEvent('ajaxPost', {
+        detail: e,
+    });
+    window.dispatchEvent(event);
+};
 
-    let base = String(import.meta.env.VITE_APP_BASE_API)
-    base = base.endsWith('/') ? base : base + '/'
+// Event emitter to emit emitAjaxPost to the parent component
+export const emitAjaxPostDone = (response: any) => {
+    const event = new CustomEvent('ajaxPostDone', {
+        detail: response,
+    });
+    window.dispatchEvent(event);
+};
 
-    if (uri) {
-
-        // remove repeated slashes
-        uri = uri.replace(/\/+/, '/')
-        // remove first slash
-        uri = uri.endsWith('/') === false ? uri : Str.afterFirst(base, '/')
-        base = base + uri
-    }
-
-    return base
-
-}
+export const baseURL = (uri: string) => import.meta.env.VITE_APP_BASE_API + (uri ? uri.replace(/\/+/, '/') : '')
 
 interface Config {
     name: string;
@@ -40,6 +48,7 @@ interface Config {
     release: string;
     urls: {
         home: string;
+        rolePermissions: string
     };
     storageName: string;
 }
@@ -49,7 +58,8 @@ export const config: Config = {
     version: 'v1.0',
     release: String(new Date().getFullYear()),
     urls: {
-        home: import.meta.env.VITE_APP_HOME || '/'
+        home: import.meta.env.VITE_APP_HOME || '/',
+        rolePermissions: import.meta.env.VITE_APP_ROLE_PERMISSION_PREFIX || '/auth'
     },
     storageName: Str.slug(import.meta.env.VITE_APP_NAME || 'App name')
 };

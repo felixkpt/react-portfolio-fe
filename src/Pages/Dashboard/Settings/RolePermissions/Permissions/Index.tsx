@@ -8,11 +8,11 @@ const Index = () => {
 
   const [modelDetails, setModelDetails] = useState({})
 
-  const { rolePermissions: list_sources } = useListSources();
+  const { rolePermissions: listSources } = useListSources();
 
   return (
     <div>
-      <PageHeader title={'Permissions List'} action="button" actionText="Create permission" actionTargetId="CreatePermissionModal" permission='/dashboard/settings/role-permissions/permissions' />
+      <PageHeader title={'Permissions List'} action="button" actionText="Create permission" actionTargetId="CreatePermission" permission='/dashboard/settings/role-permissions/permissions' />
       <AutoTable
         baseUri='/dashboard/settings/role-permissions/permissions'
         columns={[
@@ -44,11 +44,11 @@ const Index = () => {
         ]}
         getModelDetails={setModelDetails}
         search={true}
-        list_sources={list_sources}
+        listSources={listSources}
         tableId='permissionsTable'
       />
       {
-        modelDetails && <><AutoModal id={`CreatePermissionModal`} modelDetails={modelDetails} actionUrl='/dashboard/settings/role-permissions/permissions' list_sources={list_sources} /></>
+        modelDetails && <><AutoModal id={`CreatePermission`} modelDetails={modelDetails} actionUrl='/dashboard/settings/role-permissions/permissions' listSources={listSources} /></>
       }
     </div>
   );

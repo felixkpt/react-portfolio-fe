@@ -1,5 +1,5 @@
 import useAxios from '@/hooks/useAxios';
-import { emitAutoPost } from '@/utils/helpers';
+import { emitAjaxPost } from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
 
 type Role = {
@@ -23,7 +23,7 @@ const CreateOrUpdatePermission: React.FC<Props> = () => {
     const [name, setName] = useState('');
 
     useEffect(() => {
-        get('/dashboard/settings/role-permissions/permissions/create');
+        get('dashboard/settings/role-permissions/permissions/create');
     }, []);
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const CreateOrUpdatePermission: React.FC<Props> = () => {
             <div className="container mx-auto card shadow p-3">
                 <h1 className="text-2xl font-bold mb-4">{permission ? 'Edit Permission' : 'Create Permission'}</h1>
 
-                <form method='post' action={import.meta.env.VITE_APP_BASE_API + '/dashboard/settings/role-permissions/permissions'} onSubmit={(e: any) => emitAutoPost(e)} className="flex justify-center">
+                <form method='post' action={import.meta.env.VITE_APP_BASE_API + '/dashboard/settings/role-permissions/permissions'} onSubmit={(e: any) => emitAjaxPost(e)} className="flex justify-center">
 
                     {permission && <input type="hidden" value="put" name="method" />}
 

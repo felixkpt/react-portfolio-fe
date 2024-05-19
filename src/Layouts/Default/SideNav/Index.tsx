@@ -6,19 +6,19 @@ import MenuTree from './MenuTree';
 import RoutesList from './RoutesList';
 import Select from 'react-select';
 import { useRolePermissionsContext } from '@/contexts/RolePermissionsContext';
-import Loader from '@/components/Loader';
 import { NavLink } from 'react-router-dom';
 import { baseURL, config } from '../../../utils/helpers';
 import useAxios from '../../../hooks/useAxios';
 import { publish, subscribe, unsubscribe } from '../../../utils/events';
 import useAutoPostDone from '../../../hooks/useAutoPostDone';
 import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
+import MenuLoader from './MenuLoader';
 
 const Index = () => {
   const { user } = useAuth();
   const { event } = useAutoPostDone()
 
-  const { roles, setCurrentRole, currentRole, userMenu, expandedRootFolders, loadingMenu: loading } = useRolePermissionsContext();
+  const { roles, setCurrentRole, currentRole, userMenu, expandedRootFolders, loadingMenu: loading, refreshedRoutePermissions } = useRolePermissionsContext();
 
   useEffect(() => {
     const expand = document.body.querySelector('.btn-expand-collapse');
@@ -95,15 +95,8 @@ const Index = () => {
               }
             })}
           </ul>
-        ) : (
-          <div className='ps-2 pt-3'>
-            {!currentRole || loading ?
-              <Loader justify="center" message="Getting menu..." />
-              : `No menus associated with role.`
-            }
-          </div>
-        )}
-      </>
+        ) : <MenuLoader currentRole={currentRole} loading={loading} refreshedRoutePermissions={refreshedRoutePermissions} />}
+        </>
     );
   }, [user, userMenu, loading]);
 
@@ -157,7 +150,7 @@ const Index = () => {
               </>
             }
           </NavLink>
-          <div className='nav menu-inner px-2' id='menu'>
+          <div className='nav menu-inner px-2 mt-2' id='menu'>
             <div className='menu-content'>
               {memoizeMenu}
               <div id='role-switcher' title='Switch your role'>

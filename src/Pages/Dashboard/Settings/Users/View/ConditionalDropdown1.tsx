@@ -15,13 +15,13 @@ const ConditionalDropdown = () => {
     const [issueCategories, setIssueCategories] = useState([]);
 
     useEffect(() => {
-        getCustomers('admin/customers?all=1').then((resp:any) => resp && setCustomers(resp))
+        getCustomers('dashboard/customers?all=1').then((resp:any) => resp && setCustomers(resp))
         
     }, [])
 
     const fetchIssueSourcesForCustomer = async (customerId) => {
         try {
-            const issueSourcesResponse = await getIssueSources(`admin/doctors/?all=1&customer_id=${customerId}`);
+            const issueSourcesResponse = await getIssueSources(`dashboard/doctors/?all=1&customer_id=${customerId}`);
             setIssueSources(issueSourcesResponse);
         } catch (error) {
             console.error("Error fetching issue sources:", error);
@@ -30,7 +30,7 @@ const ConditionalDropdown = () => {
 
     const fetchIssueCategoriesForIssueSource = async (issueSourceId) => {
         try {
-            const issueCategoriesResponse = await getIssueCategories(`settings/picklists/tickets/issuecategories?all=1&issue_source_id=${issueSourceId}`);
+            const issueCategoriesResponse = await getIssueCategories(`dashboard/settings/picklists/tickets/issuecategories?all=1&issue_source_id=${issueSourceId}`);
             setIssueCategories(issueCategoriesResponse);
         } catch (error) {
             console.error("Error fetching issue categories:", error);

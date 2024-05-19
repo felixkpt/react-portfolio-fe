@@ -1,5 +1,5 @@
 import useAxios from '@/hooks/useAxios';
-import { emitAutoPost } from '@/utils/helpers';
+import { emitAjaxPost } from '@/utils/helpers';
 import React, { useEffect, useState } from 'react';
 
 type Role = {
@@ -36,7 +36,7 @@ const Create: React.FC<Props> = () => {
     };
 
     useEffect(() => {
-        get('admin/users/create');
+        get('dashboard/users/create');
     }, []);
 
     useEffect(() => {
@@ -58,7 +58,7 @@ const Create: React.FC<Props> = () => {
             <div className="container mx-auto card shadow p-3">
                 <h1 className="text-2xl font-bold mb-4">{user ? 'Edit User' : 'Create User'}</h1>
 
-                <form method='post' action={import.meta.env.VITE_APP_BASE_API + '/admin/users'} onSubmit={(e: any) => emitAutoPost(e)} className="flex justify-center">
+                <form method='post' action={import.meta.env.VITE_APP_BASE_API + '/dashboard/users'} onSubmit={(e: any) => emitAjaxPost(e)} className="flex justify-center">
 
                     {user && <input type="hidden" value="put" name="method" />}
 

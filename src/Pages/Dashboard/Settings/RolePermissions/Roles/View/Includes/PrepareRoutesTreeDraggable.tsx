@@ -3,6 +3,7 @@ import Str from "@/utils/Str"
 import { useEffect, useState } from "react";
 import RoutesTree from "./RoutesTree";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import SubmitButton from "@/components/SubmitButton";
 
 // Define the Props interface for the RoutesTree component
 interface Props {
@@ -322,7 +323,7 @@ const PrepareRoutesTreeDraggable: React.FC<Props> = ({ routes, permissions, allP
         className="w-100"
       >
         <div className='d-flex justify-content-end mt-2'>
-          <button type="submit" className="btn bg-success text-white" disabled={saving}>{saving ? 'Saving checked...' : 'Save checked'}</button>
+          <SubmitButton loading={saving}>Save Checked</SubmitButton>
         </div>
         <div className="d-flex align-items-start mt-1">
           <div className="nav flex-column nav-pills me-3 position-relative" id="v-pills-tab" role="tablist" aria-orientation="vertical">

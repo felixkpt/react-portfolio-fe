@@ -8,11 +8,11 @@ import { CollectionItemsInterface } from '@/interfaces/UncategorizedInterfaces';
 const Index = () => {
   const [modelDetails, setModelDetails] = useState<CollectionItemsInterface>()
 
-  const { rolePermissions: list_sources } = useListSources()
+  const { rolePermissions: listSources } = useListSources()
 
   return (
     <div>
-      <PageHeader title={'Roles List'} action="button" actionText="Create role" actionTargetId="AutoModal" permission='admin.settings.role-permissions.roles' />
+      <PageHeader title={'Roles List'} action="button" actionText="Create role" actionTargetId="AutoModal" permission='dashboard.settings.role-permissions.roles' />
       <AutoTable
         baseUri='/dashboard/settings/role-permissions/roles'
         columns={[
@@ -44,10 +44,10 @@ const Index = () => {
         ]}
         getModelDetails={setModelDetails}
         search={true}
-        list_sources={list_sources}
+        listSources={listSources}
       />
       {
-        modelDetails && <><AutoModal modelDetails={modelDetails} actionUrl='/dashboard/settings/role-permissions/roles' list_sources={list_sources} /></>
+        modelDetails && <><AutoModal modelDetails={modelDetails} actionUrl='/dashboard/settings/role-permissions/roles' listSources={listSources} /></>
       }
     </div>
   );

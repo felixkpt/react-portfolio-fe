@@ -10,12 +10,12 @@ const Index = (props: Props) => {
 
     const [modelDetails, setModelDetails] = useState({})
 
-    const { rolePermissions: list_sources } = useListSources()
+    const { rolePermissions: listSources } = useListSources()
 
     return (
 
         <div>
-            <PageHeader title={'Users List'} action="button" actionText="Create User" actionTargetId="CreateUserModal" permission='admin.settings.users' />
+            <PageHeader title={'Users List'} action="button" actionText="Create User" actionTargetId="CreateUserModal" permission='dashboard.settings.users' />
             <AutoTable
                 baseUri='/dashboard/settings/users'
                 columns={[
@@ -50,7 +50,7 @@ const Index = (props: Props) => {
             />
 
             {
-                modelDetails && <><AutoModal id={`CreateUserModalModal`} modelDetails={modelDetails} actionUrl='/dashboard/settings/users' list_sources={list_sources} /></>
+                modelDetails && <><AutoModal id={`CreateUserModal`} modelDetails={modelDetails} actionUrl='/dashboard/settings/users' listSources={listSources} /></>
             }
 
         </div>

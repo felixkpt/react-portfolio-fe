@@ -9,7 +9,6 @@ import { publish } from '@/utils/events';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { config } from '../../../../../utils/helpers';
 
 type Props = {}
 
@@ -29,7 +28,7 @@ const Index = (props: Props) => {
   const [modelDetails, setModelDetails] = useState<CollectionItemsInterface>()
 
   useEffect(() => {
-    get('/dashboard/settings/users/view/' + id)
+    get('dashboard/settings/users/view/' + id)
   }, [id, key])
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const Index = (props: Props) => {
   async function loginUser() {
 
     if (user) {
-      await postLogin(`/dashboard/settings/users/view/login/${user.id}`);
+      await postLogin(`dashboard/settings/users/view/auto-login/${user.id}`);
 
     }
 
@@ -61,14 +60,14 @@ const Index = (props: Props) => {
         setVerified(false)
 
         // Redirect the user to the home page
-        navigate(config.urls.home);
+        navigate('/dashboard');
 
       }
     }
 
   }, [dataLoggedIn, loggingIn]);
 
-  const { rolePermissions: list_sources } = useListSources()
+  const { rolePermissions: listSources } = useListSources()
 
   return (
     <div className="row">
@@ -122,7 +121,7 @@ const Index = (props: Props) => {
 
                         <div className="modal-body">
                           <div className="section">
-                            <form encType="" method="post" data-action={'/dashboard/settings/users/view/update-others-password'} onSubmit={(e: any) => publish('autoPost', e)} >
+                            <form encType="" method="post" action-url={'/dashboard/settings/users/view/update-others-password'} onSubmit={(e: any) => publish('ajaxPost', e)} >
                               <input type="hidden" name="user_id" value={id} />
                               <input type="hidden" name="_method" value="patch" />
                               <div className="form-group password">
@@ -134,7 +133,7 @@ const Index = (props: Props) => {
                                 <input type="password" name="password_confirmation" className="form-control" />
                               </div>
                               <div className="form-group mt-2">
-                                <button type="submit" className="btn  btn-primary submit-btn ">Save Information</button>
+                                <button type="submit" className="btn  bg-success submit-btn ">Save Information</button>
                               </div>
                             </form>
                           </div>
@@ -149,7 +148,7 @@ const Index = (props: Props) => {
             }
 
             {
-              user && <><AutoModal setKey={setKey} modelDetails={modelDetails} record={user} actionUrl={`/dashboard/settings/users/view/${user.id || 0}`} list_sources={list_sources} size='modal-lg' id='UpdateUserInfo' /></>
+              user && <><AutoModal setKey={setKey} modelDetails={modelDetails} record={user} actionUrl={`/dashboard/settings/users/view/${user.id || 0}`} listSources={listSources} size='modal-lg' id='UpdateUserInfo' /></>
             }
 
           </div>

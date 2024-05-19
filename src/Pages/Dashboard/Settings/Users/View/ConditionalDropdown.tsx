@@ -15,7 +15,7 @@ const ConditionalDropdown = () => {
   const { get } = useAxios();
 
   useEffect(() => {
-    fetchSelectData('admin/customers?all=1', setCustomers);
+    fetchSelectData('dashboard/customers?all=1', setCustomers);
   }, []);
 
   const fetchSelectData = (url: string, setDataFunction: (data: []) => any) => {
@@ -42,7 +42,7 @@ const ConditionalDropdown = () => {
 
   useEffect(() => {
     if (selectedSpecialty) {
-      fetchSelectData(`admin/doctors?all=1&specialty_id=${selectedSpecialty.id}`, setDoctors);
+      fetchSelectData(`dashboard/doctors?all=1&specialty_id=${selectedSpecialty.id}`, setDoctors);
     }
   }, [selectedSpecialty]);
 
@@ -55,7 +55,7 @@ const ConditionalDropdown = () => {
           onChange={(newValue) => {
             setSelectedCustomer(newValue)
             handleSelectChange(
-              { uri: 'admin/facilities?all=1', fn: setFacilities },
+              { uri: 'dashboard/facilities?all=1', fn: setFacilities },
               [
                 ['customer_id', newValue, setFacilities],
                 ['another_id', newValue, setDoctors],
@@ -74,7 +74,7 @@ const ConditionalDropdown = () => {
           onChange={(newValue) => {
             setSelectedFacility(newValue)
             handleSelectChange(
-              { uri: 'admin/specialties?all=1', fn: setSpecialties },
+              { uri: 'dashboard/specialties?all=1', fn: setSpecialties },
               [
                 ['customer_id', selectedCustomer],
                 ['facility_id', newValue],
@@ -93,7 +93,7 @@ const ConditionalDropdown = () => {
           onChange={(newValue) => {
             setSelectedSpecialty(newValue)
             handleSelectChange(
-              { uri: 'admin/doctors?all=1', fn: setDoctors },
+              { uri: 'dashboard/doctors?all=1', fn: setDoctors },
               [
                 ['customer_id', selectedCustomer],
                 ['facility_id', selectedFacility],

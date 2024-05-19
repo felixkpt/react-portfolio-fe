@@ -18,7 +18,6 @@ export interface PermissionInterface {
   title: string;
   icon: string | null;
   hidden: number;
-  is_public: number;
   user_id: number;
   status: number;
   pivot: {
@@ -30,7 +29,7 @@ export interface PermissionInterface {
 export interface RouteInterface {
   uri: string;
   methods: string;
-  uri_methods: string;
+  uri_and_methods: string;
   slug: string;
   title: string;
   hidden: boolean;
