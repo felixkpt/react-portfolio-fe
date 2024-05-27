@@ -12,6 +12,7 @@ import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInt
 import MenuLoader from './MenuLoader';
 import { useRoleRoutePermissionsAndMenuContext } from '../../../contexts/RoleRoutePermissionsAndMenuContext';
 import SideNavAbout from './SideNavAbout';
+import AuthSection from '../../Shared/Navbar/AuthSection';
 
 const Index = () => {
 
@@ -165,18 +166,8 @@ const Index = () => {
         <div className="sidebar-auth">
           {
             user ? (
-              <div>
-                <ul className="navbar-nav d-none d-lg-block">
-                  <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle px-2 d-flex gap-2" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><Icon icon={`uiw:user`} /><span className="dropdown-item disabled">{user?.name}</span></a>
-                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                      <li><NavLink className="dropdown-item" to="/user/profile">Profile</NavLink></li>
-                      <li><a className="dropdown-item" href="#!">Activity Log</a></li>
-                      <li><hr className="dropdown-divider" /></li>
-                      <li><form className="dropdown-item cursor-pointer" id='logoutBtn' data-action='/auth/logout' onClick={(e) => publish('autoPost', e)}>Logout</form></li>
-                    </ul>
-                  </li>
-                </ul>
+              <div className='d-none d-lg-block'>
+                <AuthSection />
               </div>
             ) : null
           }

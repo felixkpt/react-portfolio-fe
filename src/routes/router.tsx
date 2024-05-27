@@ -12,6 +12,7 @@ import Password from '@/Pages/Auth/Password';
 import ResetPasswordConfirm from '@/Pages/Auth/ResetPasswordConfirm';
 import PasswordSet from '@/Pages/Auth/PasswordSet';
 import Error404 from '@/Pages/ErrorPages/Error404';
+import userRoutes from '@/routes/user/index';
 import dashboardRoutes from '@/routes/dashboard';
 import GuestLayout from '@/Layouts/Guest/GuestLayout';
 import TermsAndConditions from '../Pages/TermsAndConditions';
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
     path: '/password-set/:token',
     element: <GuestLayout Component={PasswordSet} />,
 
+  },
+  {
+    path: 'user',
+    children: userRoutes
   },
   {
     path: '/dashboard',
