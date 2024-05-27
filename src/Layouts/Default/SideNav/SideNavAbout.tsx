@@ -4,7 +4,7 @@ import { baseURL } from "../../../utils/helpers"
 const SideNavAbout = () => {
     const { data } = useAboutContext()
     return (
-        <div>
+        <>
             {
                 data &&
                 <>
@@ -15,7 +15,7 @@ const SideNavAbout = () => {
                     <div className='my-3 border-light border-top-0 border-opacity-50'></div>
                 </>
             }
-        </div>
+        </>
     )
 }
 
