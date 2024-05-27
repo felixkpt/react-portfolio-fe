@@ -6,8 +6,6 @@ import MenuTree from './MenuTree';
 import RoutesList from './RoutesList';
 import Select from 'react-select';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { baseURL } from '../../../utils/helpers';
-import useAxios from '../../../hooks/useAxios';
 import { publish, subscribe, unsubscribe } from '../../../utils/events';
 import useAutoPostDone from '../../../hooks/autos/useAutoPostDone';
 import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
