@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import RenderAsyncSelect from '../RenderAsyncSelect';
 import { CollectionItemsInterface, DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
 import Str from '@/utils/Str';
+import SubmitButton from '../SubmitButton';
 interface ModalProps {
     modelDetails?: CollectionItemsInterface | undefined;
     record?: DataInterface | null | undefined
@@ -126,7 +127,6 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
 
                                 const currentData = inputData[current_key.replace(/_list|_id/, '')]
 
-                                console.log(computedSize)
                                 return (
                                     <div key={current_key} className={`col-12 ${computedSize !== 'modal-sm' && (input !== 'textarea') ? 'col-md-6 col-xl-6' : ''} d-flex align-items-${type === 'checkbox' ? 'end' : 'center'}`}>
                                         <div className="form-group mb-3 w-100" id={`form-group-section-${current_key}`}>
@@ -220,7 +220,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={() => { setLocalKey(localKey + 1); setKey && setKey(localKey + 1) }} data-bs-dismiss="modal">Close</button>
-                        <button type="submit" className="btn bg-success text-white submit-button">Submit</button>
+                        <SubmitButton>Submit</SubmitButton>
                     </div>
                 </div>
                 : 'Model data incomplete'

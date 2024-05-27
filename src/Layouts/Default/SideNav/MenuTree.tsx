@@ -2,6 +2,7 @@ import Str from '@/utils/Str';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import React from 'react'
 import RoutesList from './RoutesList';
+import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
 
 type Props = {
     child: RouteCollectionInterface

@@ -13,6 +13,7 @@ import MenuLoader from './MenuLoader';
 import { useRoleRoutePermissionsAndMenuContext } from '../../../contexts/RoleRoutePermissionsAndMenuContext';
 import SideNavAbout from './SideNavAbout';
 import AuthSection from '../../Shared/Navbar/AuthSection';
+import { folderHasRoutes } from '../../../utils/helpers';
 
 const Index = () => {
 
@@ -62,7 +63,7 @@ const Index = () => {
           <ul className="list-unstyled nested-routes main">
             {menu.map((child: RouteCollectionInterface) => {
               const { routes, children, icon, folder, hidden } = child;
-              const shouldShowFolder = !hidden && (routes.length > 0 || children.length > 0);
+              const shouldShowFolder = !hidden && folderHasRoutes(child);
               const currentId = Str.slug((folder).replace(/^\//, ''));
               const indent = 2;
 

@@ -23,7 +23,7 @@ const RoutesList: React.FC<RoutesListProps> = ({ routes }) => {
                 <>
                     {routes.map((route, i) => (
                         <NavLink
-                            onClick={() => publish('hideSideNav', 'hide')}
+                            onClick={() => publish('hideSaideNav', 'hide')}
                             key={`${i}_${route.uri}`}
                             to={cleanUri(route.uri)}
                             className="nav-link overflow-hidden text-decoration-none px-3 cursor-pointer d-flex align-items-center gap-1"

@@ -1,3 +1,4 @@
+import { RouteCollectionInterface } from "../interfaces/RolePermissionsInterfaces";
 import Str from "./Str";
 
 export function convertToTitleCase(str: string) {
@@ -94,4 +95,17 @@ export const competitionLogo = (logo: string | null | undefined) => {
 
 export const countryLogo = (logo: string | null | undefined) => {
     return logo ? baseURL(logo) : '/images/default_team_logo.png'
+}
+
+export const folderHasRoutes = (child: RouteCollectionInterface): boolean => {
+
+    const routes = child.routes
+    const children = child.children
+    if (routes.length > 0) return true
+
+    if (children.length > 0) {
+        return children.some(child => folderHasRoutes(child))
+    }
+
+    return false
 }
