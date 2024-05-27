@@ -1,5 +1,3 @@
-import useAxios from "@/hooks/useAxios"
-import { useEffect } from "react"
 import AboutCard from "../About/AboutCard"
 import NoContentMessage from "../../components/NoContentMessage"
 import Loader from "../../components/Loader"
@@ -7,28 +5,23 @@ import AlertMessage from "../../components/AlertMessage"
 import ResumeDownloadForm from "./ResumeDownloadForm"
 import Header from "../../components/Header"
 import { config } from "../../utils/helpers"
+import { useAboutContext } from "../../contexts/AboutContext"
 
 const Index = () => {
 
-    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
-
-    useEffect(() => {
-        if (!dataAbout) {
-            getAbout('/about/view/default')
-        }
-    }, [])
+    const { data, loading, loaded, errors } = useAboutContext()
 
     return (
         <div className="">
             <Header title={`${config.name}`} hideTitle />
             <div>
                 {
-                    loadedAbout && !errorsAbout ?
+                    loaded && !errors ?
                         <div className="pf-about row mt-3 justify-content-between">
                             {
-                                dataAbout?.data
+                                data
                                     ?
-                                    <AboutCard item={dataAbout.data} />
+                                    <AboutCard item={data} />
                                     :
                                     <NoContentMessage />
                             }
@@ -37,7 +30,7 @@ const Index = () => {
                         <>
                             {
 
-                                loadingAbout ? <Loader /> : <AlertMessage message={errorsAbout} />
+                                loading ? <Loader /> : <AlertMessage message={errors} />
                             }
                         </>
                 }

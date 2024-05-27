@@ -12,32 +12,43 @@ const Index = () => {
 
     const location = useParams()
     const { id } = location
-    const { data, get, loading, loaded, errors } = useAxios()
-    const { data: dataProjects, get: getProjects } = useAxios()
+    const { get, loading, loaded, errors } = useAxios()
+    const { get: getProjects, loaded: loadedProjects } = useAxios()
+
+    const [data, setData] = useState(null);
+    const [projectsList, setProjectsList] = useState([]);
     const [filteredProjects, setFilteredProjects] = useState([])
 
     useEffect(() => {
 
         if (id) {
-            get(`/projects/view/${id}`)
+            get(`/projects/view/${id}`).then((resp) => {
+                if (resp) {
+                    setData(resp.results.data)
+                }
+            })
         }
     }, [id])
 
     useEffect(() => {
-        if (!dataProjects) {
-            getProjects('projects')
+        if (!loadedProjects) {
+            getProjects('projects').then((resp) => {
+                if (resp) {
+                    setProjectsList(resp.results.data)
+                }
+            })
         }
 
     }, [])
 
     useEffect(() => {
-        if (dataProjects?.data && dataProjects.data.length) {
+        if (projectsList.length > 0) {
             // Filter out projects whose id is not the current id and limit projects to 4
-            const filtered = dataProjects.data.filter(project => project.id != id)
+            const filtered = projectsList.filter(project => project.id != id)
                 .slice(0, 4);
             setFilteredProjects(filtered);
         }
-    }, [dataProjects, id]);
+    }, [projectsList, id]);
 
     return (
         <div>
@@ -45,8 +56,8 @@ const Index = () => {
                 loaded && !errors ?
                     <div className="pf-projects row mt-3 justify-content-between">
                         {
-                            data.data ?
-                                <ProjectCard item={data.data} />
+                            data ?
+                                <ProjectCard item={data} />
                                 :
                                 <NoContentMessage />
                         }

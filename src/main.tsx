@@ -13,13 +13,16 @@ import ErrorBoundary from "./components/Notifications/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css';
 import './scss/customized-boostrap.scss';
 import { RoleRoutePermissionsAndMenuProvider } from "./contexts/RoleRoutePermissionsAndMenuContext";
+import { AboutProvider } from "./contexts/AboutContext";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ErrorBoundary fallback="There was an error.">
     <AuthProvider>
       <RoleRoutePermissionsAndMenuProvider>
-        <RouterProvider router={router} />
+        <AboutProvider>
+          <RouterProvider router={router} />
+        </AboutProvider>
       </RoleRoutePermissionsAndMenuProvider>
     </AuthProvider>
   </ErrorBoundary>

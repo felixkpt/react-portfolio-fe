@@ -9,9 +9,10 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { baseURL } from '../../../utils/helpers';
 import useAxios from '../../../hooks/useAxios';
 import { publish, subscribe, unsubscribe } from '../../../utils/events';
-import useAutoPostDone from '../../../hooks/useAutoPostDone';
+import useAutoPostDone from '../../../hooks/autos/useAutoPostDone';
 import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
 import MenuLoader from './MenuLoader';
+import { useRoleRoutePermissionsAndMenuContext } from '../../../contexts/RoleRoutePermissionsAndMenuContext';
 
 const Index = () => {
 

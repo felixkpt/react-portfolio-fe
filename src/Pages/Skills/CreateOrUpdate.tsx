@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import RenderAsyncSelect from "../../components/RenderAsyncSelect"
 import SubmitButton from "@/components/SubmitButton"
-import useListSources from "../../hooks/apis/useListSources"
+import useListSources from "../../hooks/list-sources/useListSources"
 import { publish } from "@/utils/events"
-import useAutoPostDone from "@/hooks/useAutoPostDone"
+import useAutoPostDone from "@/hooks/autos/useAutoPostDone"
 import { useEffect } from "react"
 
 const CreateOrUpdate = () => {

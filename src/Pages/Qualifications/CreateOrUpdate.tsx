@@ -3,7 +3,7 @@ import Dropzone from "@/components/Dropzone"
 import { publish } from "@/utils/events"
 import SubmitButton from "@/components/SubmitButton";
 import { useNavigate } from "react-router-dom";
-import useAutoPostDone from "@/hooks/useAutoPostDone";
+import useAutoPostDone from "@/hooks/autos/useAutoPostDone";
 
 const CreateOrUpdate = () => {
     // on success redirect to listing

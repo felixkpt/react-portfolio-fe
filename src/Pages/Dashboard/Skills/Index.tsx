@@ -2,7 +2,7 @@ import AutoTable from '@/components/Autos/AutoTable';
 import AutoModal from '@/components/Autos/AutoModal';
 import { useState } from 'react';
 import Str from '@/utils/Str';
-import useListSources from '../../../hooks/apis/useListSources';
+import useListSources from '../../../hooks/list-sources/useListSources';
 
 const Index = () => {
   // begin component common config

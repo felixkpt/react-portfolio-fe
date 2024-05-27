@@ -6,7 +6,7 @@ import useAxios from "@/hooks/useAxios";
 import Loader from "@/components/Loader";
 import { useNavigate } from "react-router-dom";
 import AlertMessage from "@/components/AlertMessage";
-import useAutoPostDone from "@/hooks/useAutoPostDone";
+import useAutoPostDone from "@/hooks/autos/useAutoPostDone";
 
 const CreateOrUpdate = () => {
     const navigate = useNavigate()
