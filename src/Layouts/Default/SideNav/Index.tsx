@@ -13,6 +13,7 @@ import useAutoPostDone from '../../../hooks/autos/useAutoPostDone';
 import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInterfaces';
 import MenuLoader from './MenuLoader';
 import { useRoleRoutePermissionsAndMenuContext } from '../../../contexts/RoleRoutePermissionsAndMenuContext';
+import SideNavAbout from './SideNavAbout';
 
 const Index = () => {
 
@@ -130,11 +131,6 @@ const Index = () => {
 
   }, [window.innerWidth]);
 
-  const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
-
-  useEffect(() => {
-    getAbout('/about/view/default')
-  }, [])
 
   return (
     <nav className="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
@@ -143,16 +139,7 @@ const Index = () => {
           <NavLink to="/" onClick={() => publish('hideSideNav', 'hide')}
             className='navbar-brand side-navbar-brand d-flex flex-column justify-content-center align-items-center gap-2'
           >
-            {
-              dataAbout?.data &&
-              <>
-                <div className='pf-avatar pf-avatar-sm'>
-                  <img src={baseURL(`assets/${dataAbout?.data?.image}`)} alt="" />
-                </div>
-                <span>{dataAbout?.data.name}</span>
-                <div className='my-3 border-light border-top-0 border-opacity-50'></div>
-              </>
-            }
+            <SideNavAbout />
           </NavLink>
           <div className='nav menu-inner px-2 mt-2' id='menu'>
             <div className='menu-content'>
