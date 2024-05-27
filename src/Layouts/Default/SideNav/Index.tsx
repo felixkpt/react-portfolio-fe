@@ -5,9 +5,8 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import MenuTree from './MenuTree';
 import RoutesList from './RoutesList';
 import Select from 'react-select';
-import { useRolePermissionsContext } from '@/contexts/RolePermissionsContext';
-import { NavLink } from 'react-router-dom';
-import { baseURL, config } from '../../../utils/helpers';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { baseURL } from '../../../utils/helpers';
 import useAxios from '../../../hooks/useAxios';
 import { publish, subscribe, unsubscribe } from '../../../utils/events';
 import useAutoPostDone from '../../../hooks/useAutoPostDone';
@@ -15,10 +14,14 @@ import { RouteCollectionInterface } from '../../../interfaces/RolePermissionsInt
 import MenuLoader from './MenuLoader';
 
 const Index = () => {
-  const { user } = useAuth();
-  const { event } = useAutoPostDone()
 
-  const { roles, setCurrentRole, currentRole, userMenu, expandedRootFolders, loadingMenu: loading, refreshedRoutePermissions } = useRolePermissionsContext();
+  const { roleMenu, roleAndPermissions } = useRoleRoutePermissionsAndMenuContext();
+  const { user, roles, setCurrentRole, currentRole } = roleAndPermissions
+  const { menu, expandedRootFolders, loading, loaded, reload } = roleMenu
+
+  const { deleteUser } = useAuth()
+  const { event } = useAutoPostDone()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const expand = document.body.querySelector('.btn-expand-collapse');
@@ -54,9 +57,9 @@ const Index = () => {
 
     return (
       <>
-        {Array.isArray(userMenu) && userMenu.length > 0 ? (
+        {Array.isArray(menu) && menu.length > 0 ? (
           <ul className="list-unstyled nested-routes main">
-            {userMenu.map((child: RouteCollectionInterface) => {
+            {menu.map((child: RouteCollectionInterface) => {
               const { routes, children, icon, folder, hidden } = child;
               const shouldShowFolder = !hidden && (routes.length > 0 || children.length > 0);
               const currentId = Str.slug((folder).replace(/^\//, ''));
@@ -95,17 +98,17 @@ const Index = () => {
               }
             })}
           </ul>
-        ) : <MenuLoader currentRole={currentRole} loading={loading} refreshedRoutePermissions={refreshedRoutePermissions} />}
-        </>
+        ) : <MenuLoader currentRole={currentRole} loading={loading} loaded={loaded} reload={reload} />}
+      </>
     );
-  }, [user, userMenu, loading]);
+  }, [user, menu, loading]);
 
   useEffect(() => {
     if (event) {
       if (event.id == 'logoutBtn') {
-        if (event.status == 'success') {
-          localStorage.removeItem(`${config.storageName}.user`);
-          window.location.href = '/';
+        if (event.status) {
+          deleteUser()
+          navigate('/')
         }
       }
     }

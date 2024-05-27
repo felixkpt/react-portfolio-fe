@@ -48,6 +48,7 @@ interface Config {
     release: string;
     urls: {
         home: string;
+        afteRegister: string
         rolePermissions: string
     };
     storageName: string;
@@ -59,6 +60,7 @@ export const config: Config = {
     release: String(new Date().getFullYear()),
     urls: {
         home: import.meta.env.VITE_APP_HOME || '/',
+        afteRegister: import.meta.env.VITE_APP_AFTER_REGISTER || '/user/account',
         rolePermissions: import.meta.env.VITE_APP_ROLE_PERMISSION_PREFIX || '/auth'
     },
     storageName: Str.slug(import.meta.env.VITE_APP_NAME || 'App name')

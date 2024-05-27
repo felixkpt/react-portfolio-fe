@@ -13,7 +13,7 @@ interface Props extends Omit<PageHeaderInterface, 'title'> {
   active?: string;
   title?: string;
   countsUrl?: string
-};
+}
 
 // AutoTabs component definition
 const AutoTabs: React.FC<Props> = ({ tabs, setCurrentTabName, active, title, action, actionText, actionLink, permission, method = 'post', actionTargetId, listUrl, countsUrl, setRecord }) => {
@@ -43,7 +43,7 @@ const AutoTabs: React.FC<Props> = ({ tabs, setCurrentTabName, active, title, act
     const newUrl = `${window.location.pathname}?tab=${tabName}`;
     window.history.pushState({ path: newUrl }, "", newUrl);
 
-    var found = tabs.find((tab) => Str.slug(tab.name) === tabName)
+    const found = tabs.find((tab) => Str.slug(tab.name) === tabName)
 
     if (found) {
       setLocalOpenTab(found);
@@ -62,9 +62,9 @@ const AutoTabs: React.FC<Props> = ({ tabs, setCurrentTabName, active, title, act
 
       const urlParams = new URLSearchParams(window.location.search);
       const tabParam = urlParams.get("tab");
-      let defaultTab = tabParam || Str.slug(tabs[0].name)
+      const defaultTab = tabParam || Str.slug(tabs[0].name)
 
-      let found = tabs.find((tab) => Str.slug(tab.name) === defaultTab)
+      const found = tabs.find((tab) => Str.slug(tab.name) === defaultTab)
       setLocalOpenTab(found);
     };
 
@@ -79,24 +79,27 @@ const AutoTabs: React.FC<Props> = ({ tabs, setCurrentTabName, active, title, act
   useEffect(() => {
 
     if (countsUrl) {
-      var tabNames = tabs.map(d => Str.slug(d['name']));
+      const tabNames = tabs.map(d => Str.slug(d['name']));
 
-      get(countsUrl + 'tabs', { params: { tabs: tabNames } }).then((res) => {
-        if (res)
-          for (let key in res) {
-            var val = res[key]
-            var elm = document.querySelector(`.auto-tabs .${key} .tab-items`)
+      get(countsUrl, { params: { tabs: tabNames } }).then((response) => {
+        if (response.results) {
+          const items = response.results
+
+          for (const key in items) {
+            const val = items[key]
+            const elm = document.querySelector(`.auto-tabs .${key} .tab-items`)
             if (elm)
               elm.textContent = val
           }
+        }
 
       })
     }
-  }, [countsUrl])
+  }, [countsUrl, key])
 
   // Render the AutoTabs component
   return (
-    <div className="auto-tabs" key={key}>
+    <div className="auto-tabs no-select" key={key}>
       {
         title &&
         <PageHeader title={`${title} - ${localOpenTab?.label || localOpenTab?.name}`} action={action} actionText={actionText} actionLink={actionLink} permission={permission} method={method} actionTargetId={actionTargetId} listUrl={listUrl} setRecord={setRecord} />
@@ -113,19 +116,19 @@ const AutoTabs: React.FC<Props> = ({ tabs, setCurrentTabName, active, title, act
                 className={`nav-link ${Str.slug(tab.name)} ${Str.slug(localOpenTab?.name) === Str.slug(tab.name) ? "active-autotab" : "border-bottom"}`}
                 data-toggle="tab"
               >
-                <small className="tab-items">1</small>
+                {countsUrl && <small className="tab-items">1</small>}
                 <span className="tab-name">{tab.label || tab.name}</span>
               </NavLink>
             </li>
           ))}
           <li className="nav-item d-flex align-items-center justify-content-center position-relative" style={{ minWidth: '30px', fontSize: '22px', }}>
-            <div className="shadow-sm position-absolute rounded" style={{top: '3px', left: '5px'}}>
-              <small title='Click to reload current tab' className='cursor-pointer rounded px-1' onClick={() => setKey(curr => curr + 1)}><Icon icon="mdi:reload" /></small>
+            <div className="shadow-sm position-absolute rounded w-100 cursor-pointer" style={{ top: 'auto', left: '5px' }} title='Click to reload current tab' onClick={() => setKey(curr => curr + 1)}>
+              <small className='rounded px-1'><Icon icon="mdi:reload" /></small>
             </div>
           </li>
         </ul>
         <div className="tab-content mt-2">
-          <div className="transition-opacity duration-500">{localOpenTab?.content}</div>
+          <div className="transition-opacity duration-500">{localOpenTab?.component}</div>
         </div>
       </div>
     </div>

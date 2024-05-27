@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 const AutoPost = () => {
 
-    const { data, post, put, destroy, patch } = useAxios();
+    const { response, post, put, destroy, patch } = useAxios();
 
     const [form, setForm] = useState();
     const [key, setKey] = useState(0);
@@ -14,7 +14,7 @@ const AutoPost = () => {
 
     const handleEvent = async (event: CustomEvent<{ [key: string]: any }>) => {
         setHasData(false)
-        
+
         const rawForm = event.detail.target
         setForm(rawForm);
 
@@ -59,24 +59,24 @@ const AutoPost = () => {
 
         // Make the request
         if (method == 'post') {
-            await post(url, formData, { elementId }).then((res) => {
-                response = res
+            await post(url, formData, { elementId }).then((resp) => {
+                response = resp
             });
         } else if (method == 'put') {
-            await put(url, formData, { elementId }).then((res) => {
-                response = res
+            await put(url, formData, { elementId }).then((resp) => {
+                response = resp
             });
         } else if (method == 'patch') {
-            await patch(url, formData, { elementId }).then((res) => {
-                response = res
+            await patch(url, formData, { elementId }).then((resp) => {
+                response = resp
             });
         } else if (method == 'delete') {
-            await destroy(url, formData, { elementId }).then((res) => {
-                response = res
+            await destroy(url, formData, { elementId }).then((resp) => {
+                response = resp
             });
         }
 
-        publish('autoPostDone', { elementId, response })
+        publish('autoPostDone', { elementId, results: response })
 
         setKey(key + 1)
 
@@ -94,8 +94,8 @@ const AutoPost = () => {
     };
 
     useEffect(() => {
-        setHasData(!!data)
-    }, [data])
+        setHasData(!!response.results || !!response.message)
+    }, [response])
 
     useEffect(() => {
 

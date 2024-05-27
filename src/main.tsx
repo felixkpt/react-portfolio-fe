@@ -12,15 +12,15 @@ import router from "@/routes/router.js";
 import ErrorBoundary from "./components/Notifications/ErrorBoundary";
 import 'react-toastify/dist/ReactToastify.css';
 import './scss/customized-boostrap.scss';
+import { RoleRoutePermissionsAndMenuProvider } from "./contexts/RoleRoutePermissionsAndMenuContext";
 
-import { RolePermissionsProvider } from "./contexts/RolePermissionsContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ErrorBoundary fallback="There was an error.">
     <AuthProvider>
-      <RolePermissionsProvider>
+      <RoleRoutePermissionsAndMenuProvider>
         <RouterProvider router={router} />
-      </RolePermissionsProvider>
+      </RoleRoutePermissionsAndMenuProvider>
     </AuthProvider>
   </ErrorBoundary>
 );

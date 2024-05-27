@@ -9,7 +9,7 @@ type Props = {
     exclude?: string[]
     only?: string[]
     htmls?: string[]
-    list_sources?: { [key: string]: () => Promise<ListSourceInterface[]> }
+    listSources?: { [key: string]: () => Promise<ListSourceInterface[]> }
     modelDetails?: CollectionItemsInterface
 
 }
@@ -20,7 +20,7 @@ function __dangerousHtml(html: HTMLElement) {
     return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
-function SimpleTable({ record, exclude, only, htmls, list_sources, modelDetails }: Props) {
+function SimpleTable({ record, exclude, only, htmls, listSources, modelDetails }: Props) {
 
     const isNative = !!modelDetails
 
@@ -47,7 +47,7 @@ function SimpleTable({ record, exclude, only, htmls, list_sources, modelDetails 
 
     const navigate = useNavigate()
 
-    const autoActions = new AutoActions(modelDetails, record, navigate, list_sources, exclude)
+    const autoActions = new AutoActions(modelDetails, record, navigate, listSources, exclude)
 
     useEffect(() => {
 
