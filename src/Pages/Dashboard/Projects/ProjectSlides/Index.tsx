@@ -15,16 +15,13 @@ const Index = () => {
       key: 'id',
     },
     {
-      key: 'title',
+      key: 'project.title',
     },
     {
-      key: 'company.name',
+      key: 'image',
     },
     {
-      key: 'start_date',
-    },
-    {
-      key: 'end_date',
+      key: 'caption',
     },
     {
       label: 'Priority',

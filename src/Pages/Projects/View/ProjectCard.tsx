@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { baseURL } from "@/utils/helpers"
 import Header from "../../../components/Header"
+import Slides from "./Includes/Slides"
 
 type Props = {
     item: any
@@ -56,6 +57,10 @@ const ProjectCard = ({ item }: Props) => {
                             <></>
                     }
                 </div>
+                {
+                    item.slides &&
+                    <Slides items={item.slides} />
+                }
             </div>
         </div>
     )
