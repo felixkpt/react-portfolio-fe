@@ -68,7 +68,7 @@ const ViewModal: React.FC<ModalShowProps> = ({ record, modelDetails, size, id })
                         <h5 className="modal-title" id="staticBackdropLabel">View {modelName} #{record && record?.id}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div className="modal-body">
+                    <div className="modal-body overflow-auto">
                         {record &&
                             <div className="text-gray-200">
                                 <SimpleTable record={record} exclude={exclude} htmls={htmls} />

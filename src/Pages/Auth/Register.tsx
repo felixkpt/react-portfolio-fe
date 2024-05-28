@@ -66,7 +66,7 @@ export default function Register({ className, isMinimal }: Props) {
                                 </div>
                             </div>
                         </div>
-                        <SubmitButton className="btn bg-success btn-block" loading={loading}>Create Account</SubmitButton>
+                        <SubmitButton loading={loading}>Create Account</SubmitButton>
                     </form>
                 </div>
                 {!isMinimal

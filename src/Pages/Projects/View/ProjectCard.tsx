@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { baseURL } from "@/utils/helpers"
 import Header from "../../../components/Header"
 import Slides from "./Includes/Slides"
+import Skills from "./Includes/Skills"
 
 type Props = {
     item: any
@@ -33,33 +34,21 @@ const ProjectCard = ({ item }: Props) => {
             </div>
             <div className="row">
                 <div>{item.description_trimmed}</div>
-                <div className="mt-4">
-                    {
-                        item.skills.length ?
-                            <>
-                                <h5>Key skills</h5>
-                                <div className="d-flex flex-wrap align-items-center">
-                                    {
-                                        item.skills.map((skill: any) =>
-                                        (
-                                            <div className="btn btn-outline-success m-1 pf-skills">
-                                                <div className="text-nowrap text-truncate d-flex align-items-center gap-1">
-                                                    <div><img className="pf-skill-image" src={baseURL(`assets/${skill.image || ''}`)} /></div>
-                                                    <span>{skill.name}</span>
-                                                </div>
-                                            </div>
-                                        )
-                                        )
-                                    }
-                                </div>
-                            </>
-                            :
-                            <></>
-                    }
-                </div>
+            </div>
+            <div className="row">
                 {
-                    item.slides &&
-                    <Slides items={item.slides} />
+                    item.slides.length ?
+                        <div className="col-12 col-md-8 col-xl-9 mt-4 mb-5 mb-md-0">
+                            <Slides items={item.slides} />
+                        </div>
+                        : null
+                }
+                {
+                    item.skills.length ?
+                        <div className={`col-12${item.slides.length > 0 ? ' col-md-4 col-xl-3' : ' '}mt-4`}>
+                            <Skills items={item.skills} slidesCounts={item.slides.length} />
+                        </div>
+                        : null
                 }
             </div>
         </div>

@@ -100,7 +100,7 @@ export default function Login({ className, isMinimal }: Props) {
                                 :
                                 null
                             }
-                            <SubmitButton className="btn bg-success main-bg" loading={loading}>Login</SubmitButton>
+                            <SubmitButton loading={loading}>Login</SubmitButton>
                         </div>
                     </form>
                 </div>

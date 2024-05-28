@@ -21,6 +21,9 @@ const Index = () => {
       key: 'name',
     },
     {
+      key: 'image',
+    },
+    {
       label: 'Priority',
       key: 'priority',
     },

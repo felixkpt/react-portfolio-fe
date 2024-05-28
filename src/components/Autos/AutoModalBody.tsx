@@ -60,14 +60,31 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                 setInputData(tObj);
             }
 
-            if (modalSize)
+            if (modalSize) {
                 setLocalComputedSize(modalSize)
-            else if (length < 6)
-                setLocalComputedSize('modal-sm')
-            else if (length < 16)
-                setLocalComputedSize('modal-lg')
-            else if (length > 16)
-                setLocalComputedSize('modal-xl')
+
+            } else {
+
+                let counts = 0
+                for (const input in fillable) {
+                    const type = fillable[input].input
+                    if (type === 'textarea') {
+                        counts += 2
+                    } else {
+                        counts += 1
+                    }
+                }
+
+                if (counts < 6)
+                    setLocalComputedSize('modal-sm')
+                else if (counts < 10)
+                    setLocalComputedSize('modal-md')
+                else if (counts < 16)
+                    setLocalComputedSize('modal-lg')
+                else if (counts > 16)
+                    setLocalComputedSize('modal-xl')
+
+            }
         }
 
     }, [fillable, record])
@@ -111,7 +128,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
     };
 
     return (
-        <div key={localKey} className='modal-body'>
+        <div key={localKey} className='modal-body overflow-auto'>
             {modelDetails ?
                 <div className="container-fluid">
                     <input type="hidden" name="_method" value={method} />

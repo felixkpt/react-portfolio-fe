@@ -54,7 +54,7 @@ const Index = () => {
         <div>
             {
                 loaded && !errors ?
-                    <div className="pf-projects row mt-3 justify-content-between">
+                    <div className="pf-projects row mt-5 justify-content-between">
                         {
                             data ?
                                 <ProjectCard item={data} />
@@ -73,14 +73,14 @@ const Index = () => {
 
             {
                 filteredProjects.length > 0 ?
-                    <div className="container-lg mx-auto mt-5">
+                    <div className="container-fluid p-0 mx-auto mt-5">
                         <hr className="mt-5" />
                         <div className="pf-projects row mt-3 justify-content-center">
                             <h6 className="mb-3">More Projects</h6>
                             {
                                 filteredProjects.map((item) => {
                                     return (
-                                        <div className="col-md-6 col-lg-3 p-2 h-auto" key={item.id}>
+                                        <div className="col-md-6 col-xl-4 p-2 h-auto" key={item.id}>
                                             <div className="shadow-sm rounded h-100 pf-projects-card row gap-2 gap-md-0 pf-card">
 
                                                 <NavLink to={`/projects/view/${item.id}`} className='nav-link'>

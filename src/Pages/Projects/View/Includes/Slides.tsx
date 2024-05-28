@@ -1,22 +1,17 @@
+import { ProjectSlideInterface } from "../../../../interfaces/PortfolioInterfaces"
+import SlidesComponent from "./SlidesComponent"
+
 
 type Props = {
-    items: string[]
+    items: ProjectSlideInterface[]
 }
 
 const Slides = ({ items }: Props) => {
     return (
-        <div className="mt-4">
-            {
-                items.map(item => {
-                    return (
-                        <div>
-                            <div>{item.image}</div>
-                            <div>{item.caption}</div>
-                        </div>
-                    )
-                })
-            }
-        </div>
+        <>
+            <h5>Key Sections</h5>
+            <SlidesComponent slides={items} />
+        </>
     )
 }
 
