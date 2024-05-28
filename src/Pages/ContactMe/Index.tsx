@@ -54,7 +54,6 @@ const Index = () => {
                             <Header title="Contact me" />
                             <div className="p-3">
                                 <h6 className="mb-4">If you have a project idea or simply want to have a conversation, don't hesitate to send me an email!</h6>
-
                                 {
                                     !isSent ?
                                         <form id="contact-me-form" data-action="/contact-me" onSubmit={(e) => publish('autoPost', e)}>
