@@ -73,9 +73,9 @@ const Index = () => {
                                         </form>
                                         :
                                         <div className="alert alert-success">
-                                            <div className="d-flex gap-2">
-                                                <Icon icon={'success'} />
-                                                <div>Your message was went</div>
+                                            <div className='text-primary d-flex align-items-center fs-6'>
+                                                <Icon icon={'ooui:success'} style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
+                                                <span className="fw-bold">Your message was went!</span>
                                             </div>
                                         </div>
                                 }

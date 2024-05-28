@@ -45,7 +45,7 @@ const ProjectCard = ({ item }: Props) => {
                 }
                 {
                     item.skills.length ?
-                        <div className={`col-12${item.slides.length > 0 ? ' col-md-4 col-xl-3' : ' '}mt-4`}>
+                        <div className={`mt-4 col-12 ${item.slides.length > 0 ? ' col-md-4 col-xl-3' : ''}`}>
                             <Skills items={item.skills} slidesCounts={item.slides.length} />
                         </div>
                         : null

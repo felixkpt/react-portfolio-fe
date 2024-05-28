@@ -10,7 +10,6 @@ type Props = {}
 const PasswordSet = (props: Props) => {
     const { setUser } = useAuth();
 
-
     const navigate = useNavigate();
     const { loading: loadingPost, post } = useAxios()
     const { loading: loadingGet, get: getEmail } = useAxios()
