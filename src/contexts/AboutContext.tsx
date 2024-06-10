@@ -2,10 +2,10 @@ import { createContext, useContext, ReactNode } from "react";
 import useGetAbout from "../hooks/useGetAbout";
 
 interface AboutData {
-  data: any; // Adjust the type of data according to your actual data structure
+  data: any;
   loading: boolean;
   loaded: boolean;
-  errors: any[] | undefined; // Adjust the type of errors according to your actual error structure
+  errors: string | undefined;
 }
 
 const defaultValue: AboutData = {

@@ -56,8 +56,16 @@ class FormatDate {
         return `${hour}:${minute}`;
     }
 
-    static toLocaleDateString(dateString: string) {
-        const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+    static toLocaleDateString(dateString: string): string {
+        const options: Intl.DateTimeFormatOptions = {
+            weekday: 'short', // "short", "long", or "narrow"
+            month: 'short', // "numeric", "2-digit", "short", "long", or "narrow"
+            day: 'numeric', // "numeric" or "2-digit"
+            year: 'numeric', // "numeric" or "2-digit"
+            hour: 'numeric', // "numeric" or "2-digit"
+            minute: 'numeric', // "numeric" or "2-digit"
+            hour12: true // boolean
+        };
 
         const formattedDate = new Date(dateString).toLocaleDateString('en-US', options);
 

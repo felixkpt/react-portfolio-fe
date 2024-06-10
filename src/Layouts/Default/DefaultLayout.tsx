@@ -15,7 +15,7 @@ interface Props {
     uri: string;
     permission?: string | null;
     method?: HttpVerbsType;
-    Component: React.ComponentType;
+    Component: ((props?:any) => void) | JSX.Element;
 }
 
 const AuthenticatedLayout = ({ uri, permission, method, Component }: Props) => {

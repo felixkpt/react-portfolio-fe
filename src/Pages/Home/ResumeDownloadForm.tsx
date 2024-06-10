@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { baseURL } from '../../utils/helpers';
 
 function ResumeDownloadForm() {
-  const [loading, setLoading] = useState(false);
+  const loading = false;
 
   useEffect(() => {
 

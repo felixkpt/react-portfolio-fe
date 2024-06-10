@@ -40,7 +40,6 @@ const AuthContent = createContext<AuthenticatedUser>({
   setRedirectTo: () => { },
   redirectMessage: undefined,
   setRedirectMessage: () => { },
-  fileAccessToken: null
 
 });
 
@@ -56,12 +55,12 @@ const encryptData = (user: UserInterface) => {
 // Authentication Provider component that wraps the application with authentication capabilities
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // Get the stored user data from localStorage
-  
+
   // Initialize the 'user' state with the decrypted user data (if available) or null
   const [user, _setUser] = useState<UserInterface | null>(() => {
 
     const storedUser = localStorage.getItem(`${config.storageName}.user`);
-    
+
     try {
       if (storedUser) {
         const decryptedUser = decryptUser(storedUser);
@@ -84,7 +83,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (newUser) {
       const encryptedUser = encryptData(newUser);
-      localStorage.setItem(`${config.storageName}.user`, encryptedUser);
+      if (encryptedUser) {
+        localStorage.setItem(`${config.storageName}.user`, encryptedUser);
+      }
     } else {
       localStorage.removeItem(`${config.storageName}.user`);
     }
@@ -102,9 +103,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (encryptedUser) {
         localStorage.setItem(`${config.storageName}.user`, encryptedUser);
         setVerified(true)
-        setFileAccessToken(updatedUserData.fileAccessToken); // Set the file access token
-
-
       }
 
       // Update the 'user' state with the updated user object
@@ -123,11 +121,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     _setUser(null);
   };
 
-  const [fileAccessToken, setFileAccessToken] = useState<string | null>(null);
-
   // Provide the authentication data and functions to the children components
   return (
-    <AuthContent.Provider value={{ user, updateUser, csrfToken, setUser, deleteUser, verified, setVerified, redirectTo, setRedirectTo, setRedirectMessage, redirectMessage, fileAccessToken }}>
+    <AuthContent.Provider value={{ user, updateUser, csrfToken, setUser, deleteUser, verified, setVerified, redirectTo, setRedirectTo, setRedirectMessage, redirectMessage }}>
       {children}
     </AuthContent.Provider>
   );

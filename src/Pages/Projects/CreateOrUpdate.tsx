@@ -12,12 +12,13 @@ const CreateOrUpdate = () => {
     const navigate = useNavigate()
     const { event } = useAutoPostDone()
     useEffect(() => {
-        if (event && event.status == 'success' && event.id === 'projectsForm') {
+        if (event && (event.status == 200 || event.status == 201) && event.id === 'projectsForm') {
             navigate('/projects')
         }
     }, [event])
+    
 
-    const [files, setFiles] = useState<string[]>([]);
+    const [files, setFiles] = useState<(Blob | MediaSource)[]>([]);
     const { portfolio: list_sources } = useListSources()
 
     return (
@@ -61,7 +62,7 @@ const CreateOrUpdate = () => {
                         <div className="accordion-body">
                             <div className="form-group mb-4 inside-accordion">
                                 <div className='form-control' id='image'>
-                                    <Dropzone fileType="jpg" files={files} setFiles={setFiles} fileType='featured image' maxFiles={1} />
+                                    <Dropzone files={files} setFiles={setFiles} maxFiles={1} />
                                 </div>
                             </div>
                         </div>

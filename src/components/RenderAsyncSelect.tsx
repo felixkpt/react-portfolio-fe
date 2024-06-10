@@ -13,7 +13,7 @@ interface RenderAsyncSelectProps {
     listSelects?: { [key: string]: any };
 }
 
-var l: any
+let l: any
 
 const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData, isMulti = false }: RenderAsyncSelectProps) => {
 
@@ -21,7 +21,7 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
         l = listSources
 
     async function getOptions(current_key: string, rawSelected: PropsValue<object> | PropsValue<object[]> | undefined, q?: string) {
-        
+
         if (!l) return {};
 
         const fn = Str.camel(current_key);
@@ -56,25 +56,24 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
         }
     }
 
+
+    async function fetchData(query: string) {
+        const currentValue = typeof currentData === 'number' ? currentData : (currentData || (isMulti ? [] : ''));
+        const { options: fetchedOptions, selected: fetchedSelected } = await getOptions(current_key, currentValue, query);
+
+        setSelected(fetchedSelected);
+
+        // Include the existing record's option in fetchedOptions if not already present
+        if (currentValue && !fetchedOptions.some((option: any) => option.id === currentValue.id)) {
+            fetchedOptions.push(currentValue);
+        }
+        return fetchedOptions
+    }
+
     function loadOptions(q: string) {
 
         if (current_key) {
-
-            async function fetchData() {
-                const currentValue = typeof currentData === 'number' ? currentData : (currentData || (isMulti ? [] : ''));
-                const { options: fetchedOptions, selected: fetchedSelected } = await getOptions(current_key, currentValue, q);
-
-                setSelected(fetchedSelected);
-
-                // Include the existing record's option in fetchedOptions if not already present
-                if (currentValue && !fetchedOptions.some((option: any) => option.id === currentValue.id)) {
-                    fetchedOptions.push(currentValue);
-                }
-                return fetchedOptions
-            }
-
-            return fetchData();
-
+            return fetchData(q);
         }
     }
 

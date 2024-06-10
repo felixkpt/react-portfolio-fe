@@ -1,3 +1,5 @@
+import { UserInterface } from "./UserInterface";
+
 export interface RoleInterface {
   id: number;
   name: string;
@@ -34,7 +36,7 @@ export interface RouteInterface {
   title: string;
   hidden: boolean;
   icon: string | null;
-  checked: boolean; 
+  checked: boolean;
   filename: string;
 }
 export interface RouteCollectionInterface {
@@ -46,4 +48,47 @@ export interface RouteCollectionInterface {
   icon: string | null;
 
   children: RouteCollectionInterface[];
+}
+
+export interface RoleRoutePermissionsAndMenuContextInterface {
+  // useGetUserRolesAndPermissions
+  roleAndPermissions: {
+    // guest mode / auth mode
+    guestMode: boolean
+    isGuestModeSupported: boolean
+    user: UserInterface
+    loadingUser: boolean
+    loadedUser: boolean
+    loadingUserError: string | undefined
+    setUser: (user: UserInterface) => React.Dispatch<React.SetStateAction<UserInterface>>
+    roles: RoleInterface[]
+    routePermissions: PermissionInterface[]
+    directPermissions: PermissionInterface[]
+    currentRole: RoleInterface
+    setCurrentRole: (role: RoleInterface | undefined) => React.Dispatch<React.SetStateAction<RoleInterface>>
+    loading: boolean
+    loaded: boolean
+    errors: string | undefined
+    reload: () => void
+  }
+
+  // useGetRoleRoutePermissions
+  roleRoutePermissions: {
+    permissions: PermissionInterface[]
+    loading: boolean
+    loaded: boolean
+    errors: string | undefined
+    reload: () => void
+    key: number
+  }
+
+  // useGetRoleMenu
+  roleMenu: {
+    menu: any
+    expandedRootFolders: string[]
+    loading: boolean
+    loaded: boolean
+    errors: string | undefined
+    reload: () => void
+  }
 }

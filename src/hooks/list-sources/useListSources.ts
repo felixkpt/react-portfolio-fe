@@ -22,12 +22,12 @@ const useListSources = (params?: string) => {
 
     async rolesList(search?: string) {
       const resp = await get('/dashboard/settings/role-permissions/roles' + prepareParams(search))
-      return res.results.data || []
+      return resp.results.data || []
     },
 
     async directPermissionsList(search?: string) {
       const resp = await get('/dashboard/settings/role-permissions/permissions' + prepareParams(search))
-      return res.results.data || []
+      return resp.results.data || []
     },
 
   }
@@ -36,22 +36,11 @@ const useListSources = (params?: string) => {
 
     async parentCategoryId(search?: string) {
       const resp = await get('/dashboard/posts/categories' + prepareParams(search))
-      return res.results.data || []
+      return resp.results.data || []
 
     },
 
   }
-
-  const booleanOptions: ListSourceInterface[] = [
-    {
-      id: '1',
-      name: 'Yes',
-    },
-    {
-      id: '0',
-      name: 'No',
-    }
-  ]
 
   const portfolio = {
 
@@ -79,7 +68,7 @@ const useListSources = (params?: string) => {
       const resp = await get('/dashboard/projects' + prepareParams(search))
       const data = resp.results?.data || []
       if (data) {
-        data.map((itm) => {
+        data.map((itm:any) => {
           itm['name'] = itm.title
           return itm
         });

@@ -9,6 +9,21 @@ interface AutoTableOptionsInterface {
     perPage?: string | undefined;
 }
 
+const convertQueryParams = (params: ParsedQuery<string | undefined>): { [key: string]: string | undefined } => {
+    const queryParams: { [key: string]: string | undefined } = {};
+    Object.keys(params).forEach((key) => {
+        const value = params[key] as unknown;
+        if (typeof value === 'string' || value === undefined) {
+            queryParams[key] = value;
+        } else if (Array.isArray(value)) {
+            queryParams[key] = value[0] || undefined; // Convert the first element of the array to string or undefined
+        } else {
+            queryParams[key] = value !== null && value !== undefined ? value.toString() : undefined; // Convert other types to string or undefined
+        }
+    });
+    return queryParams;
+};
+
 const useAutoTableEffect = (
     baseUri: string,
     tableId: string | undefined,
@@ -52,11 +67,9 @@ const useAutoTableEffect = (
             mergedParams['order_by'] = orderBy;
             mergedParams['order_direction'] = orderDirection;
 
-            // Cast parsedUrlParams to ParsedQuery<string | undefined>
+            // Parse the URL and convert the query params to the correct type
             const parsedUrlParams = queryString.parseUrl(baseUri).query as ParsedQuery<string | undefined>;
-
-            // Ensure parsedUrlParams is of type { [key: string]: string | undefined }
-            const queryParams: { [key: string]: string | undefined } = parsedUrlParams ? parsedUrlParams : {};
+            const queryParams = convertQueryParams(parsedUrlParams);
 
             const newUrl = queryString.parseUrl(baseUri).url;
 
@@ -68,7 +81,7 @@ const useAutoTableEffect = (
             });
 
             const queryStringParams = queryString.stringify(mergedParams);
-            setFullQueryString(queryStringParams)
+            setFullQueryString(queryStringParams);
 
             const finalUrl = `${newUrl}?${queryStringParams}`;
 

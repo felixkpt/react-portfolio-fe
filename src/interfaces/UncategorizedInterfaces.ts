@@ -1,13 +1,3 @@
-import { ReactNode } from "react"
-
-export interface UserInterface {
-    [x: string]: ReactNode;
-    id: number;
-    name: string;
-    email: string;
-    roles: []
-}
-
 
 export interface DataInterface {
     id: string | number
