@@ -3,6 +3,7 @@ import { useRoleRoutePermissionsAndMenuContext } from "@/contexts/RoleRoutePermi
 import { useNavigate } from "react-router-dom";
 import { convertToLaravelPattern } from '@/utils/helpers';
 import { HttpVerbsType } from "@/interfaces/UncategorizedInterfaces";
+import { PermissionInterface } from "@/interfaces/RolePermissionsInterfaces";
 
 interface Props {
   uri: string;
@@ -35,7 +36,7 @@ const useRoleBasedAccessAccess = ({ uri, permission, method }: Props) => {
   const [previousUrl, setPreviousUrl] = useState<string | null>(null);
 
   const perms = roleRoutePermissions.permissions.length > 0 ? roleRoutePermissions.permissions : roleAndPermissions.routePermissions
-  const [permissions, setPermissions] = useState(perms)
+  const [permissions, setPermissions] = useState<PermissionInterface[]>([])
 
   useEffect(() => {
     if (permissions.length == 0 || roleRoutePermissions.key > 1) {
@@ -43,7 +44,7 @@ const useRoleBasedAccessAccess = ({ uri, permission, method }: Props) => {
       setPermissions(perms)
       setIsAllowed(false)
     }
-  }, [roleRoutePermissions.key])
+  }, [roleAndPermissions.routePermissions, roleRoutePermissions.key])
 
 
   const [loadedPermissions, setLoadedPermissions] = useState(false)
@@ -86,7 +87,6 @@ const useRoleBasedAccessAccess = ({ uri, permission, method }: Props) => {
         }
         setLoading(false);
       } else {
-        console.log('first')
         setIsAllowed(true);
         setLoading(false);
       }
@@ -138,40 +138,38 @@ const useRoleBasedAccessAccess = ({ uri, permission, method }: Props) => {
     }
   }, [loadingUserError, navigate]);
 
-  console.log('IS NOT ALLOWED::', isAllowed)
+  // useEffect(() => {
+  //   if (scenario2) {
+  //     console.log('Should redirect to login because of Scenario 2');
+  //   }
+  // }, [scenario2]);
 
-  useEffect(() => {
-    if (scenario2) {
-      console.log('Should redirect to login because of Scenario 2');
-    }
-  }, [scenario2]);
+  // useEffect(() => {
 
-  useEffect(() => {
+  //   if (scenario3 || scenario4) {
+  //     console.log('Should render 403');
+  //   }
+  // }, [scenario3, scenario4, shouldRender403]);
 
-    if (scenario3 || scenario4) {
-      console.log('Should render 403');
-    }
-  }, [scenario3, scenario4, shouldRender403]);
+  // useEffect(() => {
+  //   if (scenario5) {
+  //     console.log('Authenticated user with sufficient permissions');
+  //   }
+  // }, [scenario5]);
 
-  useEffect(() => {
-    if (scenario5) {
-      console.log('Authenticated user with sufficient permissions');
-    }
-  }, [scenario5]);
+  // useEffect(() => {
+  //   if (scenario6) {
+  //     console.log('Waiting for role permissions to be fully loaded');
+  //   }
+  // }, [scenario6]);
 
-  useEffect(() => {
-    if (scenario6) {
-      console.log('Waiting for role permissions to be fully loaded');
-    }
-  }, [scenario6]);
+  // useEffect(() => {
+  //   console.log("isAllowed:", isAllowed);
+  // }, [isAllowed]);
 
-  useEffect(() => {
-    console.log("isAllowed:", isAllowed);
-  }, [isAllowed]);
-
-  useEffect(() => {
-    console.log("loading:", loading);
-  }, [loading]);
+  // useEffect(() => {
+  //   console.log("loading:", loading);
+  // }, [loading]);
 
   const userCan = (permission: string, method: HttpVerbsType | undefined) => {
     if (method) {
