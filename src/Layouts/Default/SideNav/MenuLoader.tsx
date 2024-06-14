@@ -2,7 +2,7 @@ import Loader from '@/components/Loader'
 import { RoleInterface } from '@/interfaces/RolePermissionsInterfaces'
 
 type Props = {
-    currentRole: RoleInterface
+    currentRole: RoleInterface | undefined
     loading: boolean
     loaded: boolean
     reload: () => void

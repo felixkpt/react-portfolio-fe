@@ -46,7 +46,7 @@ COPY gcp/nginx.conf /etc/nginx/nginx.conf
 
 RUN mkdir -p /app
 
-COPY . /app
+COPY ./dist /app
 
 COPY gcp/.env_prod /app/.env
 

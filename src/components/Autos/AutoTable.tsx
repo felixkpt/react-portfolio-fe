@@ -82,7 +82,9 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
                 setCurrentPageDataLength(-1);
             }
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { data, ...others } = tableData
+
             if (setModelDetails) {
 
                 const rest = { ...others, tableId: localTableId, query }
@@ -104,7 +106,7 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
 
     const [columns, setColumns] = useState(initCols)
 
-    const reloadAutoTable: EventListener | any = (event) => {
+    const reloadAutoTable: EventListener | any = () => {
         setReload((curr) => curr + 1)
     }
 

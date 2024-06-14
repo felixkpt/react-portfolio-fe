@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 interface Props {
     previousUrl: string | null
     currentUrl: string
-    setReloadKey: React.Dispatch<React.SetStateAction<number>>
+    setReloadKey?: React.Dispatch<React.SetStateAction<number>>
 }
 
 const Error403 = ({ previousUrl, currentUrl, setReloadKey }: Props) => {
@@ -18,7 +18,7 @@ const Error403 = ({ previousUrl, currentUrl, setReloadKey }: Props) => {
                             <p>You do not have permission to access this page.</p>
 
                             {previousUrl &&
-                                <NavLink to={previousUrl} onClick={() => previousUrl === currentUrl && setReloadKey(curr => curr + 1)} className="link_404 rounded">{previousUrl === currentUrl ? 'Reload' : 'Go Back'}</NavLink>
+                                <NavLink to={previousUrl} onClick={() => previousUrl === currentUrl && setReloadKey && setReloadKey(curr => curr + 1)} className="link_404 rounded">{previousUrl === currentUrl ? 'Reload' : 'Go Back'}</NavLink>
                             }
                         </div>
 

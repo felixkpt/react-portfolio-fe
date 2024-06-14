@@ -2,6 +2,7 @@ import AutoTable from '@/components/Autos/AutoTable';
 import AutoModal from '@/components/Autos/AutoModal';
 import { useState } from 'react';
 import Str from '@/utils/Str';
+import { ModelDetailsInterface } from '@/interfaces/UncategorizedInterfaces';
 
 const Index = () => {
   // begin component common config
@@ -9,7 +10,7 @@ const Index = () => {
   const singularName = 'Post Status'
   const uri = '/dashboard/settings/picklists/statuses/post'
   const componentId = Str.slug(pluralName)
-  const [modelDetails, setModelDetails] = useState({})
+  const [modelDetails, setModelDetails] = useState<ModelDetailsInterface>()
   const search = true
   const columns = [
     {

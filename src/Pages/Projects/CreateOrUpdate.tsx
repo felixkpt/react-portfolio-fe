@@ -30,7 +30,7 @@ const CreateOrUpdate = () => {
                 </div>
                 <div className="form-group">
                     <label className="form-label">Company</label>
-                    <RenderAsyncSelect list_sources={list_sources} listSelects={undefined} current_key={'company_id'} currentData={undefined} isMulti={false} />
+                    <RenderAsyncSelect listSources={list_sources} listSelects={undefined} current_key={'company_id'} currentData={undefined} isMulti={false} />
                 </div>
                 <div className="form-group">
                     <label className="form-label">Start date</label>
@@ -50,7 +50,7 @@ const CreateOrUpdate = () => {
                 </div>
                 <div className="form-group">
                     <label className="form-label">Skills</label>
-                    <RenderAsyncSelect list_sources={list_sources} listSelects={undefined} current_key={'skill_ids'} currentData={undefined} isMulti={true} />
+                    <RenderAsyncSelect listSources={list_sources} listSelects={undefined} current_key={'skill_ids'} currentData={undefined} isMulti={true} />
                 </div>
                 <div className="accordion-item mb-2">
                     <h2 className="accordion-header" id="heading4">

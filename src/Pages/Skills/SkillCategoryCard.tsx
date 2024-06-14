@@ -15,7 +15,7 @@ const SkillCategoryCard = ({ item }: Props) => {
         </h5>
         <div className="pf-card-content">
           {
-            item.skills.map((item) => <SkillCard key={item.id} item={item} />)
+            item.skills.map((item: any) => <SkillCard key={item.id} item={item} />)
           }
         </div>
       </div>

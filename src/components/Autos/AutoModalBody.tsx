@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import RenderAsyncSelect from '../RenderAsyncSelect';
-import { CollectionItemsInterface, DataInterface, ListSourceInterface, ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
+import { DataInterface, ListSourceInterface, ModalSizeType, ModelDetailsInterface } from '@/interfaces/UncategorizedInterfaces';
 import Str from '@/utils/Str';
 import SubmitButton from '../SubmitButton';
 interface ModalProps {
-    modelDetails?: CollectionItemsInterface | undefined;
+    modelDetails?: ModelDetailsInterface | undefined;
     record?: DataInterface | null | undefined
     modelName?: string;
     fillable?: { [key: string]: { input: string; type: string } };
@@ -22,7 +22,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
     const [inputData, setInputData] = useState<{ [key: string]: string }>({});
     const [localKey, setLocalKey] = useState(0);
     const [hasFillable, setHasFillable] = useState(false);
-    const [fillable, setFillable] = useState<{ [key: string]: string }[]>({});
+    const [fillable, setFillable] = useState<{ [key: string]: string }[]>([]);
     const [method, setMethod] = useState("POST");
 
     useEffect(() => {
@@ -138,6 +138,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                             Object.keys(fillable).map((key: any) => {
                                 const obj = fillable[key]
                                 const { input, type, min, max, rows, capitalize } = obj;
+                                const rowsCasted = rows as unknown as number
                                 const accept = obj.accept || '*'
 
                                 const current_key = key.replace(/_multilist$/, '_list')
@@ -224,7 +225,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                                                     defaultValue={inputData[current_key] || ''}
                                                     onChange={(e) => handleInputChange(current_key, e.target.value)}
                                                     key={current_key}
-                                                    rows={rows || 7}
+                                                    rows={rowsCasted || 7}
                                                 ></textarea>
                                             )}
                                         </div>

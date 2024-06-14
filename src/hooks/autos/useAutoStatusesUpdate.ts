@@ -1,4 +1,4 @@
-import { CollectionItemsInterface } from '@/interfaces/UncategorizedInterfaces';
+import { CollectionItemsInterface, DataInterface } from '@/interfaces/UncategorizedInterfaces';
 import { useEffect, useState } from 'react';
 
 const useStatusesUpdateEffect = (
@@ -7,7 +7,7 @@ const useStatusesUpdateEffect = (
 ) => {
 
     const [currentPageDataLength, setCurrentPageDataLength] = useState<number>(-1);
-    const [statuses, setStatuses] = useState<(string | number)[]>([]);
+    const [statuses, setStatuses] = useState<DataInterface[]>([]);
    
     useEffect(() => {
         if (tableData) {

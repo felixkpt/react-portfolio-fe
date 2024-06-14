@@ -11,7 +11,7 @@ interface Props {
   method?: HttpVerbsType;
 }
 
-const useRoleBasedAccessAccess = ({ uri, permission, method }: Props) => {
+const useRoleBasedAccessAccess = ({ uri, permission, method = 'get' }: Props) => {
   const allowedRoutes = ['error-404', 'login', 'user/account'];
   const testPermission = permission || uri;
 

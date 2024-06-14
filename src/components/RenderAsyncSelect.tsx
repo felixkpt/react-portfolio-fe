@@ -7,27 +7,27 @@ import { ListSourceInterface } from '@/interfaces/UncategorizedInterfaces';
 
 interface RenderAsyncSelectProps {
     current_key: string;
-    currentData: {};
+    currentData: any;
     isMulti?: boolean;
     listSources?: { [key: string]: () => Promise<ListSourceInterface[]> };
     listSelects?: { [key: string]: any };
 }
 
-let l: any
+let _listSources: any
 
 const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData, isMulti = false }: RenderAsyncSelectProps) => {
 
     if (listSources)
-        l = listSources
+        _listSources = listSources
 
     async function getOptions(current_key: string, rawSelected: PropsValue<object> | PropsValue<object[]> | undefined, q?: string) {
 
-        if (!l) return {};
+        if (!_listSources) return {};
 
         const fn = Str.camel(current_key);
 
         // Type assertion to specify that listSources[fn] is a function returning Promise<any>
-        const listSourceFn = l[fn] as ((q?: string) => Promise<any>);
+        const listSourceFn = _listSources[fn] as ((q?: string) => Promise<any>);
 
         if (typeof listSourceFn === 'function') {
             const options = await listSourceFn(q);

@@ -21,12 +21,17 @@ export interface CollectionItemsInterface {
     total: number
     model_name: string
     model_name_plural: string
-    fillable: { [key: string]: any }
+    fillable: { [key: string]: string }[]
     sortable: []
     htmls: []
     query: string
     statuses: []
     module_uri: string
+}
+
+export interface ModelDetailsInterface extends Omit<CollectionItemsInterface, 'data'> {
+    [key: string]: any
+    tableId?: string
 }
 
 export interface Link {
@@ -58,6 +63,9 @@ export interface ColumnInterface {
     key: string
     column?: string
     is_html?: boolean
+    isSorted?: boolean
+    sortDirection?: 'desc' | 'asc' | ''
+    callback?: (key: string, record: any) => void
 }
 
 interface ActionInterface {
@@ -101,7 +109,7 @@ export interface DocsInterface {
 
 export type ModalSizeType = 'modal-sm' | 'modal-lg' | 'modal-xl';
 
-export type HttpVerbsType = 'POST' | 'post' | 'PUT' | 'put' | 'PATCH' | 'patch' | 'DELETE' | 'delete'
+export type HttpVerbsType = 'POST' | 'post' | 'PUT' | 'put' | 'PATCH' | 'patch' | 'DELETE' | 'delete' | 'GET' | 'get'
 
 export interface PageHeaderInterface {
     title: string;
@@ -118,5 +126,5 @@ export interface PageHeaderInterface {
 export interface TabInterface {
     name: string;
     label?: string;
-    content: JSX.Element;
+    component: JSX.Element;
 };

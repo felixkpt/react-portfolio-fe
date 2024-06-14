@@ -23,7 +23,7 @@ const Index = () => {
 
   const navigate = useNavigate();
 
-  const { loading, errors, get } = useAxios()
+  const { loading, get } = useAxios()
   const { loading: loadingResetToken, post: postResetToken } = useAxios()
   const { loading: loggingIn, post: postLogin } = useAxios()
 
@@ -77,8 +77,10 @@ const Index = () => {
   }
 
   function sendResetToken() {
-    postResetToken(`dashboard/settings/users/view/token/${user.id}`).then(() => {
-    })
+    if (user) {
+      postResetToken(`dashboard/settings/users/view/token/${user.id}`).then(() => {
+      })
+    }
 
   }
 

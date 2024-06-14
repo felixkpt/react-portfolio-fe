@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import SimpleTable from "./SimpleTable";
-import { CollectionItemsInterface } from "@/interfaces/UncategorizedInterfaces";
+import { ModelDetailsInterface } from "@/interfaces/UncategorizedInterfaces";
 
 type ModalShowProps = {
-    record: object | null
-    modelDetails?: CollectionItemsInterface
+    record: { [key: string]: string }
+    modelDetails: ModelDetailsInterface | undefined
     size?: 'modal-sm' | 'modal-lg' | 'modal-xl'
     id?: string
 }
@@ -51,7 +51,9 @@ const ViewModal: React.FC<ModalShowProps> = ({ record, modelDetails, size, id })
 
     useEffect(() => {
         if (modelDetails) {
-            setModelName(modelDetails?.model_name || null);
+            if (modelDetails?.model_name) {
+                setModelName(modelDetails.model_name || 'Model Title');
+            }
             setExclude(modelDetails?.exclude || []);
             setHtmls(modelDetails?.htmls || []);
         }

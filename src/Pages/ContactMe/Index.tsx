@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useAxios from "@/hooks/useAxios";
 import Loader from "@/components/Loader";
@@ -12,10 +12,17 @@ import ResumeDownloadForm from "../Home/ResumeDownloadForm";
 import Header from "../../components/Header";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const Index = () => {
+interface ContactType {
+    id: number;
+    title: string;
+    link: string;
+    icon: string;
+}
 
+const Index = () => {
     const [isSent, setIsSent] = useState<boolean>(false);
     const { event } = useAutoPostDone();
+
     useEffect(() => {
         if (event && event.id === 'contact-me-form' && event.status === 200) {
             setIsSent(true)
@@ -25,7 +32,7 @@ const Index = () => {
     const { get, loading, loaded, errors } = useAxios();
     const { userCan } = usePermissions();
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<ContactType[]>([]); // Use ContactType[] for data
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,7 +82,7 @@ const Index = () => {
                                         <div className="alert alert-success">
                                             <div className='text-primary d-flex align-items-center fs-6'>
                                                 <Icon icon={'ooui:success'} style={{ fontSize: '2rem', marginRight: '0.5rem' }} />
-                                                <span className="fw-bold">Your message was went!</span>
+                                                <span className="fw-bold">Your message was sent!</span>
                                             </div>
                                         </div>
                                 }

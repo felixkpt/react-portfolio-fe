@@ -23,7 +23,7 @@ const Error404 = ({ previousUrl, currentUrl, setReloadKey }: Props) => {
               <p>the page you are looking for is not avaible!</p>
 
               {previousUrl &&
-                <NavLink to={previousUrl} onClick={() => previousUrl === currentUrl && setReloadKey(curr => curr + 1)} className="link_404 rounded">{previousUrl === currentUrl ? 'Reload' : 'Go Back'}</NavLink>
+                <NavLink to={previousUrl} onClick={() => previousUrl === currentUrl && setReloadKey && setReloadKey(curr => curr + 1)} className="link_404 rounded">{previousUrl === currentUrl ? 'Reload' : 'Go Back'}</NavLink>
               }
             </div>
             <NavLink to="/">

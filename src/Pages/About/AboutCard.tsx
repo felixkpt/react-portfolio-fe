@@ -1,7 +1,8 @@
+import { AboutType } from "@/interfaces/PortfolioInterfaces"
 import { baseURL } from "@/utils/helpers"
 
 type Props = {
-    item: any
+    item: AboutType
 }
 
 

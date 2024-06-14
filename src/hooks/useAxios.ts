@@ -5,8 +5,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { publish } from '@/utils/events';
 import { baseURL } from '@/utils/helpers';
 
-interface ResultsInterface {
-    results: any;
+interface ResultsInterface<T = any> {
+    results: T | undefined;
     message: string | undefined;
     status: number | undefined;
 }
@@ -17,11 +17,10 @@ interface AxiosErrorResponseData {
 }
 
 const useAxios = <T = any>() => {
-
     axios.defaults.baseURL = baseURL('api');
     const frontendUrl = window.location.origin;
 
-    const [response, setResponse] = useState<T | ResultsInterface>({
+    const [response, setResponse] = useState<ResultsInterface<T>>({
         results: undefined,
         message: undefined,
         status: undefined,
@@ -31,39 +30,28 @@ const useAxios = <T = any>() => {
     const [loaded, setLoaded] = useState(false);
     const [errors, setErrors] = useState<string | undefined>(undefined);
 
-    // Create an Axios instance with a request interceptor
-    const axiosInstance = axios.create();
-
-    // Assuming you have a useAuth hook that manages user authentication and provides the user object with the token
     const { user, deleteUser } = useAuth();
 
-    // Request interceptor to add Authorization header if user is authenticated
+    const axiosInstance = axios.create();
+
     axiosInstance.interceptors.request.use(
         (config) => {
-            // Ensure config.headers is of type AxiosRequestHeaders
             if (!config.headers) {
-                config.headers = {} as AxiosRequestHeaders; // Initialize as an empty object
+                config.headers = {} as AxiosRequestHeaders;
             }
 
-            // Add X-Frontend-URL header
             config.headers['X-Frontend-URL'] = frontendUrl;
 
-            // Optionally add other headers here
-
             if (user) {
-                // Add Authorization header if user is authenticated
                 config.headers['Authorization'] = `Bearer ${user.token}`;
             }
 
             return config;
         },
-        (error) => {
-            return Promise.reject(error);
-        }
+        (error) => Promise.reject(error)
     );
 
     const fetchData = async (config: any) => {
-
         let elementId: string | null = null;
         if (config?.elementId) {
             elementId = config.elementId;
@@ -114,7 +102,6 @@ const useAxios = <T = any>() => {
             if (axios.isAxiosError(axiosError)) {
                 if (axiosError.response !== undefined) {
                     status = axiosError.response.status;
-
                     message = axiosError.response.data?.message || 'An error occurred.';
                     const errors = axiosError.response.data?.errors;
                     setErrors(message);
@@ -127,11 +114,9 @@ const useAxios = <T = any>() => {
                         deleteUser();
                     }
 
-                    // Handle validation errors in the response data
                     if (axiosError.response.data?.errors) {
                         showErrors(axiosError.response.data, elementId);
                     }
-
                 } else {
                     message = 'We are experiencing server connection issues.';
                     setErrors(message);
@@ -153,35 +138,11 @@ const useAxios = <T = any>() => {
 
     const get = (url: string, config = {}) => fetchData({ method: 'GET', url, ...config });
     const post = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config });
-    const put = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config, _method: 'patch' });
-    const patch = (url: string, data = {}, config = {}) => fetchData({ method: 'POST', url, data, ...config, _method: 'patch' });
+    const put = (url: string, data = {}, config = {}) => fetchData({ method: 'PUT', url, data, ...config });
+    const patch = (url: string, data = {}, config = {}) => fetchData({ method: 'PATCH', url, data, ...config });
     const destroy = (url: string, data = {}, config = {}) => fetchData({ method: 'DELETE', url, data, ...config });
-    const getFile = async (url: string, config = {}, placeholder: string | null = null) => {
 
-        if (!url && placeholder) return placeholder;
-
-        try {
-            setLoading(true);
-            const resp = await axiosInstance({
-                method: 'GET',
-                url: `/dashboard/file-repo/${url}`,
-                responseType: 'blob', // This tells Axios to handle the response as a binary blob
-                ...config,
-            });
-
-            const file = new Blob([resp.data], { type: resp.headers['content-type'] });
-            return file;
-        } catch (error) {
-            // Error handling code...
-        } finally {
-            setLoading(false);
-            setLoaded(true);
-        }
-
-        return '';
-    };
-
-    return { response, loading, loaded, errors, get, post, put, patch, destroy, getFile };
+    return { response, loading, loaded, errors, get, post, put, patch, destroy };
 };
 
 export default useAxios;

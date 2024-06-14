@@ -8,7 +8,7 @@ interface PaginationProps {
   items: any;
   setPage: (value: string) => void
   setPerPage: (value: string) => void
-  setPaginatorChangeKey: React.Dispatch<SetStateAction<number>>
+  setPaginatorChangeKey?: React.Dispatch<SetStateAction<number>>
   hidePerPage?: boolean
   loading?: boolean
   breakpoint?: 'md' | 'lg' | 'xl'
@@ -60,7 +60,6 @@ const Pagination: React.FC<PaginationProps> = ({ items, setPage, setPerPage, set
               pageRangeDisplayed={5}
               onPageChange={handlePageClick}
               containerClassName={'pagination'}
-              subContainerClassName={''}
               activeClassName={'active'}
             />
           </nav>

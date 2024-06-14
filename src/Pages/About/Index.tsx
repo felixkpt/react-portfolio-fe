@@ -6,14 +6,18 @@ import usePermissions from "@/hooks/rba/usePermissions"
 import AlertMessage from "@/components/AlertMessage"
 import NoContentMessage from "@/components/NoContentMessage"
 import AboutCard from "./AboutCard"
+import { AboutType } from "@/interfaces/PortfolioInterfaces"
 
 const Index = () => {
 
-    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, data: dataAbout } = useAxios()
+    const { get: getAbout, loading: loadingAbout, loaded: loadedAbout, errors: errorsAbout, response: aboutResponse } = useAxios()
+
+    const aboutData: AboutType = aboutResponse.results
+
     const { userCan } = usePermissions()
 
     useEffect(() => {
-        if (!dataAbout) {
+        if (!aboutData) {
             getAbout('/about/view/default')
         }
     }, [])
@@ -32,9 +36,9 @@ const Index = () => {
                     loadedAbout && !errorsAbout ?
                         <div className="pf-about row mt-3 justify-content-between">
                             {
-                                dataAbout?.data
+                                aboutData
                                     ?
-                                    <AboutCard item={dataAbout.data} />
+                                    <AboutCard item={aboutData} />
                                     :
                                     <NoContentMessage />
                             }

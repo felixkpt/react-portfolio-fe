@@ -8,11 +8,16 @@ import SkillCategoryCard from "./SkillCategoryCard";
 import ResumeDownloadForm from "../Home/ResumeDownloadForm";
 import Header from "../../components/Header";
 
+type SkillCategoryType = {
+    id: string
+    [key: string]: any
+}
+
 const Index = () => {
     const { get, loading, loaded, errors } = useAxios();
     const { userCan } = usePermissions();
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<SkillCategoryType[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

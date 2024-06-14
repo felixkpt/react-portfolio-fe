@@ -9,11 +9,15 @@ import QualificationCard from "./QualificationCard";
 import ResumeDownloadForm from '../Home/ResumeDownloadForm';
 import Header from '../../components/Header';
 
+type QualificationType = {
+    id: string
+    [key: string]: any
+}
 const Index = () => {
     const { get, loading, loaded, errors } = useAxios();
     const { userCan } = usePermissions();
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<QualificationType[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

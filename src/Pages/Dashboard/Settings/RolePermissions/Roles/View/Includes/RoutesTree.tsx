@@ -10,12 +10,12 @@ import { RouteInterface } from '@/interfaces/RolePermissionsInterfaces';
 
 interface Props {
     child: RouteCollectionInterface;
-    allPermissions: PermissionInterface[];
-    rolePermissions: PermissionInterface[];
+    allPermissions?: PermissionInterface[];
+    rolePermissions?: PermissionInterface[];
     indent: number
     counter: number
-    isInitialRender: boolean
-    hiddenIds: string[]
+    isInitialRender?: boolean
+    hiddenIds?: string[]
     setHiddenIds: React.Dispatch<React.SetStateAction<string[]>>
 }
 
@@ -32,7 +32,7 @@ const checkboxTreeManager = new CheckboxTreeManager(
 );
 
 // Function to get the hidden for a route based on its permissions
-function getHiddenState(allPermissions: any[], uri: string) {
+function getHiddenState(allPermissions: any[] | undefined, uri: string) {
     let hidden = false
     if (allPermissions) {
 
@@ -47,7 +47,7 @@ function getHiddenState(allPermissions: any[], uri: string) {
 }
 
 // Function to get the icon for a route based on its permissions
-function getRouteIcon(allPermissions: any[], uri: string) {
+function getRouteIcon(allPermissions: any[] | undefined, uri: string) {
     let icon = ''
     if (allPermissions) {
 
@@ -62,7 +62,7 @@ function getRouteIcon(allPermissions: any[], uri: string) {
 }
 
 // The main RoutesTree component
-const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, indent, counter, isInitialRender, hiddenIds, setHiddenIds }) => {
+const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, indent, counter, isInitialRender, hiddenIds, setHiddenIds }: Props) => {
 
     const { routes, children } = child
 
@@ -78,9 +78,11 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
 
     useEffect(() => {
 
-        checkboxTreeManager.setRolePermissions(rolePermissions)
+        if (rolePermissions) {
+            checkboxTreeManager.setRolePermissions(rolePermissions)
+        }
 
-    }, [rolePermissions.length])
+    }, [rolePermissions?.length])
 
     // Function to handle toggling the display of child routes
     function handleToggle(id: string) {
@@ -90,12 +92,14 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
         const targetUpdated = document.getElementById(id);
         const isHidden = targetUpdated?.classList.contains('d-none')
 
-        if (isHidden) {
-            if (!hiddenIds.find((_id) => _id === id)) {
-                setHiddenIds((curr) => [...curr, id])
+        if (hiddenIds) {
+            if (isHidden) {
+                if (!hiddenIds.find((_id) => _id === id)) {
+                    setHiddenIds((curr) => [...curr, id])
+                }
+            } else {
+                setHiddenIds(hiddenIds.filter((_id) => _id !== id))
             }
-        } else {
-            setHiddenIds(hiddenIds.filter((_id) => _id !== id))
         }
     }
 
@@ -144,7 +148,7 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
     }
 
     // React state to track order of items
-    const [itemList, setItemList] = useState(children);
+    const [itemList, setItemList] = useState<RouteCollectionInterface[]>(children);
 
     // Function to update list on drop
     const handleDrop = (droppedItem: any) => {
@@ -162,7 +166,7 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
     };
 
     // React state to track order of items
-    const [routesList, setRoutesList] = useState(routes);
+    const [routesList, setRoutesList] = useState<RouteInterface[]>(routes);
 
     // Function to update list on drop
     const handleDropRoutes = (droppedItem: any) => {
@@ -202,7 +206,7 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
                         />
                     </label>
                     <label className="toggler text-base flex-grow-1 border flex-grow-1 py-2 ps-1 pe-0 rounded" onClick={() => handleToggle(`chld-${PARENT_FOLDER_ID_PREFIX}${currentId}-${PARENT_CHILDREN_CLASS}`)}>
-                        <h5>{Str.title(Str.afterLast(child.folder, '/') || '--')}</h5>
+                        <h5>{child ? Str.title(Str.afterLast(child.folder, '/')) : '--'}</h5>
                     </label>
                 </div>
                 <div className='bg-light col-5 d-flex rounded gap-1'>
@@ -228,7 +232,7 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
                 </div>
             </div>
             <div>
-                <div id={`chld-${PARENT_FOLDER_ID_PREFIX}${currentId}-${PARENT_CHILDREN_CLASS}`} className={`${PARENT_CHILDREN_CLASS} my-1 ms-2 shadow-sm px-1 py-2 ${hiddenIds.includes(`chld-${PARENT_FOLDER_ID_PREFIX}${currentId}-${PARENT_CHILDREN_CLASS}`) ? 'd-none' : ''}`}>
+                <div id={`chld-${PARENT_FOLDER_ID_PREFIX}${currentId}-${PARENT_CHILDREN_CLASS}`} className={`${PARENT_CHILDREN_CLASS} my-1 ms-2 shadow-sm px-1 py-2 ${hiddenIds ? (hiddenIds.includes(`chld-${PARENT_FOLDER_ID_PREFIX}${currentId}-${PARENT_CHILDREN_CLASS}`) ? 'd-none' : '') : ''}`}>
                     {
                         routesList.length > 0 &&
                         <DragDropContext onDragEnd={handleDropRoutes}>
@@ -286,7 +290,7 @@ const RoutesTree: React.FC<Props> = ({ child, rolePermissions, allPermissions, i
                                                                                     value={route.uri_and_methods}
                                                                                     id={`${Str.uriMethods(route.uri_and_methods)}-child-checkbox`}
                                                                                     className={`${ROUTE_CHECKBOX_CLASS} form-check-input me-2`}
-                                                                                    onChange={(e) => debouncedHandleCheckedSingle(e, currentId, true, true)}
+                                                                                    onChange={(e: any) => debouncedHandleCheckedSingle(e)}
                                                                                     disabled={route.checked}
                                                                                 />
                                                                                 <input

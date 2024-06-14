@@ -2,41 +2,45 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { toggleSidebar } from "../../Default/SideNav/Index";
 import { config } from "@/utils/helpers";
 import { publish } from "../../../utils/events";
 import AuthSection from "./AuthSection";
 
 interface Props {
-    sidNavHidden?: boolean
-    hideFrom?: 'md' | 'lg' | 'xl' | 'xxl'
+    sidNavHidden?: boolean;
+    hideFrom?: 'md' | 'lg' | 'xl' | 'xxl';
 }
+
 const NavBar = ({ sidNavHidden, hideFrom }: Props) => {
     const { user } = useAuth();
 
     useEffect(() => {
         const sidebarToggle = document.body.querySelector('#sidebarToggle');
 
+        const handleClick = () => {
+            publish('hideSideNav', 'toggle');
+        };
+
         if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarToggle.addEventListener('click', handleClick);
         }
 
         return () => {
             if (sidebarToggle) {
-                sidebarToggle.removeEventListener('click', toggleSidebar);
+                sidebarToggle.removeEventListener('click', handleClick);
             }
-        }
+        };
     }, []);
 
     return (
-        <nav className={`sb-topnav navbar navbar-expand navbar-dark sb-navbar-dark shadow ${hideFrom ? 'd-' + hideFrom + '-none' : ''}`}>
+        <nav className={`sb-topnav navbar navbar-expand navbar-dark sb-navbar-dark shadow ${hideFrom ? 'd-' + hideFrom + '-none' : ''} overflow-auto`}>
             <div className="navbar-brand ps-3 d-flex align-items-center justify-content-md-between">
                 <span className="order-2 order-md-1">
                     <NavLink to="/" className='navbar-brand ps-3'>{config.name}</NavLink>
                 </span>
                 {
                     !sidNavHidden &&
-                    <button className="btn btn-link btn-sm me-4 me-lg-0 order-1 order-md-2 sidebarToggle" onClick={() => publish('hideSideNav', 'toggle')}><Icon icon={`fa6-solid:bars`} /></button>
+                    <button className="btn btn-link btn-sm me-4 me-lg-0 order-1 order-md-2 sidebarToggle" id="sidebarToggle"><Icon icon={`fa6-solid:bars`} /></button>
                 }
             </div>
             {
@@ -50,4 +54,5 @@ const NavBar = ({ sidNavHidden, hideFrom }: Props) => {
         </nav>
     );
 };
-export default NavBar
+
+export default NavBar;

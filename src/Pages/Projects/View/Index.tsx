@@ -7,6 +7,7 @@ import ProjectCard from "./ProjectCard"
 import ResumeDownloadForm from "../../Home/ResumeDownloadForm"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { baseURL } from "../../../utils/helpers"
+import { ProjectType } from "@/interfaces/PortfolioInterfaces"
 
 const Index = () => {
 
@@ -16,8 +17,8 @@ const Index = () => {
     const { get: getProjects, loaded: loadedProjects } = useAxios()
 
     const [data, setData] = useState(null);
-    const [projectsList, setProjectsList] = useState([]);
-    const [filteredProjects, setFilteredProjects] = useState([])
+    const [projectsList, setProjectsList] = useState<ProjectType[]>([]);
+    const [filteredProjects, setFilteredProjects] = useState<ProjectType[]>([])
 
     useEffect(() => {
 
@@ -88,14 +89,14 @@ const Index = () => {
                                                         <div className="card-header">
                                                             <div className="pf-card-content">
                                                                 <div className="d-flex justify-content-between gap-1 mb-1">
-                                                                    {item.title}
+                                                                    <div className="text-center">{item.title}</div>
                                                                     <div className="pf-card-view-item">
                                                                         <Icon icon='ph:arrow-right-bold' />
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="text-center text-md-start">
-                                                                <img className="pf-projects-image thumb" src={baseURL(`assets/${item.image || ''}`)} />
+                                                            <div className="text-center">
+                                                                <img className="pf-projects-image thumb thumb-sm" src={baseURL(`assets/${item.image || ''}`)} />
                                                             </div>
                                                         </div>
                                                         <div className="card-body">

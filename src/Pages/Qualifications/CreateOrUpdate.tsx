@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import Dropzone from "@/components/Dropzone"
-import { publish } from "@/utils/events"
+import Dropzone from "@/components/Dropzone";
+import { publish } from "@/utils/events";
 import SubmitButton from "@/components/SubmitButton";
 import { useNavigate } from "react-router-dom";
 import useAutoPostDone from "@/hooks/autos/useAutoPostDone";
 
 const CreateOrUpdate = () => {
-    // on success redirect to listing
-    const navigate = useNavigate()
-    const { event } = useAutoPostDone()
-    useEffect(() => {
-        if (event && event.status == 'success' && event.id === 'qualificationsForm') {
-            navigate('/qualifications')
-        }
-    }, [event])
+    const navigate = useNavigate();
+    const { event } = useAutoPostDone();
 
-    const [files, setFiles] = useState<string[]>([]);
+    useEffect(() => {
+        if (event && event.status === 200 && event.id === 'qualificationsForm') {
+            navigate('/qualifications');
+        }
+    }, [event, navigate]);
+
+    const [files, setFiles] = useState<Blob[]>([]); // Adjusted to use Blob instead of string for files
 
     return (
         <div>
@@ -34,11 +34,11 @@ const CreateOrUpdate = () => {
                 </div>
                 <div className="form-group">
                     <label className="form-label">Start date</label>
-                    <input type="datetime" name="start_date" id="start_date" className="form-control" />
+                    <input type="datetime-local" name="start_date" id="start_date" className="form-control" />
                 </div>
                 <div className="form-group">
                     <label className="form-label">End date</label>
-                    <input type="datetime" name="end_date" id="end_date" className="form-control" />
+                    <input type="datetime-local" name="end_date" id="end_date" className="form-control" />
                 </div>
                 <div className="accordion-item mb-2">
                     <h2 className="accordion-header" id="heading4">
@@ -50,18 +50,18 @@ const CreateOrUpdate = () => {
                         <div className="accordion-body">
                             <div className="form-group mb-4 inside-accordion">
                                 <div className='form-control' id='image'>
-                                    <Dropzone fileType="jpg" files={files} setFiles={setFiles} fileType='featured image' maxFiles={1} />
+                                    <Dropzone fileType="jpg" files={files} setFiles={setFiles} maxFiles={1} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="mt-2 d-flex justify-content-end">
-                    <SubmitButton />
+                    <SubmitButton className="btn btn-warning">Save</SubmitButton>
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default CreateOrUpdate
+export default CreateOrUpdate;

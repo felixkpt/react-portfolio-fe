@@ -11,7 +11,7 @@ const CreateOrUpdate = () => {
     const navigate = useNavigate()
     const { event } = useAutoPostDone()
     useEffect(() => {
-        if (event && event.status == 'success' && event.id === 'skillsForm') {
+        if (event && event.status == 200 && event.id === 'skillsForm') {
             navigate('/skills')
         }
     }, [event])
@@ -31,11 +31,11 @@ const CreateOrUpdate = () => {
                 </div>
                 <div className="form-group">
                     <label className="form-label">Experience</label>
-                    <RenderAsyncSelect list_sources={list_sources} listSelects={undefined} current_key={'experience_level_id'} currentData={undefined} />
+                    <RenderAsyncSelect listSources={list_sources} listSelects={undefined} current_key={'experience_level_id'} currentData={undefined} />
                 </div>
                 <div className="form-group">
                     <label className="form-label">Category</label>
-                    <RenderAsyncSelect list_sources={list_sources} listSelects={undefined} current_key={'skill_category_id'} currentData={undefined} />
+                    <RenderAsyncSelect listSources={list_sources} listSelects={undefined} current_key={'skill_category_id'} currentData={undefined} />
                 </div>
                 <div className="mt-2 d-flex justify-content-end">
                     <SubmitButton />

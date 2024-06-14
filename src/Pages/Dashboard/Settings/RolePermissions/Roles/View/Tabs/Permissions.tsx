@@ -5,8 +5,7 @@ import PrepareRoutesTreeDraggable from '../Includes/PrepareRoutesTreeDraggable';
 import RoleHeader from '../Includes/RoleHeader';
 import { useRoleRoutePermissionsAndMenuContext } from '@/contexts/RoleRoutePermissionsAndMenuContext';
 import { publish } from '@/utils/events';
-import { PermissionInterface, RoleInterface } from '@/interfaces/RolePermissionsInterfaces';
-import { RouteInterface } from '../../../../../../../interfaces/RolePermissionsInterfaces';
+import { PermissionInterface, RoleInterface, RouteCollectionInterface } from '@/interfaces/RolePermissionsInterfaces';
 
 type Props = {
     role: RoleInterface | undefined;
@@ -28,7 +27,7 @@ const Permissions: React.FC<Props> = ({ role }) => {
     const allPermissionsUri = `dashboard/settings/role-permissions/permissions/get-role-permissions/all`;
     const routesUri = 'dashboard/settings/role-permissions/permissions/routes';
 
-    const [routes, setRoutes] = useState<RouteInterface[]>([])
+    const [routes, setRoutes] = useState<RouteCollectionInterface[]>([])
     const [allPermissions, setAllPermissions] = useState<PermissionInterface[]>([])
 
     useEffect(() => {
@@ -47,7 +46,8 @@ const Permissions: React.FC<Props> = ({ role }) => {
 
     useEffect(() => {
 
-        if (savedFolders.length > 0 && id && roleAndPermissions.currentRole.id === id) {
+        const curr = roleAndPermissions.currentRole
+        if (savedFolders.length > 0 && id && curr && String(curr.id) == id) {
 
             roleRoutePermissions.reload()
             roleMenu.reload()

@@ -7,12 +7,13 @@ import NoContentMessage from "@/components/NoContentMessage";
 import ProjectsCard from "./ProjectCard";
 import ResumeDownloadForm from "../Home/ResumeDownloadForm";
 import Header from "../../components/Header";
+import { ProjectType } from "@/interfaces/PortfolioInterfaces";
 
 const Index = () => {
     const { get, loading, loaded, errors } = useAxios();
     const { userCan } = usePermissions();
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<ProjectType[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

@@ -3,64 +3,53 @@ import './SlidesComponent.scss';
 import { debounce } from 'lodash';
 import { ProjectSlideInterface } from '../../../../interfaces/PortfolioInterfaces';
 import { baseURL } from '../../../../utils/helpers';
-import { Icon } from '@iconify/react/dist/iconify.js';
 
 interface Props {
-  slides: ProjectSlideInterface[]
-  componentId?: string
-  delay?: number // in secs
-  timeout?: number // in secs
+  slides: ProjectSlideInterface[];
+  componentId?: string;
+  delay?: number; // in secs
+  timeout?: number; // in secs
 }
-const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout }) => {
 
-  const id = componentId || 'slideCarousel'
-  delay = delay || 4 // in secs
-  timeout = timeout || Math.round(Math.random() * 10) // in secs
+const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout }) => {
+  const id = componentId || 'slideCarousel';
+  delay = delay || 4; // in secs
+  timeout = timeout || Math.round(Math.random() * 10); // in secs
 
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [autoScroll, setAutoScroll] = useState<boolean>(true);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [scrollLimit, setScrollLimit] = useState<number>(0);
 
-  const initAutoScroll = true
-  const [autoScroll, setAutoScroll] = useState<boolean>(initAutoScroll)
-
-  const [scrollPosition, setScrollPosition] = useState<number>(0)
-  const [scrollLimit, setScrollLimit] = useState<number>(0)
-
-  const debouncedPrev = debounce(prevHandler, 100)
-  const debouncedNext = debounce(nextHandler, 100)
+  const debouncedPrev = debounce(prevHandler, 100);
+  const debouncedNext = debounce(nextHandler, 100);
 
   useEffect(() => {
-
-    const { carouselInner, cardWidth } = getSelectors()
+    const { carouselInner, cardWidth } = getSelectors();
 
     if (carouselInner && carouselInner && cardWidth) {
-      setScrollLimit((carouselInner.scrollWidth - carouselInner.clientWidth) + cardWidth)
+      setScrollLimit((carouselInner.scrollWidth - carouselInner.clientWidth) + cardWidth);
     }
-
-  }, [])
+  }, []);
 
   useEffect(() => {
     const carousel = carouselRef.current;
 
     if (carousel && scrollLimit) {
-
-      const multipleItemCarousel = carousel;
+      const multipleItemCarousel = carousel as HTMLDivElement;
 
       if (!window.matchMedia("(min-width:576px)").matches) {
         multipleItemCarousel.classList.add("slide");
       }
-
     }
-
-  }, [scrollLimit, scrollPosition])
+  }, [scrollLimit, scrollPosition]);
 
   function prevHandler() {
-
     if (scrollLimit) {
-
-      const { carouselInner, cardWidth } = getSelectors()
+      const { carouselInner, cardWidth } = getSelectors();
 
       if (carouselInner && scrollPosition > 0) {
-        const affectVal = scrollPosition - cardWidth
+        const affectVal = scrollPosition - cardWidth;
         setScrollPosition(affectVal);
 
         carouselInner.scrollTo({
@@ -69,36 +58,26 @@ const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout 
         });
       }
     }
-
   }
 
   function nextHandler() {
-
-    const { carouselItems, carouselInner, cardWidth } = getSelectors()
-
-    console.log('N Head:', scrollPosition,)
+    const { carouselItems, carouselInner, cardWidth } = getSelectors();
 
     if (scrollLimit && carouselInner) {
-
       if (scrollPosition < carouselInner.scrollWidth - cardWidth * 3) {
-
-        const affectVal = scrollPosition + cardWidth
+        const affectVal = scrollPosition + cardWidth;
         setScrollPosition(affectVal);
 
         carouselInner.scrollTo({
           left: affectVal,
           behavior: "smooth"
         });
-
       } else {
-
-        if (carouselItems[carouselItems.length - 1].classList.contains('active')) {
-
-          const affectVal = 0
+        if (carouselItems.length && (carouselItems[carouselItems.length - 1] as HTMLElement).classList.contains('active')) {
+          const affectVal = 0;
           setScrollPosition(affectVal);
 
           carouselItems.forEach((itm, i) => {
-
             if (i === 0) {
               itm.classList.add('active');
               carouselInner.scrollTo({
@@ -106,37 +85,32 @@ const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout 
                 behavior: "smooth"
               });
             } else {
-              itm.classList.remove('active')
+              itm.classList.remove('active');
             }
-          })
+          });
         }
       }
-
     }
   }
 
   useEffect(() => {
-
     if (autoScroll && scrollLimit > 0) {
-
       const carousel = carouselRef.current;
+
       let timeoutId: number | undefined;
       let intervalId: number | undefined;
 
       const startCarousel = () => {
-
         timeoutId = setTimeout(() => {
-
           intervalId = setInterval(() => {
             if (carousel) {
-              const nextButton = carousel.querySelector('.carousel-control-next');
+              const nextButton = carousel.querySelector('.carousel-control-next') as HTMLElement;
 
               if (nextButton) {
                 nextButton.click();
               }
             }
           }, delay * 1000);
-
         }, timeout * 1000);
       };
 
@@ -154,41 +128,37 @@ const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout 
       return () => {
         stopCarousel();
       };
-
     }
-
   }, [autoScroll, scrollLimit, scrollPosition]);
 
   function getSelectors() {
     const carousel = carouselRef.current;
 
-    interface Prop {
-      carouselItems: NodeList | [],
-      cardWidth: number,
-      carouselInner: HTMLDivElement | null,
-
+    interface SelectorResult {
+      carouselItems: NodeListOf<HTMLDivElement>;
+      cardWidth: number;
+      carouselInner: HTMLDivElement | null;
     }
 
-    const obj: Prop = {
-      carouselItems: [],
+    const obj: SelectorResult = {
+      carouselItems: document.querySelectorAll<HTMLDivElement>(".carousel-item"),
       cardWidth: 0,
-      carouselInner: null,
-    }
+      carouselInner: null
+    };
+
     if (carousel) {
-      obj.carouselItems = carousel.querySelectorAll(".carousel-item");
-      obj.cardWidth = obj.carouselItems[0].offsetWidth as number;
+      obj.cardWidth = (obj.carouselItems[0] as HTMLDivElement).offsetWidth;
       obj.carouselInner = carousel.querySelector(".carousel-inner") as HTMLDivElement;
     }
 
-    return obj
+    return obj;
   }
 
   const alterAutoScroll = (state: string) => {
-    if (initAutoScroll == true) {
-      setAutoScroll(state == 'pause' ? false : true)
+    if (autoScroll) {
+      setAutoScroll(state === 'pause' ? false : true);
     }
-
-  }
+  };
 
   return (
     <div className="shadow p-2 rounded">

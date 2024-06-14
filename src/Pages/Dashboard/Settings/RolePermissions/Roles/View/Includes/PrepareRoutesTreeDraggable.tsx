@@ -35,7 +35,7 @@ function constructMenus() {
   const elements = document.querySelectorAll(selector);
 
   const orderArray: string[] = [];
-  elements.forEach((element, i) => {
+  elements.forEach((element) => {
     const id = element.id
     if (id.match(/^v-pills-/) && id.match(/-tab$/)) {
       const extractedValue = id.replace('v-pills-', '').replace('-tab', '');

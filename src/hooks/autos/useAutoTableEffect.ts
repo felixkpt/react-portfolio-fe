@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { config } from '@/utils/helpers';
 
 interface AutoTableOptionsInterface {
-    perPage?: string | undefined;
+    perPage?: number | undefined;
 }
 
 const convertQueryParams = (params: ParsedQuery<string | undefined>): { [key: string]: string | undefined } => {
@@ -31,7 +31,8 @@ const useAutoTableEffect = (
 ) => {
     const [tableData, setTableData] = useState<CollectionItemsInterface | null>(null);
     const [page, setPage] = useState<string | undefined>('1');
-    const [per_page, setPerPage] = useState<string | undefined>(options.perPage || '50');
+    const perPage = options.perPage as unknown as string
+    const [per_page, setPerPage] = useState<string | undefined>(perPage || '50');
     const [orderBy, setOrderBy] = useState<string | undefined>(undefined);
     const [orderDirection, setOrderDirection] = useState<string>('desc');
     const [searchTerm, setSearchTerm] = useState<string | undefined>(undefined);

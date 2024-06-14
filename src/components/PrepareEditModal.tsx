@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { publish, subscribe, unsubscribe } from '@/utils/events'
 import AutoModal from './Autos/AutoModal'
-import { ListSourceInterface } from '@/interfaces/UncategorizedInterfaces'
+import { CollectionItemsInterface, ListSourceInterface } from '@/interfaces/UncategorizedInterfaces'
 
 const PrepareEditModal = () => {
 
-    const [modelDetails, setModelDetails] = useState({})
+    const [modelDetails, setModelDetails] = useState<Omit<CollectionItemsInterface, 'data'>>()
     const [record, setRecord] = useState<any>(undefined)
     const [list_sources, setListSources] = useState<{ [key: string]: () => Promise<ListSourceInterface[]> }>()
 
@@ -74,7 +74,7 @@ const PrepareEditModal = () => {
                         modelDetails={modelDetails}
                         record={record}
                         actionUrl={actionUrl}
-                        list_sources={list_sources}
+                        listSources={list_sources}
                         id='AutoModalEdit'
                         modalSize={modalSize}
                     />
