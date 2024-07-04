@@ -14,7 +14,7 @@ const ProjectCard = ({ item }: Props) => {
             <Header title={`${item.title} @ ${item.company.name}`} hideTitle description={item.company.name} />
             <div className="shadow-sm rounded pf-projects-card row gap-2 gap-md-0 pf-card">
                 <div className="col-md-3 col-xl-2 text-center text-md-start">
-                    <img className="pf-projects-image" src={baseURL(`assets/${item.image || ''}`)} />
+                    <img className="pf-projects-image" src={`${item.image || ''}`} />
                 </div>
                 <div className="col-md-9 col-xl-10 pf-card-content">
                     <h5 className="col mb-4 d-flex justify-content-between">

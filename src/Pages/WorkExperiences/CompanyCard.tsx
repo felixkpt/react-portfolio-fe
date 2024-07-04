@@ -16,7 +16,7 @@ const CompanyCard = ({ item }: Props) => {
                 </div>
                 <div className="col-xl-10 pf-card-content">
                     <h5 className="col mb-4 d-flex gap-3 align-items-center">
-                        <img className="pf-companies-image" src={baseURL(`assets/${item.image || ''}`)} />
+                        <img className="pf-companies-image" src={`${item.image || ''}`} />
                         <span>{item.name}</span>
                     </h5>
                     <h6 className="text-white-50">{item.position}</h6>

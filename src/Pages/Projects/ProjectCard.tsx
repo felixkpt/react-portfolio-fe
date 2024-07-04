@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { baseURL } from "../../utils/helpers"
 import { NavLink } from "react-router-dom"
 
 type Props = {
@@ -12,7 +11,7 @@ const ProjectCard = ({ item }: Props) => {
             <NavLink to={`/projects/view/${item.id}`} className='nav-link cursor-pointer'>
                 <div className="shadow-sm rounded pf-card pf-projects-card row">
                     <div className="col-xl-2">
-                        <img className="pf-projects-image" src={baseURL(`assets/${item.image || ''}`)} />
+                        <img className="pf-projects-image" src={`${item.image || ''}`} />
                     </div>
                     <div className="col-xl-10 pf-card-content">
                         <h5 className="col mb-4 d-flex justify-content-between">

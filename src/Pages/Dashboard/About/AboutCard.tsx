@@ -9,7 +9,7 @@ const AboutCard = ({ item }: Props) => {
         <div>
             <h4 className="pf-header d-flex gap-1">
                 <div className='pf-avatar pf-avatar-sm d-lg-none'>
-                    <img src={baseURL(`assets/${item?.image}`)} alt="" />
+                    <img src={item?.image} alt="" />
                 </div>
                 {
                     item.current_title

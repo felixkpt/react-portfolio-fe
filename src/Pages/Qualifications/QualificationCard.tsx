@@ -12,7 +12,7 @@ const QualificationCard = ({ item }: Props) => {
                 <p className="desc">{item.institution} - {item.course}</p>
                 <p className="qualification">{item.qualification}</p>
             </div>
-            <div className="after"><img src={baseURL(`assets/${item.image || ''}`)} alt="" /></div>
+            <div className="after"><img src={`${item.image || ''}`} alt="" /></div>
 
         </li>
     )

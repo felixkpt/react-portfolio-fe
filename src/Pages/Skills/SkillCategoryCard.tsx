@@ -10,7 +10,7 @@ const SkillCategoryCard = ({ item }: Props) => {
     <div className="col-md-4">
       <div className="shadow-sm pf-card pf-card-transform rounded pf-skill-cat-card">
         <h5 className="col mb-2 d-flex gap-3">
-          <img className="pf-skill-cat-image" src={baseURL(`assets/${item.image || ''}`)} />
+          <img className="pf-skill-cat-image" src={`${item.image || ''}`} />
           <span>{item.name}</span>
         </h5>
         <div className="pf-card-content">

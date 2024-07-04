@@ -1,10 +1,8 @@
 import { AboutType } from "@/interfaces/PortfolioInterfaces"
-import { baseURL } from "@/utils/helpers"
 
 type Props = {
     item: AboutType
 }
-
 
 const AboutCard = ({ item }: Props) => {
 
@@ -29,7 +27,7 @@ const AboutCard = ({ item }: Props) => {
                 </div>
                 <div className="pf-grid-item featured_image_sect d-lg-none">
                     <div className='pf-avatar pf-avatar-sm mx-auto'>
-                        <img src={baseURL(`assets/${item?.image}`)} alt="" />
+                        <img src={item?.image} alt="" />
                     </div>
                 </div>
             </div>

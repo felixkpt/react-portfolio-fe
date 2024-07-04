@@ -175,7 +175,7 @@ const SlidesComponent: React.FC<Props> = ({ slides, componentId, delay, timeout 
                       </div>
                     </div>
                     <div className="text-center text-md-start">
-                      <img className="pf-projects-image thumb" src={baseURL(`assets/${item.image || ''}`)} />
+                      <img className="pf-projects-image thumb" src={`${item.image || ''}`} />
                     </div>
                   </div>
                   <div className="card-body mt-2">

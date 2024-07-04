@@ -96,7 +96,7 @@ const Index = () => {
                                                                 </div>
                                                             </div>
                                                             <div className="text-center">
-                                                                <img className="pf-projects-image thumb thumb-sm" src={baseURL(`assets/${item.image || ''}`)} />
+                                                                <img className="pf-projects-image thumb thumb-sm" src={`${item.image || ''}`} />
                                                             </div>
                                                         </div>
                                                         <div className="card-body">
