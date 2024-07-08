@@ -58,7 +58,7 @@ options:
 #logging: CLOUD_LOGGING_ONLY  #to help make a job as complete in gitlab pipelines
 substitutions:
   #  _APP_DEBUG: 'false'
-  _SERVICE_NAME: 'portfolio-fe' #The name must use only lowercase alphanumeric characters and dashes, cannot begin or end with a dash, and cannot be longer than 63 characters
-  _SERVICE_NAME_PROXY: 'portfolio-fe-proxy'
+  _SERVICE_NAME: 'felix-portfolio-fe' #The name must use only lowercase alphanumeric characters and dashes, cannot begin or end with a dash, and cannot be longer than 63 characters
+  _SERVICE_NAME_PROXY: 'felix-portfolio-fe-proxy'
   _CLOUD_SQL_INSTANCES: 'kipkiro:us-central1:kipkiro-mysql-ssd-10g'
   _DOCKER_FILE_PATH: 'gcp/docker/Dockerfile_production'

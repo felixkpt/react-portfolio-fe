@@ -1,4 +1,3 @@
-import { baseURL } from "../../../../utils/helpers"
 
 type Props = {
     items: string[]
@@ -15,7 +14,7 @@ const Skills = ({ items, slidesCounts }: Props) => {
                     (
                         <div className={`col ${slidesCounts > 0 ? 'col-md-12' : ''} m-1 pf-skills`}>
                             <div className="text-nowrap text-truncate d-flex align-items-center gap-1">
-                                <div><img className="pf-skill-image" src={baseURL(`assets/${skill.image || ''}`)} /></div>
+                                <div><img className="pf-skill-image" src={`${skill.image || ''}`} /></div>
                                 <span>{skill.name}</span>
                             </div>
                         </div>

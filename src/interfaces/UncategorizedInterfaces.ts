@@ -65,7 +65,7 @@ export interface ColumnInterface {
     is_html?: boolean
     isSorted?: boolean
     sortDirection?: 'desc' | 'asc' | ''
-    callback?: (key: string, record: any) => void
+    callback?: (key: string, record: any, moduleUri?: string) => void
 }
 
 interface ActionInterface {

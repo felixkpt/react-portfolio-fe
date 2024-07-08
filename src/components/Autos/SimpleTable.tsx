@@ -3,6 +3,7 @@ import AutoActions from "./AutoActions";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { CollectionItemsInterface, ListSourceInterface } from "@/interfaces/UncategorizedInterfaces";
+import useAutoAction from "@/hooks/autos/useAutoAction";
 
 type Props = {
     record: any
@@ -47,37 +48,37 @@ function SimpleTable({ record, exclude, only, htmls, listSources, modelDetails }
 
     const navigate = useNavigate()
 
-    const autoActions = new AutoActions(modelDetails, record, navigate, listSources, exclude)
+    const { handleNavigation, handleView, handleModalAction } = useAutoAction({ modelDetails, record, navigate, listSources, exclude })
 
     useEffect(() => {
 
         const autotableNavigateElements = document.querySelectorAll('.autotable .autotable-navigate');
         autotableNavigateElements.forEach((element) => {
-            element.addEventListener('click', autoActions.handleNavigation);
+            element.addEventListener('click', handleNavigation);
         });
 
         const autotableViewElements = document.querySelectorAll('.autotable .autotable-modal-view');
         autotableViewElements.forEach((element) => {
-            element.addEventListener('click', autoActions.handleView);
+            element.addEventListener('click', handleView);
         });
 
         const autotableModalActionElements = document.querySelectorAll('.autotable [class*="autotable-modal-"]');
         autotableModalActionElements.forEach((element) => {
-            element.addEventListener('click', autoActions.handleModalAction);
+            element.addEventListener('click', handleModalAction);
         });
 
         return () => {
             // Clean up event listeners when the component unmounts
             autotableViewElements.forEach((element) => {
-                element.removeEventListener('click', autoActions.handleView);
+                element.removeEventListener('click', handleView);
             });
 
             autotableNavigateElements.forEach((element) => {
-                element.removeEventListener('click', autoActions.handleNavigation);
+                element.removeEventListener('click', handleNavigation);
             });
 
             autotableModalActionElements.forEach((element) => {
-                element.removeEventListener('click', autoActions.handleModalAction);
+                element.removeEventListener('click', handleModalAction);
             });
         };
 

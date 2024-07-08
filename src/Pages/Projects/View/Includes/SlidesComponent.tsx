@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './SlidesComponent.scss';
 import { debounce } from 'lodash';
 import { ProjectSlideInterface } from '../../../../interfaces/PortfolioInterfaces';
-import { baseURL } from '../../../../utils/helpers';
 
 interface Props {
   slides: ProjectSlideInterface[];

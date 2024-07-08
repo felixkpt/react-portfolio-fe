@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { baseURL } from "@/utils/helpers"
 import Header from "../../../components/Header"
 import Slides from "./Includes/Slides"
 import Skills from "./Includes/Skills"

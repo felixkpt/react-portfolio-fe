@@ -1,5 +1,4 @@
 import FormatDate from "../../utils/FormatDate"
-import { baseURL } from "../../utils/helpers"
 
 type Props = {
     item: any

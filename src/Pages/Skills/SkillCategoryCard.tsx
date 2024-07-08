@@ -1,4 +1,3 @@
-import { baseURL } from "../../utils/helpers"
 import SkillCard from "./SkillCard"
 
 type Props = {

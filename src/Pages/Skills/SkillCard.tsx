@@ -1,5 +1,3 @@
-import { baseURL } from "../../utils/helpers"
-
 type Props = {
     item: any
 }

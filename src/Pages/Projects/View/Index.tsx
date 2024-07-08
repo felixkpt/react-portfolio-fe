@@ -6,7 +6,6 @@ import Loader from "../../../components/Loader"
 import ProjectCard from "./ProjectCard"
 import ResumeDownloadForm from "../../Home/ResumeDownloadForm"
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { baseURL } from "../../../utils/helpers"
 import { ProjectType } from "@/interfaces/PortfolioInterfaces"
 
 const Index = () => {
