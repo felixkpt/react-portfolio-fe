@@ -1,18 +1,19 @@
+import { ModalSizeType } from '@/interfaces/UncategorizedInterfaces';
 import { publish } from '@/utils/events';
 
 type Props = {
-  modelDetail: any
+  modelDetails: any
   tableData: any
   navigate: any
   listSources: any
-  exclude: any
-  modalSize: any
-  customModalId: any
-  isSingle: any
+  exclude?: string[]
+  modalSize?: ModalSizeType
+  customModalId?: string
+  isSingle?: boolean
 }
 
 const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude, modalSize, customModalId, isSingle }: Props) => {
-  const handleModalAction = (event) => {
+  const handleModalAction = (event: any) => {
     event.preventDefault();
 
     const target = event.target instanceof HTMLElement ? event.target : null;
@@ -29,7 +30,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
 
       if (!id || !action) return;
 
-      const record = isSingle ? tableData : tableData.data.find(item => item.id == id);
+      const record = isSingle ? tableData : tableData.data.find((item: any) => item.id == id);
 
       publish('prepareModalAction', {
         modelDetails,
@@ -43,7 +44,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
     }
   };
 
-  const handleView = (event) => {
+  const handleView = (event: any) => {
     event.preventDefault();
 
     const target = event.target instanceof HTMLElement ? event.target : null;
@@ -55,7 +56,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
 
     if (!id || !action) return;
 
-    const record = isSingle ? tableData : tableData.data.find(item => item.id == id);
+    const record = isSingle ? tableData : tableData.data.find((item: any) => item.id == id);
 
     publish('prepareView', {
       modelDetails,
@@ -67,7 +68,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
     });
   };
 
-  const handleEdit = (event) => {
+  const handleEdit = (event: any) => {
     event.preventDefault();
 
     const target = event.target instanceof HTMLElement ? event.target : null;
@@ -79,7 +80,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
 
     if (!id || !action) return;
 
-    const record = isSingle ? tableData : tableData.data.find(item => item.id == id);
+    const record = isSingle ? tableData : tableData.data.find((item: any) => item.id == id);
 
     publish('prepareEdit', {
       modelDetails,
@@ -91,7 +92,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
     });
   };
 
-  const handleStatusUpdate = (event) => {
+  const handleStatusUpdate = (event: any) => {
     event.preventDefault();
 
     const target = event.target instanceof HTMLElement ? event.target : null;
@@ -103,7 +104,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
 
     if (!id || !action) return;
 
-    const record = isSingle ? tableData : tableData.data.find(item => item.id == id);
+    const record = isSingle ? tableData : tableData.data.find((item: any) => item.id == id);
 
     publish('prepareStatusUpdate', {
       modelDetails,
@@ -113,7 +114,7 @@ const useAutoAction = ({ modelDetails, tableData, navigate, listSources, exclude
     });
   };
 
-  const handleNavigation = (event) => {
+  const handleNavigation = (event: any) => {
     const mouseEvent = event;
 
     if (mouseEvent.ctrlKey) return;

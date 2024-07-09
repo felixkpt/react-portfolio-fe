@@ -1,5 +1,4 @@
 import Str from "@/utils/Str";
-import AutoActions from "./AutoActions";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { CollectionItemsInterface, ListSourceInterface } from "@/interfaces/UncategorizedInterfaces";
@@ -25,11 +24,11 @@ function SimpleTable({ record, exclude, only, htmls, listSources, modelDetails }
 
     const isNative = !!modelDetails
 
-    let allExcluded: string[] = ['status', 'status_id', 'user_id', 'action']
+    const allExcluded: string[] = ['status', 'status_id', 'user_id', 'action']
     if (exclude && exclude.length > 0)
         allExcluded.push(...exclude)
 
-    let allHtmls: string[] = ['Status']
+    const allHtmls: string[] = ['Status']
     if (htmls && htmls.length > 0)
         allHtmls.push(...htmls)
     if (modelDetails && modelDetails.htmls)
@@ -48,7 +47,8 @@ function SimpleTable({ record, exclude, only, htmls, listSources, modelDetails }
 
     const navigate = useNavigate()
 
-    const { handleNavigation, handleView, handleModalAction } = useAutoAction({ modelDetails, record, navigate, listSources, exclude })
+    const tableData = record
+    const { handleNavigation, handleView, handleModalAction } = useAutoAction({ modelDetails, tableData, navigate, listSources, exclude })
 
     useEffect(() => {
 

@@ -15,6 +15,7 @@ import useAutoPostDone from '@/hooks/autos/useAutoPostDone';
 import Str from '../../utils/Str';
 import useAutoAction from '@/hooks/autos/useAutoAction';
 import AutoAction from './AutoActions';
+import RecordStatus from './RecordStatus';
 
 const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetails, listSources, tableId, modalSize, customModalId, perPage }: AutoTableInterface) => {
     const localTableId = tableId ? tableId : 'AutoTable'
@@ -196,13 +197,14 @@ const AutoTable = ({ baseUri, search, columns: initCols, exclude, getModelDetail
     const renderCellContent = (column: ColumnInterface, row: any, htmls: any) => {
         if (column.key === 'action') {
             return <AutoAction row={row} moduleUri={moduleUri} />;
-        }
-
-        if (htmls.includes(column.key) || column.callback) {
+        } else if (column.key === 'Status') {
+            return <RecordStatus row={row} statuses={tableData?.statuses} />;
+        } else if (htmls.includes(column.key) || column.callback) {
             return column.callback ? column.callback(row[column.key], row) : row[column.key];
+        } else {
+            return String(getDynamicValue(row, column.key));
         }
 
-        return String(getDynamicValue(row, column.key));
     };
 
     const renderColumns = (columns: ColumnInterface[], row: any, htmls: any) => {
