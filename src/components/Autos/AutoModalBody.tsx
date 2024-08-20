@@ -3,6 +3,7 @@ import RenderAsyncSelect from '../RenderAsyncSelect';
 import { DataInterface, ListSourceInterface, ModalSizeType, ModelDetailsInterface } from '@/interfaces/UncategorizedInterfaces';
 import Str from '@/utils/Str';
 import SubmitButton from '../SubmitButton';
+import TextEditor from '../TextEditor';
 interface ModalProps {
     modelDetails?: ModelDetailsInterface | undefined;
     record?: DataInterface | null | undefined
@@ -218,15 +219,14 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                                             {input === 'select' && type !== 'multi' && <RenderAsyncSelect listSources={listSources} listSelects={listSelects} current_key={current_key} currentData={currentData} isMulti={false} />}
 
                                             {input === 'textarea' && (
-                                                <textarea
+                                                <TextEditor
                                                     id={current_key}
-                                                    className="form-control"
                                                     name={current_key}
-                                                    defaultValue={inputData[current_key] || ''}
-                                                    onChange={(e) => handleInputChange(current_key, e.target.value)}
                                                     key={current_key}
-                                                    rows={rowsCasted || 7}
-                                                ></textarea>
+                                                    value={inputData[current_key] || ''}
+                                                    onChange={(value) => handleInputChange(current_key, value)}
+                                                />
+
                                             )}
                                         </div>
                                     </div>

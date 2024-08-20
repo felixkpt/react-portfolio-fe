@@ -3,6 +3,7 @@ import AutoModal from '@/components/Autos/AutoModal';
 import { useState } from 'react';
 import Str from '@/utils/Str';
 import { ModelDetailsInterface } from '@/interfaces/UncategorizedInterfaces';
+import useListSources from '@/hooks/list-sources/useListSources';
 
 const Index = () => {
   // begin component common config
@@ -43,6 +44,8 @@ const Index = () => {
   ]
   // end component common config
 
+  const { portfolio: listSources } = useListSources()
+
   return (
     <div>
       <h3>{pluralName} List</h3>
@@ -56,10 +59,11 @@ const Index = () => {
           getModelDetails={setModelDetails}
           search={search}
           tableId={`${componentId}Table`}
+          listSources={listSources}
         />
       </div>
       {
-        modelDetails && <><AutoModal id={`${componentId}Modal`} modelDetails={modelDetails} actionUrl={uri} /></>
+        modelDetails && <><AutoModal id={`${componentId}Modal`} modelDetails={modelDetails} actionUrl={uri} listSources={listSources} /></>
       }
     </div>
   );
