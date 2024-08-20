@@ -138,8 +138,7 @@ const AutoModalBody: React.FC<ModalProps> = ({ modelDetails, record, modalSize, 
                         {hasFillable ? (
                             Object.keys(fillable).map((key: any) => {
                                 const obj = fillable[key]
-                                const { input, type, min, max, rows, capitalize } = obj;
-                                const rowsCasted = rows as unknown as number
+                                const { input, type, min, max, capitalize } = obj;
                                 const accept = obj.accept || '*'
 
                                 const current_key = key.replace(/_multilist$/, '_list')
