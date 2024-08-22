@@ -2,12 +2,13 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import Header from "../../../components/Header"
 import Slides from "./Includes/Slides"
 import Skills from "./Includes/Skills"
+import FormatDate from "@/utils/FormatDate"
 
 type Props = {
     item: any
 }
 
-const ProjectCard = ({ item }: Props) => {
+const ProjectViewCard = ({ item }: Props) => {
     return (
         <div className="col-md-12 cursor-default">
             <Header title={`${item.title} @ ${item.company.name}`} hideTitle description={item.company.name} />
@@ -28,11 +29,16 @@ const ProjectCard = ({ item }: Props) => {
                             </div>
                         }
                     </h5>
+                    <div className="col-xl-2">
+                        <h6><span>{FormatDate.MMYY(item.start_date)}</span>
+                            <span className="mx-1">—</span>
+                            <span>{item.end_date ? FormatDate.MMYY(item.end_date) : 'Present'}</span></h6>
+                    </div>
                     <div className="border-bottom border-light border-opacity-25 my-4"></div>
                 </div>
             </div>
             <div className="row">
-                <div>{item.description_trimmed}</div>
+                <div dangerouslySetInnerHTML={{ __html: (item.description) }}></div>
             </div>
             <div className="row">
                 {
@@ -50,8 +56,12 @@ const ProjectCard = ({ item }: Props) => {
                         : null
                 }
             </div>
+            <div className="mt-4">
+                <h5>Achievements</h5>
+                <div dangerouslySetInnerHTML={{ __html: (item.achievements) }}></div>
+            </div>
         </div>
     )
 }
 
-export default ProjectCard
+export default ProjectViewCard

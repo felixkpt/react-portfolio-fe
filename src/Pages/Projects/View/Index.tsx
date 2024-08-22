@@ -3,7 +3,7 @@ import { NavLink, useParams } from "react-router-dom"
 import useAxios from "../../../hooks/useAxios"
 import NoContentMessage from "../../../components/NoContentMessage"
 import Loader from "../../../components/Loader"
-import ProjectCard from "./ProjectCard"
+import ProjectViewCard from "./ProjectViewCard"
 import ResumeDownloadForm from "../../Home/ResumeDownloadForm"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { ProjectType } from "@/interfaces/PortfolioInterfaces"
@@ -57,7 +57,7 @@ const Index = () => {
                     <div className="pf-projects row mt-5 justify-content-between">
                         {
                             data ?
-                                <ProjectCard item={data} />
+                                <ProjectViewCard item={data} />
                                 :
                                 <NoContentMessage />
                         }

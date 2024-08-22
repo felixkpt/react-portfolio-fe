@@ -1,3 +1,4 @@
+import FormatDate from "@/utils/FormatDate"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { NavLink } from "react-router-dom"
 
@@ -23,12 +24,14 @@ const ProjectCard = ({ item }: Props) => {
                                 <Icon icon='ph:arrow-right-bold' />
                             </div>
                         </h5>
-                        <div>{item.description_trimmed}</div>
-                        <div>
-                            <p>
-                                {item.roles}
-                            </p>
+                        <div className="col-xl-2">
+                            <h6><span>{FormatDate.MMYY(item.start_date)}</span>
+                                <span className="mx-1">—</span>
+                                <span>{item.end_date ? FormatDate.MMYY(item.end_date) : 'Present'}</span></h6>
                         </div>
+                        <div className="border-bottom border-light border-opacity-25 my-4"></div>
+
+                        <div dangerouslySetInnerHTML={{ __html: (item.description) }}></div>
                     </div>
                 </div>
             </NavLink>
