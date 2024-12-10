@@ -1,9 +1,10 @@
-import { PropsValue } from 'react-select';
+import { GetOptionValue, GroupBase, OptionsOrGroups, PropsValue } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 import Str from '@/utils/Str';
 import { useState } from "react";
 import { ListSourceInterface } from '@/interfaces/UncategorizedInterfaces';
+import { reactSelectStyles } from '@/utils/styles';
 
 interface RenderAsyncSelectProps {
     current_key: string;
@@ -13,9 +14,13 @@ interface RenderAsyncSelectProps {
     listSelects?: { [key: string]: any };
 }
 
+type OptionsType = void | Promise<OptionsOrGroups<object, GroupBase<object>>>
+
 let _listSources: any
 
 const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData, isMulti = false }: RenderAsyncSelectProps) => {
+
+    const [selected, setSelected] = useState<PropsValue<object> | undefined>();
 
     if (listSources)
         _listSources = listSources
@@ -27,25 +32,23 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
         const fn = Str.camel(current_key);
 
         // Type assertion to specify that listSources[fn] is a function returning Promise<any>
-        const listSourceFn = _listSources[fn] as ((q?: string) => Promise<any>);
+        const listSourceFn = _listSources[fn] as ((q?: string) => Promise<unknown>);
 
         if (typeof listSourceFn === 'function') {
             const options = await listSourceFn(q);
 
             let selected = rawSelected;
 
-            if (listSelects && listSelects[fn]) {
+            if (listSelects?.[fn]) {
                 selected = listSelects[fn]
             }
-            else {
+            else if (Array.isArray(rawSelected)) {
+                selected = options.filter((option: any) => rawSelected.some((selectedItem: any) => String(selectedItem.id) === String(option.id)));
+            } else if (typeof rawSelected === 'number' || typeof rawSelected === 'string') {
 
-                if (Array.isArray(rawSelected)) {
-                    selected = options.filter((option: any) => rawSelected.some((selectedItem: any) => String(selectedItem.id) === String(option.id)));
-                } else if (typeof rawSelected === 'number' || typeof rawSelected === 'string') {
-
-                    selected = options.find((option: any) => String(option.id) === String(rawSelected) || String(option.name) === String(rawSelected));
-                }
+                selected = options.find((option: any) => String(option.id) === String(rawSelected) || String(option.name) === String(rawSelected));
             }
+
 
             return { options, selected: selected };
 
@@ -57,27 +60,26 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
     }
 
 
-    async function fetchData(query: string) {
-        const currentValue = typeof currentData === 'number' ? currentData : (currentData || (isMulti ? [] : ''));
-        const { options: fetchedOptions, selected: fetchedSelected } = await getOptions(current_key, currentValue, query);
-
-        setSelected(fetchedSelected);
-
-        // Include the existing record's option in fetchedOptions if not already present
-        if (currentValue && !fetchedOptions.some((option: any) => option.id === currentValue.id)) {
-            fetchedOptions.push(currentValue);
-        }
-        return fetchedOptions
-    }
-
-    function loadOptions(q: string) {
+    async function loadOptions(query: string): Promise<unknown> {
 
         if (current_key) {
-            return fetchData(q);
+            let currentValue;
+            if (typeof currentData === 'number') {
+                currentValue = currentData
+
+            } else {
+                currentValue = currentData || (isMulti ? [] : '')
+            }
+
+            const { options: fetchedOptions } = await getOptions(current_key, currentValue, query);
+
+            if (!selected) {
+                setSelected(currentValue);
+            }
+
+            return fetchedOptions
         }
     }
-
-    const [selected, setSelected] = useState<PropsValue<object> | undefined>();
 
     return (
         <AsyncSelect
@@ -92,10 +94,12 @@ const RenderAsyncSelect = ({ listSources, listSelects, current_key, currentData,
             value={selected}
             isMulti={isMulti}
             defaultOptions
-            loadOptions={(q: any) => loadOptions(q)}
+            loadOptions={(q: string) => loadOptions(q) as unknown as OptionsType}
             onChange={(val) => setSelected(val)}
             getOptionValue={(option: any) => `${option['id']}`}
             getOptionLabel={(option: any) => `${option['name']}`}
+            cacheOptions
+            styles={reactSelectStyles}
         />
     );
 };
